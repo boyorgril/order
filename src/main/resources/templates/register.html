@@ -17,9 +17,9 @@
         <input type="text" id="account" name="account" autofocus="autofocus"  onblur="checkAccount();"/>
         <span style="display: none" id="acc">账号已存在</span>
         <br/>
-        <label for="password">密　码</label>:
-        <input type="password" id="passwordno" name="passwordno" onblur="encryptPassword();"/>
-        <input id="password" name="password" style="display: none"/>
+        <label for="passWord">密　码</label>:
+        <input type="passWord" id="passWordno" name="passWordno" onblur="encryptPassWord();"/>
+        <input id="passWord" name="passWord" style="display: none"/>
         <br/>
         <input id="register" type="button" value="注册" onclick="formSubmit()" disabled="disabled" />
     </div>
@@ -28,7 +28,7 @@
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
 
     var accountFlag = false;
-    var passwordFlag = false;
+    var passWordFlag = false;
 
     function checkAccount() {
         var account = $("#account").val();
@@ -56,19 +56,19 @@
         checkInfo();
     }
 
-    function encryptPassword() {
-        var before = document.getElementById("passwordno").value;
+    function encryptPassWord() {
+        var before = document.getElementById("passWordno").value;
         if(before.length > 0){
-            passwordFlag = true;
-            $("#password").val($.md5(before));
+            passWordFlag = true;
+            $("#passWord").val($.md5(before));
         }else{
-            passwordFlag = false;
+            passWordFlag = false;
         }
         checkInfo();
     }
 
     function checkInfo() {
-        if(accountFlag && passwordFlag){
+        if(accountFlag && passWordFlag){
             document.getElementById("register").disabled=false;
         }else{
             document.getElementById("register").disabled=true;

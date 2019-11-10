@@ -18,9 +18,9 @@
         <label for="account">用户名</label>:
         <input type="text" id="account" name="account" autofocus="autofocus" required/>
         <br/>
-        <label for="password">密　码</label>:
-        <input type="password" id="passwordno" name="passwordno" onblur="encryptPassword();"/>
-        <input id="password" name="password" style="display: none"/>
+        <label for="passWord">密　码</label>:
+        <input type="passWord" id="passWordno" name="passWordno" onblur="encryptPassWord();"/>
+        <input id="passWord" name="passWord" style="display: none"/>
         <br/>
         <p th:if="${errormessage} == 'notfound'" class="text-warning">用户名或密码错误</p>
         <img th:src="@{/test.jpg}"></img>
@@ -31,14 +31,14 @@
 </body>
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
 
-    function encryptPassword() {
-        $("#password").val($.md5(document.getElementById("passwordno").value));
+    function encryptPassWord() {
+        $("#passWord").val($.md5(document.getElementById("passWordno").value));
     }
 
     function formSubmit() {
         var account = document.getElementById("account").value;
-        var passwordno = document.getElementById("passwordno").value;
-        if(account.length > 0 && passwordno.length > 0){
+        var passWordno = document.getElementById("passWordno").value;
+        if(account.length > 0 && passWordno.length > 0){
             document.getElementById("myForm").submit();
         }else{
             alert("请输入账号，密码");

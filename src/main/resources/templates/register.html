@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/css/bootstrap-theme.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{/common/md5.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+</head>
+<body>
+<form id="myForm" th:action="@{/registerAccount}" method="post">
+    <div>
+        <label for="account">账   号</label>:
+        <input type="text" id="account" name="account" autofocus="autofocus"  onblur="checkAccount();"/>
+        <span style="display: none" id="acc">账号已存在</span>
+        <br/>
+        <label for="password">密　码</label>:
+        <input type="password" id="passwordno" name="passwordno" onblur="encryptPassword();"/>
+        <input id="password" name="password" style="display: none"/>
+        <br/>
+        <input id="register" type="button" value="注册" onclick="formSubmit()" disabled="disabled" />
+    </div>
+</form>
+</body>
+<script th:inline="javascript" type="text/javascript" charset="utf-8">
+
+    var accountFlag = false;
+    var passwordFlag = false;
+
+    function checkAccount() {
+        var account = $("#account").val();
+        if(account.length > 0){
+            var params = {
+                account : account
+            }
+            $.ajax({
+                type : "POST",
+                url : "/checkAccount",
+                async: false,
+                data : params,
+                success : function(result) {
+                    if(result == "exit"){
+                        accountFlag = false;
+                        document.getElementById("acc").style.display = 'block';
+                    }
+                    if(result == "noAccount"){
+                        accountFlag = true;
+                        document.getElementById("acc").style.display = 'none';
+                    }
+                }
+            });
+        }
+        checkInfo();
+    }
+
+    function encryptPassword() {
+        var before = document.getElementById("passwordno").value;
+        if(before.length > 0){
+            passwordFlag = true;
+            $("#password").val($.md5(before));
+        }else{
+            passwordFlag = false;
+        }
+        checkInfo();
+    }
+
+    function checkInfo() {
+        if(accountFlag && passwordFlag){
+            document.getElementById("register").disabled=false;
+        }else{
+            document.getElementById("register").disabled=true;
+        }
+    }
+
+    function formSubmit() {
+        document.getElementById("myForm").submit()
+    }
+
+</script>
+</html>

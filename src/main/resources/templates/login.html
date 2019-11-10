@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/css/bootstrap-theme.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+    <script th:src="@{/common/md5.js}"></script>
+</head>
+<body>
+<h1>Login page</h1>
+
+<form id="myForm" th:action="@{/loginCheck}" method="post">
+    <img style="">
+        <label for="account">用户名</label>:
+        <input type="text" id="account" name="account" autofocus="autofocus" required/>
+        <br/>
+        <label for="password">密　码</label>:
+        <input type="password" id="passwordno" name="passwordno" onblur="encryptPassword();"/>
+        <input id="password" name="password" style="display: none"/>
+        <br/>
+        <p th:if="${errormessage} == 'notfound'" class="text-warning">用户名或密码错误</p>
+        <img th:src="@{/test.jpg}"></img>
+        <input type="button" value="登录" class="btn" onclick="formSubmit()"/>
+        <input type="button" value="注册" class="btn" onclick="javascript:window.location.href='/register'"/>
+    </div>
+</form>
+</body>
+<script th:inline="javascript" type="text/javascript" charset="utf-8">
+
+    function encryptPassword() {
+        $("#password").val($.md5(document.getElementById("passwordno").value));
+    }
+
+    function formSubmit() {
+        var account = document.getElementById("account").value;
+        var passwordno = document.getElementById("passwordno").value;
+        if(account.length > 0 && passwordno.length > 0){
+            document.getElementById("myForm").submit();
+        }else{
+            alert("请输入账号，密码");
+        }
+    }
+
+
+</script>
+</html>

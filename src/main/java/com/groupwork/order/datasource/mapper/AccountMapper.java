@@ -11,12 +11,12 @@ public interface AccountMapper {
 
     @Select({
             "select id from user",
-            "where account = #{account,jdbcType=VARCHAR} and password =  #{password,jdbcType=VARCHAR}"
+            "where account = #{account,jdbcType=VARCHAR} and passWord =  #{passWord,jdbcType=VARCHAR}"
     })
     Long selectCount(User user);
 
     @Insert({
-            "insert into user(account, password) values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})"
+            "insert into user(account, passWord) values (#{account,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR})"
     })
     int accountRegister(User user);
 
@@ -27,13 +27,13 @@ public interface AccountMapper {
     int findAccountNumber(String account);
 
     @Select({
-            "select id, account, username, password from user where id = #{userId,jdbcType=BIGINT}"
+            "select id, account, userName, passWord from user where id = #{userId,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
             @Result(column = "account", property = "account", jdbcType = JdbcType.VARCHAR),
-            @Result(column = "username", property = "username", jdbcType = JdbcType.VARCHAR),
-            @Result(column = "password", property = "password", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "userName", property = "userName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "passWord", property = "passWord", jdbcType = JdbcType.VARCHAR),
     })
     User userInfo(Long userId);
 
@@ -41,7 +41,7 @@ public interface AccountMapper {
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
             @Result(column = "account", property = "account", jdbcType = JdbcType.VARCHAR),
-            @Result(column = "username", property = "username", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "userName", property = "userName", jdbcType = JdbcType.VARCHAR),
     })
     List<User> selectByExample(UserExample userExample);
 }

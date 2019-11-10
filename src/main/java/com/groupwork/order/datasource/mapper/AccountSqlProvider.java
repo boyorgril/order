@@ -17,7 +17,7 @@ public class AccountSqlProvider {
             sql.SELECT("id");
         }
         sql.SELECT("account");
-        sql.SELECT("username");
+        sql.SELECT("userName");
         sql.FROM("user");
         applyWhere(sql, example, false);
 

@@ -1,6 +1,7 @@
 package com.groupwork.order.datasource.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * user
@@ -11,9 +12,19 @@ public class User implements Serializable {
 
     private String account;
 
-    private String username;
+    private String userName;
 
-    private String password;
+    private String passWord;
+
+    private String type;
+
+    private String imgUrl;
+
+    private Double money;
+
+    private Date createAt;
+
+    private Date updateWhen;
 
     private static final long serialVersionUID = 1L;
 
@@ -33,20 +44,59 @@ public class User implements Serializable {
         this.account = account;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getUpdateWhen() {
+        return updateWhen;
+    }
+
+    public void setUpdateWhen(Date updateWhen) {
+        this.updateWhen = updateWhen;
+    }
 }

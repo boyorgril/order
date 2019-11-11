@@ -1,13 +1,14 @@
 package com.groupwork.order.datasource.mapper;
 
-import com.groupwork.order.datasource.dto.UserExample;
+
+import com.groupwork.order.datasource.dto.LoginRecordExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
 
 public class LoginRecordSqlProvider {
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, LoginRecordExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
@@ -35,10 +36,10 @@ public class LoginRecordSqlProvider {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<UserExample.Criteria> oredCriteria = example.getOredCriteria();
+        List<LoginRecordExample.Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
         for (int i = 0; i < oredCriteria.size(); i++) {
-            UserExample.Criteria criteria = oredCriteria.get(i);
+            LoginRecordExample.Criteria criteria = oredCriteria.get(i);
             if (criteria.isValid()) {
                 if (firstCriteria) {
                     firstCriteria = false;
@@ -47,10 +48,10 @@ public class LoginRecordSqlProvider {
                 }
 
                 sb.append('(');
-                List<UserExample.Criterion> criterions = criteria.getAllCriteria();
+                List<LoginRecordExample.Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
                 for (int j = 0; j < criterions.size(); j++) {
-                    UserExample.Criterion criterion = criterions.get(j);
+                    LoginRecordExample.Criterion criterion = criterions.get(j);
                     if (firstCriterion) {
                         firstCriterion = false;
                     } else {

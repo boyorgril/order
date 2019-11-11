@@ -1,6 +1,7 @@
 package com.groupwork.order.datasource.mapper;
 
-import com.groupwork.order.datasource.dto.UserExample;
+
+import com.groupwork.order.datasource.dto.ShopFoodExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class ShopFoodSqlProvider {
 
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, ShopFoodExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
@@ -36,10 +37,10 @@ public class ShopFoodSqlProvider {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<UserExample.Criteria> oredCriteria = example.getOredCriteria();
+        List<ShopFoodExample.Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
         for (int i = 0; i < oredCriteria.size(); i++) {
-            UserExample.Criteria criteria = oredCriteria.get(i);
+            ShopFoodExample.Criteria criteria = oredCriteria.get(i);
             if (criteria.isValid()) {
                 if (firstCriteria) {
                     firstCriteria = false;
@@ -48,10 +49,10 @@ public class ShopFoodSqlProvider {
                 }
 
                 sb.append('(');
-                List<UserExample.Criterion> criterions = criteria.getAllCriteria();
+                List<ShopFoodExample.Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
                 for (int j = 0; j < criterions.size(); j++) {
-                    UserExample.Criterion criterion = criterions.get(j);
+                    ShopFoodExample.Criterion criterion = criterions.get(j);
                     if (firstCriterion) {
                         firstCriterion = false;
                     } else {

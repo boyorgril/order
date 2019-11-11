@@ -1,13 +1,36 @@
 package com.groupwork.order.datasource.mapper;
 
-import com.groupwork.order.datasource.dto.UserExample;
+
+import com.groupwork.order.datasource.dto.CommentExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
 
 public class CommentSqlProvider {
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    public String selectByExample(CommentExample example){
+
+        SQL sql = new SQL();
+        if (example != null && example.isDistinct()) {
+            sql.SELECT_DISTINCT("id");
+        } else {
+            sql.SELECT("id");
+        }
+        sql.SELECT("orderId");
+        sql.SELECT("content");
+        sql.SELECT("createAt");
+        sql.FROM("comment");
+        applyWhere(sql, example, false);
+
+        if (example != null && example.getOrderByClause() != null) {
+            sql.ORDER_BY(example.getOrderByClause());
+        }
+
+        return sql.toString();
+
+    }
+
+    protected void applyWhere(SQL sql, CommentExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
@@ -35,10 +58,10 @@ public class CommentSqlProvider {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<UserExample.Criteria> oredCriteria = example.getOredCriteria();
+        List<CommentExample.Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
         for (int i = 0; i < oredCriteria.size(); i++) {
-            UserExample.Criteria criteria = oredCriteria.get(i);
+            CommentExample.Criteria criteria = oredCriteria.get(i);
             if (criteria.isValid()) {
                 if (firstCriteria) {
                     firstCriteria = false;
@@ -47,10 +70,10 @@ public class CommentSqlProvider {
                 }
 
                 sb.append('(');
-                List<UserExample.Criterion> criterions = criteria.getAllCriteria();
+                List<CommentExample.Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
                 for (int j = 0; j < criterions.size(); j++) {
-                    UserExample.Criterion criterion = criterions.get(j);
+                    CommentExample.Criterion criterion = criterions.get(j);
                     if (firstCriterion) {
                         firstCriterion = false;
                     } else {

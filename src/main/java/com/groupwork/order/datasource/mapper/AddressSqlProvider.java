@@ -1,5 +1,6 @@
 package com.groupwork.order.datasource.mapper;
 
+import com.groupwork.order.datasource.dto.AddressExample;
 import com.groupwork.order.datasource.dto.UserExample;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -7,8 +8,34 @@ import java.util.List;
 
 public class AddressSqlProvider {
 
+    public String deleteByExample(AddressExample example){
+        SQL sql = new SQL();
+        sql.DELETE_FROM("address");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    public String selectByExample(AddressExample example){
+        SQL sql = new SQL();
+        if (example != null && example.isDistinct()) {
+            sql.SELECT_DISTINCT("id");
+        } else {
+            sql.SELECT("id");
+        }
+        sql.SELECT("userId");
+        sql.SELECT("location");
+        sql.SELECT("phoneNumber");
+        sql.SELECT("name");
+        sql.FROM("address");
+        applyWhere(sql, example, false);
+
+        if (example != null && example.getOrderByClause() != null) {
+            sql.ORDER_BY(example.getOrderByClause());
+        }
+        return sql.toString();
+    }
+
+    protected void applyWhere(SQL sql, AddressExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
@@ -36,10 +63,10 @@ public class AddressSqlProvider {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<UserExample.Criteria> oredCriteria = example.getOredCriteria();
+        List<AddressExample.Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
         for (int i = 0; i < oredCriteria.size(); i++) {
-            UserExample.Criteria criteria = oredCriteria.get(i);
+            AddressExample.Criteria criteria = oredCriteria.get(i);
             if (criteria.isValid()) {
                 if (firstCriteria) {
                     firstCriteria = false;
@@ -48,10 +75,10 @@ public class AddressSqlProvider {
                 }
 
                 sb.append('(');
-                List<UserExample.Criterion> criterions = criteria.getAllCriteria();
+                List<AddressExample.Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
                 for (int j = 0; j < criterions.size(); j++) {
-                    UserExample.Criterion criterion = criterions.get(j);
+                    AddressExample.Criterion criterion = criterions.get(j);
                     if (firstCriterion) {
                         firstCriterion = false;
                     } else {

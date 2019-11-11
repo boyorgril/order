@@ -1,5 +1,6 @@
 package com.groupwork.order.datasource.mapper;
 
+import com.groupwork.order.datasource.dto.OperationRecordExample;
 import com.groupwork.order.datasource.dto.UserExample;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public class OperationRecordSqlProvider {
 
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, OperationRecordExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
@@ -36,10 +37,10 @@ public class OperationRecordSqlProvider {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<UserExample.Criteria> oredCriteria = example.getOredCriteria();
+        List<OperationRecordExample.Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
         for (int i = 0; i < oredCriteria.size(); i++) {
-            UserExample.Criteria criteria = oredCriteria.get(i);
+            OperationRecordExample.Criteria criteria = oredCriteria.get(i);
             if (criteria.isValid()) {
                 if (firstCriteria) {
                     firstCriteria = false;
@@ -48,10 +49,10 @@ public class OperationRecordSqlProvider {
                 }
 
                 sb.append('(');
-                List<UserExample.Criterion> criterions = criteria.getAllCriteria();
+                List<OperationRecordExample.Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
                 for (int j = 0; j < criterions.size(); j++) {
-                    UserExample.Criterion criterion = criterions.get(j);
+                    OperationRecordExample.Criterion criterion = criterions.get(j);
                     if (firstCriterion) {
                         firstCriterion = false;
                     } else {

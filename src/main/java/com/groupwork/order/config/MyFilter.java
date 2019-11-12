@@ -32,6 +32,7 @@ public class MyFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         Long userId = (Long) request.getSession().getAttribute("userId");
+
         boolean flag = false;
         for (String pattern : ignoreUrl){
             if(request.getRequestURI().contains(pattern)){
@@ -43,8 +44,12 @@ public class MyFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+
         if(StringUtils.isEmpty(userId)){
             request.getRequestDispatcher("/login").forward(servletRequest,servletResponse);
+            return;
+        }else{
+            filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
     }

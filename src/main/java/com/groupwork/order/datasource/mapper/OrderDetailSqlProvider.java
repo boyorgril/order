@@ -1,12 +1,76 @@
 package com.groupwork.order.datasource.mapper;
 
 
+import com.groupwork.order.datasource.dto.OrderDetail;
 import com.groupwork.order.datasource.dto.OrderDetailExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
+import java.util.Map;
 
 public class OrderDetailSqlProvider {
+
+
+    public String selectByExample(OrderDetailExample example){
+        SQL sql = new SQL();
+
+        if (example != null && example.isDistinct()) {
+            sql.SELECT_DISTINCT("id");
+        } else {
+            sql.SELECT("id");
+        }
+        sql.SELECT("oid");
+        sql.SELECT("sfid");
+        sql.SELECT("number");
+        sql.FROM("orderDetail");
+        applyWhere(sql, example, false);
+
+        if (example != null && example.getOrderByClause() != null) {
+            sql.ORDER_BY(example.getOrderByClause());
+        }
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter){
+        SQL sql = new SQL();
+        OrderDetail record = (OrderDetail) parameter.get("record");
+        OrderDetailExample example = (OrderDetailExample) parameter.get("example");
+        sql.UPDATE("orderDetail");
+
+        if(record.getId() != null){
+            sql.SET("id", "#{id,jdbcType=BIGINT}");
+        }
+
+        if(record.getSfid() != null){
+            sql.SET("sfid", "#{sfid,jdbcType=BIGINT}");
+        }
+
+        if(record.getOid() != null){
+            sql.SET("oid", "#{oid,jdbcType=BIGINT}");
+        }
+
+        if(record.getNumber() != null){
+            sql.SET("number", "#{number,jdbcType=INTEGER}");
+        }
+
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
+    public String updateByExample(Map<String, Object> parameter){
+        SQL sql = new SQL();
+        sql.UPDATE("orderDetail");
+
+        sql.SET("id = #{record.id,jdbcType=BIGINT}");
+        sql.SET("sfid = #{record.sfid,jdbcType=BIGINT}");
+        sql.SET("oid = #{record.oid,jdbcType=BIGINT}");
+        sql.SET("number = #{record.number,jdbcType=INTEGER}");
+
+        OrderDetailExample example = (OrderDetailExample) parameter.get("example");
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
+
 
     protected void applyWhere(SQL sql, OrderDetailExample example, boolean includeExamplePhrase) {
         if (example == null) {

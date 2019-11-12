@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>登录界面</title>
+    <link href="favicon.ico" rel="shortcut icon" />
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background-image: url(images/default.jpeg);
+            background-repeat: repeat-x;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        var sign = 1;
+        function select(i) {
+            if(i==sign)return;
+            if(sign==2){
+                $("#userselect").addClass("bg");
+                $("#shopselect").removeClass("bg");
+                sign = 1;
+            }else{
+                $("#shopselect").addClass("bg");
+                $("#userselect").removeClass("bg");
+                sign = 2;
+            }
+        }
+    </script>
+        <style>
+           .bg{
+               background-color: #8ac007;
+               color: white;
+           }
+            .btn-primary:hover {
+                background-color: #3c763d;
+            }
+           .btn-primary:focus {
+               background-color: #3c763d;
+           }
+           .btn-primary:active{
+               background-color: #3e8f3e;
+           }
+           .btn-primary:checked{
+               background-color: #3e8f3e;
+           }
+        </style>
+
+    </head>
+    <body >
+<div class="modal-dialog" style="margin-top: 10%;">
+<div class="modal-content">
+      <div class="modal-header">
+    <h4 class="modal-title text-center" id="myModalLabel">登录</h4>
+  </div>
+      <div class="modal-body" id = "model-body">
+    <div class="form-group">
+          <input type="text" class="form-control"placeholder="您的用户名" autocomplete="off">
+        </div>
+    <div class="form-group">
+          <input type="password" class="form-control" placeholder="密码" autocomplete="off">
+          <br>
+        <div >
+            <table>
+                <tr>
+                    <td class="btn btn-default bg" id = "userselect" onclick="select(1)">用户</td>
+                    <td class="btn btn-default" id = "shopselect" onclick="select(2)">商家</td>
+                </tr>
+            </table>
+        </div>
+
+</div>
+    <div class="modal-footer">
+        <div class="form-group" >
+            <button type="button" class="btn btn-primary form-control bg">登录</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default form-control">注册</button>
+        </div>
+
+  </div>
+      <!-- /.modal-content -->
+</div>
+<!-- /.modal -->
+</div>
+</div>
+</body>
+</html>

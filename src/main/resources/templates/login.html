@@ -9,27 +9,81 @@
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
     <script th:src="@{/common/md5.js}"></script>
+    <style>
+        .bg{
+            background-color: #8ac007;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #3c763d;
+        }
+        .btn-primary:focus {
+            background-color: #3c763d;
+        }
+        .btn-primary:active{
+            background-color: #3e8f3e;
+        }
+        .btn-primary:checked{
+            background-color: #3e8f3e;
+        }
+    </style>
 </head>
 <body>
-<h1>Login page</h1>
-
-<form id="myForm" th:action="@{/loginCheck}" method="post">
-    <img style="">
-        <label for="account">用户名</label>:
-        <input type="text" id="account" name="account" autofocus="autofocus" required/>
-        <br/>
-        <label for="passWord">密　码</label>:
-        <input type="passWord" id="passWordno" name="passWordno" onblur="encryptPassWord();"/>
-        <input id="passWord" name="passWord" style="display: none"/>
-        <br/>
-        <p th:if="${errormessage} == 'notfound'" class="text-warning">用户名或密码错误</p>
-        <img th:src="@{/test.jpg}"></img>
-        <input type="button" value="登录" class="btn" onclick="formSubmit()"/>
-        <input type="button" value="注册" class="btn" onclick="javascript:window.location.href='/register'"/>
+<div class="modal-dialog" style="margin-top: 10%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="myModalLabel">登录</h4>
+        </div>
+        <div class="modal-body" id = "model-body">
+            <form id="myForm" th:action="@{/loginCheck}" method="post">
+                    <div class="form-group">
+                        <input type="text" id="account" name="account" autofocus="autofocus" class="form-control"placeholder="您的用户名" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="passWordno" name="passWordno"  onblur="encryptPassWord();" class="form-control" placeholder="密码" autocomplete="off">
+                        <br>
+                    </div>
+                    <input id="passWord" name="passWord" style="display: none"/>
+                    <p th:if="${errormessage} == 'notfound'" class="text-warning">用户名或密码错误</p>
+                    <div>
+                        <table>
+                            <tr>
+                                <td class="btn btn-default bg" id = "userselect" onclick="select(1)">用户</td>
+                                <td class="btn btn-default" id = "shopselect" onclick="select(2)">商家</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <input id="type" name="type" style="display: none" value="BUYER"/>
+                    <div class="modal-footer">
+                        <div class="form-group" >
+                            <input type="button" value="登录" class="btn btn-primary form-control bg" onclick="formSubmit()"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" value="注册" class="btn btn-default form-control" onclick="javascript:window.location.href='/register'"/>
+                        </div>
+                    </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 </body>
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
+
+    var sign = 1;
+    function select(i) {
+        if(i==sign)return;
+        if(sign==2){
+            $("#userselect").addClass("bg");
+            $("#shopselect").removeClass("bg");
+            sign = 1;
+            document.getElementById("type").value = "BUYER";
+        }else{
+            $("#shopselect").addClass("bg");
+            $("#userselect").removeClass("bg");
+            sign = 2;
+            document.getElementById("type").value = "SELLER";
+        }
+    }
 
     function encryptPassWord() {
         $("#passWord").val($.md5(document.getElementById("passWordno").value));

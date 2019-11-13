@@ -3,6 +3,7 @@ package com.groupwork.order.controller;
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.service.AccountService;
 import com.groupwork.order.utils.FileUtilsDiy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class AccountController {
 
     @Autowired
@@ -23,6 +26,7 @@ public class AccountController {
 
     @RequestMapping("/login")
     public String login(){
+        log.info("{} 访问登录页面 {}", "visitor", new Date());
         return "login";
     }
 
@@ -37,7 +41,8 @@ public class AccountController {
             //直接返回到页面
             //return "index";
             //访问controller的index
-            return "forward:index";
+            //return "forward:index";
+            return "redirect:/index";
         }
         model.addAttribute("errormessage","notfound");
         return "login";
@@ -58,15 +63,15 @@ public class AccountController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest httpServletRequest){
         httpServletRequest.getSession().removeAttribute("userId");
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping("/registerAccount")
     public String registerAccount(User user){
         if(accountService.accountRegister(user) > 0){
-            return "forward:login";
+            return "redirect:login";
         }else{
-            return "forward:register";
+            return "redirect:register";
         }
     }
 

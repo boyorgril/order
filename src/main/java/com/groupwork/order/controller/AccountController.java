@@ -1,8 +1,11 @@
 package com.groupwork.order.controller;
 
+import com.groupwork.order.datasource.dto.LoginRecord;
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.service.AccountService;
+import com.groupwork.order.service.LoginRecordService;
 import com.groupwork.order.utils.FileUtilsDiy;
+import com.groupwork.order.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +23,8 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private LoginRecordService loginRecordService;
 
     @Value(value = "${resources_path}")
     String resources_path;//资源文件绝对地址目录
@@ -36,8 +41,8 @@ public class AccountController {
         if(!"null".equals(String.valueOf(userId)) && userId > 0){
             //userId放到session缓存中，大多数数据根据userId都可以找到
             httpServletRequest.getSession().setAttribute("userId",userId);
-            List<User> users = accountService.findUserByExample();
-            System.out.println(users.size());
+            String ipAddress = IpUtil.getIpAddr(httpServletRequest);
+            loginRecordService.addRecord(ipAddress + IpUtil.getIpInfo(ipAddress), userId);
             //直接返回到页面
             //return "index";
             //访问controller的index

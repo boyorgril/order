@@ -14,8 +14,8 @@ public interface LoginRecordMapper {
 
     @Insert({
             "insert into loginRecord (ipAddress, userId, loginTime)",
-            "values (ipAddress = #{ipAddress,jdbcType=VARCHAR}, userId = #{userId,jdbcType=BIGINT}, ",
-                    "loginTime = #{loginTime,jdbcType=TIMESTAMP})"
+            "values (#{ipAddress,jdbcType=VARCHAR},  #{userId,jdbcType=BIGINT}, ",
+                    " #{loginTime,jdbcType=TIMESTAMP})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(LoginRecord record);

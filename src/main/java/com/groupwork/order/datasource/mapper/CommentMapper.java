@@ -18,8 +18,8 @@ public interface CommentMapper {
 
     @Insert({
             "insert into comment (orderId, content, createAt) values ",
-            "(orderId = #{orderId,jdbcType=BIGINT}, content = #{content,jdbcType=VARCHAR}, ",
-            "createdAt = #{createdAt,jdbcType=TIMESTAMP}) "
+            "(#{orderId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, ",
+            " #{createdAt,jdbcType=TIMESTAMP}) "
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(Comment record);

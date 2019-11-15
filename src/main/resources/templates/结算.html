@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>结算</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <script src="jquery.js"></script>
-    <script src="twitter-bootstrap.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <script src="../static/jquery/jquery-3.0.0.js"></script>
+    <script src="../static/twitter-bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
     <style>
         /*下拉列表*/
@@ -29,7 +29,7 @@
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            min-width: 160px;
+            min-width: 400px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         }
 
@@ -38,6 +38,7 @@
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            min-width: 400px;
         }
 
         .dropdown-content li:hover {background-color: #f1f1f1}
@@ -245,7 +246,7 @@
                             <td >
                                 <table align="right">
                                     <tr class="tr">
-                                        <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                                        <td width="35%" ><img src="../static/img/666.jpg" class="pic" alt="菜品图标"></td>
                                         <td>
                                             <table class="tbl" align="center">
                                                 <tr>
@@ -254,11 +255,11 @@
                                                 <tr>
                                                     <td >
                                                         <div class="pingjia">
-                                                            <img src="star.png" class="pic pic-size"/>
-                                                            <img src="star.png" class="pic pic-size"/>
-                                                            <img src="star.png" class="pic pic-size"/>
-                                                            <img src="star.png" class="pic pic-size"/>
-                                                            <img src="star.png" class="pic pic-size"/>
+                                                            <img src="../static/img/star.png" class="pic pic-size"/>
+                                                            <img src="../static/img/star.png" class="pic pic-size"/>
+                                                            <img src="../static/img/star.png" class="pic pic-size"/>
+                                                            <img src="../static/img/star.png" class="pic pic-size"/>
+                                                            <img src="../static/img/star.png" class="pic pic-size"/>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -461,11 +462,13 @@
     </td>
     <td>
         <div class="rightinfo">
-            <p style="margin-top: 50px">总价：      6466</p>
-
-            <input type="text" value="收货人" id="tt1" class="text" align="center" style="margin-top: 50px">
-            <br>
-            <input type="text" value="电话号码" id="tt1" class="text" align="center" style="margin-top: 50px">
+            <p style="margin-top: 50px;margin-bottom: 50px" class="mealname">总价：      6466</p>
+            <div class="form-group"style="margin-top: 50px">
+                <input type="text" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group"style="margin-top: 50px">
+                <input type="text" class="form-control" autocomplete="off">
+            </div>
             <!--下拉列表-->
             <div class="dropdown">
                 <button class="dropbtn">请选择一个地址</button>
@@ -477,6 +480,9 @@
                     <li>收获地址 1</li>
                     <li>收获地址 1</li>
                 </div>
+            </div>
+            <div class="form-group" style="margin-top: 50px; background-color: #4CAF50">
+                <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">结账</button>
             </div>
         </div>
     </td>

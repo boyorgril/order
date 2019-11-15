@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>订单列表</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <script src="jquery.js"></script>
-    <script src="twitter-bootstrap.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <script src="../static/jquery/jquery-3.0.0.js"></script>
+    <script src="../static/twitter-bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
     <!--    导航栏设置文本-->
     <style>
@@ -74,7 +74,7 @@
             margin-left:5px;
         }
         .mealname{
-            font-size: 80%;
+            font-size: 15px;
             font-family: "Microsoft Tai Le";
             float: left;
             margin-top:10px;
@@ -183,6 +183,10 @@
         .bg{
             background-color:#f7f4f8;
         }
+        .bg-blue{
+            background-color: #2aabd2;
+            color: white;
+        }
         .btn-bg{
             background-color: #8ac007;
             color: white;
@@ -260,7 +264,7 @@
                                         </tr>
                                         <tr>
                                             <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品简介</p>
+                                                <p class="mealwrite">菜品概览</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -273,7 +277,7 @@
                         <table class="in-tbl" align="center">
                             <tr>
                                 <td>
-                                    <input type="button" value="已完成" class="btn btn-default bg" onclick="">
+                                    <input type="button" value="待确认" class="btn btn-default bg-blue" onclick="">
                                 </td>
                             </tr>
                         </table>
@@ -301,7 +305,7 @@
                                         </tr>
                                         <tr>
                                             <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品简介</p>
+                                                <p class="mealwrite">菜品概览</p>
                                             </td>
                                         </tr>
                                     </table>

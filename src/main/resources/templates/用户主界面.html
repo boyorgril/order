@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
@@ -153,12 +153,12 @@
             <div class="list">
                 <a href="#" target="_blank" onclick="test()" class="box btn btn-default">
                     <table class="tbl" align="center">
-                        <tr class="tr">
-                            <td width="25%" ><img src="../static/img/666.jpg" class="pic" alt="商家图标"></td>
+                        <tr class="tr" th:each=" shop : ${shops}">
+                            <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                             <td>
                                 <table class="tbl" align="center">
                                     <tr>
-                                        <td  class="shopname">店名</td>
+                                        <td  class="shopname" th:text="${shop.name}">店名</td>
                                     </tr>
                                     <tr>
                                         <td >
@@ -172,7 +172,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这">店铺简介</p></td>
+                                        <td width="100%" class="box brief" >
+                                            <p class="write" data-toggle="tooltip" title="鼠标移动到这" th:text="${shop.introduce}">
+                                                店铺简介</p>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>

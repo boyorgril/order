@@ -4,29 +4,20 @@ import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.datasource.dto.ShopFoodExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
 
 public interface ShopFoodMapper {
-    long countByExample(ShopFoodExample example);
 
-    int deleteByExample(ShopFoodExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(ShopFood record);
-
-    int insertSelective(ShopFood record);
-
-    List<ShopFood> selectByExample(ShopFoodExample example);
-
-    ShopFood selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") ShopFood record, @Param("example") ShopFoodExample example);
-
-    int updateByExample(@Param("record") ShopFood record, @Param("example") ShopFoodExample example);
-
-    int updateByPrimaryKeySelective(ShopFood record);
-
-    int updateByPrimaryKey(ShopFood record);
+    @Select({
+            "select imgUrl from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
+    })
+    @Results({
+            @Result(column="imgUrl", property="imgUrl", jdbcType= JdbcType.VARCHAR),
+    })
+    List<String> shopFoodImg(Long shopId);
 }

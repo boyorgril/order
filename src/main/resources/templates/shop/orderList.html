@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>商家浏览的订单列表</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <script src="../static/jquery/jquery-3.0.0.js"></script>
-    <script src="../static/twitter-bootstrap.js"></script>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
     <!--    导航栏设置文本-->
     <style>
@@ -198,14 +200,14 @@
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">订单列表</li>
-    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
     <li style="float: right" role="presentation"><a href="#">订单详情</a></li>
     <li style="float: right" role="presentation"><a href="#">商家主页</a></li>
 </ul>
 
 <table class="tbl-two "align="center" >
-    <tr >
+    <tr th:each = "order:${orders}">
         <td>
             <table class="tbl-in "align="center" >
                 <tr >
@@ -213,19 +215,19 @@
                     <td >
                         <table align="right">
                             <tr class="tr">
-                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                                <td width="35%" ><img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标"></td>
                                 <td>
                                     <table class="tbl" align="center">
                                         <td>
                                             <tr>
-                                                <td  class="mealname">总价</td>
+                                                <td th:text="${order.totalMoney}" class="mealname">总价</td>
                                             </tr>
                                             <tr>
-                                                <td  class="mealname">菜品数目</td>
+                                                <td  class="mealname" th:text="${order.who}">收件人  电话</td>
                                             </tr>
                                         </td>
                                         <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite">菜品概览</p>
+                                            <p class="mealwrite" th:text="${order.address}">地址</p>
                                         </td>
                                     </table>
                                 </td>
@@ -235,131 +237,11 @@
                     <!--                    第二格-->
                     <td>
                         <table class="in-tbl" align="center">
-                            <tr>
-                                <td class="btn btn-block btn-bg">
+                            <tr th:switch="${order.status}">
+                                <td th:case="'NOCOMPLETE'" class="btn btn-block btn-bg">
                                     未完成
                                 </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr >
-        <td>
-            <table class="tbl-in "align="center" >
-                <tr >
-                    <!--                    第一格-->
-                    <td >
-                        <table align="right">
-                            <tr class="tr">
-                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                                <td>
-                                    <table class="tbl" align="center">
-                                        <tr>
-                                            <td  class="mealname">总价</td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="mealname">菜品数目</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <!--                    第二格-->
-                    <td>
-                        <table class="in-tbl" align="center">
-                            <tr>
-                                <td class="btn btn-block bg">
-                                    已完成
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr >
-        <td>
-            <table class="tbl-in "align="center" >
-                <tr >
-                    <!--                    第一格-->
-                    <td >
-                        <table align="right">
-                            <tr class="tr">
-                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                                <td>
-                                    <table class="tbl" align="center">
-                                        <tr>
-                                            <td  class="mealname">总价</td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="mealname">菜品数目</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <!--                    第二格-->
-                    <td>
-                        <table class="in-tbl" align="center">
-                            <tr>
-                                <td class="btn btn-block bg">
-                                    已完成
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr >
-        <td>
-            <table class="tbl-in "align="center" >
-                <tr >
-                    <!--                    第一格-->
-                    <td >
-                        <table align="right">
-                            <tr class="tr">
-                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                                <td>
-                                    <table class="tbl" align="center">
-                                        <tr>
-                                            <td  class="mealname">总价</td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="mealname">菜品数目</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <!--                    第二格-->
-                    <td>
-                        <table class="in-tbl" align="center">
-                            <tr>
-                                <td class="btn btn-block bg">
+                                <td th:case="'COMPLETE'" class="btn btn-block">
                                     已完成
                                 </td>
                             </tr>

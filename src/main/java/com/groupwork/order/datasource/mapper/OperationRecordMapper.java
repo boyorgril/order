@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface OperationRecordMapper {
     @Insert({
             "insert into operationRecord (userId, describe, createAt)",
-            "values (userId = #{userId,jdbcType=BIGINT}, describe = #{describe,jdbcType=VARCHAR}, ",
-            "createAt = #{createAt,jdbcType=TIMESTAMP})"
+            "values (#{userId,jdbcType=BIGINT}, #{describe,jdbcType=VARCHAR}, ",
+            " #{createAt,jdbcType=TIMESTAMP})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(OperationRecord record);

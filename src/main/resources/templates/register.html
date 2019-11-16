@@ -9,26 +9,90 @@
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script th:src="@{/common/md5.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+
+    <style>
+        .bg{
+            background-color: #8ac007;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #3c763d;
+        }
+        .btn-primary:focus {
+            background-color: #3c763d;
+        }
+        .btn-primary:active{
+            background-color: #3e8f3e;
+        }
+        .btn-primary:checked{
+            background-color: #3e8f3e;
+        }
+    </style>
 </head>
 <body>
-<form id="myForm" th:action="@{/registerAccount}" method="post">
-    <div>
-        <label for="account">账   号</label>:
-        <input type="text" id="account" name="account" autofocus="autofocus"  onblur="checkAccount();"/>
-        <span style="display: none" id="acc">账号已存在</span>
-        <br/>
-        <label for="passWord">密　码</label>:
-        <input type="passWord" id="passWordno" name="passWordno" onblur="encryptPassWord();"/>
-        <input id="passWord" name="passWord" style="display: none"/>
-        <br/>
-        <input id="register" type="button" value="注册" onclick="formSubmit()" disabled="disabled" />
+<div class="modal-dialog" style="margin-top: 10%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="myModalLabel">注册新用户</h4>
+        </div>
+        <div class="modal-body" id = "model-body">
+            <form id="myForm" th:action="@{/registerAccount}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="account" name="account" autofocus="autofocus"  onblur="checkAccount();" placeholder="您的用户名" autocomplete="off">
+                </div>
+                <span style="display: none" id="acc">账号已存在</span>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="passWordno1" name="passWordno1" onblur="encryptPassWord();" placeholder="密码" autocomplete="off">
+                    <br>
+                    <input type="password" class="form-control" id="passWordno2" name="passWordno2" onblur="vertifyPassWord();" placeholder="确认密码" autocomplete="off">
+                    <br>
+                    <input id="passWord" name="passWord" style="display: none"/>
+                </div>
+                <span id="errorMessage"  style="display: none">密码不一致</span>
+                <div >
+                    <table>
+                        <tr>
+                            <td class="btn btn-default bg" id = "userselect" onclick="select(1)">用户</td>
+                            <td class="btn btn-default" id = "shopselect" onclick="select(2)">商家</td>
+                        </tr>
+                    </table>
+                </div>
+                <input id="type" name="type" style="display: none" value="BUYER"/>
+
+                <div class="modal-footer">
+                    <div class="form-group" >
+                        <input type="button" value="注册" id="register" class="btn btn-primary form-control" onclick="formSubmit()"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="登录" class="btn btn-default form-control bg" onclick="javascript:window.location.href='/login'"/>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 </body>
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
 
     var accountFlag = false;
     var passWordFlag = false;
+    var vertify = false;
+    let sign = 1;
+
+    function select(i) {
+        if(i==sign)return;
+        if(sign==2){
+            $("#userselect").addClass("bg");
+            $("#shopselect").removeClass("bg");
+            sign = 1;
+            document.getElementById("type").value = "BUYER";
+        }else{
+            $("#shopselect").addClass("bg");
+            $("#userselect").removeClass("bg");
+            sign = 2;
+            document.getElementById("type").value = "SELLER";
+        }
+    }
 
     function checkAccount() {
         var account = $("#account").val();
@@ -57,18 +121,30 @@
     }
 
     function encryptPassWord() {
-        var before = document.getElementById("passWordno").value;
+        var before = document.getElementById("passWordno1").value;
         if(before.length > 0){
             passWordFlag = true;
-            $("#passWord").val($.md5(before));
+            document.getElementById("passWord").value = $.md5(before);
         }else{
             passWordFlag = false;
         }
         checkInfo();
     }
 
+    function vertifyPassWord() {
+        var before1 = document.getElementById("passWordno2").value;
+        if(document.getElementById("passWord").value != $.md5(before1)){
+            document.getElementById("errorMessage").style.display = 'block';
+            vertify = false
+        }else{
+            document.getElementById("errorMessage").style.display = 'none';
+            vertify = true
+        }
+        checkInfo();
+    }
+
     function checkInfo() {
-        if(accountFlag && passWordFlag){
+        if(accountFlag && passWordFlag && vertify){
             document.getElementById("register").disabled=false;
         }else{
             document.getElementById("register").disabled=true;

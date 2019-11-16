@@ -24,8 +24,8 @@ public interface CollectShopMapper {
 
     @Insert({
             "insert into collectShop (userId, shopId, createAt, status)",
-            "values( userId = #{userId,jdbcType=BIGINT}, shopId = #{shopId,jdbcType=BIGINT}, ",
-                    "createdAt = #{createdAt,jdbcType=TIMESTAMP}, status = #{status,jdbcType=VARCHAR})"
+            "values( #{userId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, ",
+                    "#{createdAt,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(CollectShop record);

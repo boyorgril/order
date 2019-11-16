@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface OrderDetailMapper {
 
     @Insert({
-            "insert into orderDetail (oid, sfid, number) values (oid = #{oid,jdbcType=BIGINT}, " ,
-                    "sfid = #{sfid,jdbcType=BIGINT}, number = #{number,jdbcType=INTEGER})"
+            "insert into orderDetail (oid, sfid, number) values ( #{oid,jdbcType=BIGINT}, " ,
+                    " #{sfid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(OrderDetail record);

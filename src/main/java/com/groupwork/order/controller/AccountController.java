@@ -1,8 +1,12 @@
 package com.groupwork.order.controller;
 
+import com.groupwork.order.datasource.dto.LoginRecord;
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.service.AccountService;
+import com.groupwork.order.service.LoginRecordService;
 import com.groupwork.order.utils.FileUtilsDiy;
+import com.groupwork.order.utils.IpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,19 +14,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private LoginRecordService loginRecordService;
 
     @Value(value = "${resources_path}")
     String resources_path;//资源文件绝对地址目录
 
     @RequestMapping("/login")
     public String login(){
+        log.info("{} 访问登录页面 {}", "visitor", new Date());
         return "login";
     }
 
@@ -32,12 +41,13 @@ public class AccountController {
         if(!"null".equals(String.valueOf(userId)) && userId > 0){
             //userId放到session缓存中，大多数数据根据userId都可以找到
             httpServletRequest.getSession().setAttribute("userId",userId);
-            List<User> users = accountService.findUserByExample();
-            System.out.println(users.size());
+            String ipAddress = IpUtil.getIpAddr(httpServletRequest);
+            loginRecordService.addRecord(ipAddress + IpUtil.getIpInfo(ipAddress), userId);
             //直接返回到页面
             //return "index";
             //访问controller的index
-            return "forward:index";
+            //return "forward:index";
+            return "redirect:/index";
         }
         model.addAttribute("errormessage","notfound");
         return "login";
@@ -58,15 +68,15 @@ public class AccountController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest httpServletRequest){
         httpServletRequest.getSession().removeAttribute("userId");
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping("/registerAccount")
     public String registerAccount(User user){
         if(accountService.accountRegister(user) > 0){
-            return "forward:login";
+            return "redirect:login";
         }else{
-            return "forward:register";
+            return "redirect:register";
         }
     }
 

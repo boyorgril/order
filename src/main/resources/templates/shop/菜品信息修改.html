@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>菜品信息修改</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <script src="../static/jquery/jquery-3.0.0.js"></script>
-    <script src="../static/twitter-bootstrap.js"></script>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>
         function add(i){
 
@@ -272,8 +274,8 @@
 <!--导航-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">菜品信息修改</li>
-    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'">注销登录</li>
+    <li style="float: right" role="presentation">返回上级</li>
 </ul>
 <!--信息栏-->
 <div class="fr-list">

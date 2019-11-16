@@ -4,6 +4,10 @@ import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.datasource.dto.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
 public interface UserMapper {
@@ -28,4 +32,14 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    @Select({
+            "select shop_img_url,name,introduce from shop"
+    })
+    @Results({
+            @Result(column="shop_img_url", property="imgUrl", jdbcType= JdbcType.VARCHAR, id=true),
+            @Result(column = "name", property = "userName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "introduce", property = "type", jdbcType = JdbcType.VARCHAR),
+    })
+    List<User> selectAllShop();
 }

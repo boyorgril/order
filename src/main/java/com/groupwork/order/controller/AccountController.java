@@ -45,7 +45,7 @@ public class AccountController {
             if("BUYER".equals(user.getType())){
                 return "redirect:/customer/index";
             }else{
-                return "redirect:/merchant/index";
+                return "redirect:/shop/index";
             }
 
         }

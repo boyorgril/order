@@ -20,4 +20,19 @@ public interface ShopFoodMapper {
             @Result(column="imgUrl", property="imgUrl", jdbcType= JdbcType.VARCHAR),
     })
     List<String> shopFoodImg(Long shopId);
+
+    @Select({
+            "select name,imgUrl,introduce from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
+    })
+    @Results({
+            @Result(column="imgUrl", property="imgUrl", jdbcType= JdbcType.VARCHAR),
+            @Result(column="name", property="name", jdbcType= JdbcType.VARCHAR),
+            @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),
+    })
+    List<ShopFood> getShopFoodAll(Long shopId);
+
+    @Select({
+            "select imgUrl from shopfood where id = #{id,jdbcType=BIGINT}"
+    })
+    String getImgUrlByID(Long id);
 }

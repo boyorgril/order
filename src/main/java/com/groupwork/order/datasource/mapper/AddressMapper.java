@@ -30,6 +30,11 @@ public interface AddressMapper {
     })
     List<Address> selectByExample(AddressExample example);
 
+    @Select({
+            "select id,userId,location,phoneNumber,name from address where id = #{id,jdbcType=BIGINT} "
+    })
+    Address getAddressById(Long id);
+
     @Insert({
             "insert into address (userId, location, phoneNumber, name)",
             "values (#{userId,jdbcType=BIGINT}, #{location,jdbcType=VARCHAR}, ",

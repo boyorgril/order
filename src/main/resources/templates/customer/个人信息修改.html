@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商家信息修改</title>
+    <title>个人信息修改</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <script src="../static/jquery/jquery-3.0.0.js"></script>
     <script src="../static/twitter-bootstrap.js"></script>
@@ -212,11 +212,11 @@
         }
         .addresschild{
             width: 540px;
-            height: 250px;
+            height: 50px;
             background-color: white;
             border-radius: 20px;
-            margin-top: 5px;
-            margin-left: 30px;
+            margin-top: 10px;
+            margin-left: 20px;
         }
         .address-txt{
             text-align: center;
@@ -271,7 +271,8 @@
 <body style="background-color:#f7f4f8 ">
 <!--导航-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">商家信息修改</li>
+    <li role="presentation" class="active">个人信息修改</li>
+    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
 </ul>
 <!--信息栏-->
@@ -282,7 +283,7 @@
             <td>
                 <table class="tbl" align="center">
                     <tr>
-                        <td  class="shopname">店名</td>
+                        <td  class="shopname">昵称</td>
                         <td>
                             <input type="text" class="form-control" autocomplete="off">
                         </td>
@@ -298,29 +299,43 @@
     </table>
 </div>
 
-<!--菜品简介-->
-<table class="addressbox">
+<!--地址-->
+<table>
     <tr>
-        <td >
-            <table>
-                <tr>
-                    <td>
-                        <div class = "addresschild" >
-                            <p class="address-txt">菜品简介</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <td>
+            <div class="addressbox" style="overflow-y: scroll;overflow-x: hidden">
+                <table>
+                    <tr>
+                        <td>
+                            <div class = "addresschild" >
+                                <p class="address-txt">收货地址</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class = "addresschild" >
+                                <p class="address-txt ">收货地址</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class = "addresschild" >
+                                <p class="address-btn">+</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </td>
         <td>
-
+<!--            修改按钮-->
+            <div class="form-group" style="margin-top: 250px; background-color: #4CAF50;margin-left: 150px">
+                <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认修改</button>
+            </div>
         </td>
     </tr>
 </table>
-<!--            修改按钮-->
-<div class="form-group" style="margin-top:50px;background-color: #4CAF50;float: right; margin-right: 400px">
-    <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认修改</button>
-</div>
-
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商家看到的订单详情</title>
+    <title>订单详情</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <script src="../static/jquery/jquery-3.0.0.js"></script>
     <script src="../static/twitter-bootstrap.js"></script>
@@ -126,18 +126,6 @@
             text-align: left;
             line-height: 200%;
         }
-        .mealwrite_2{
-            width: 100px;
-            height: 50px;
-            font-size: 25px;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:5px;
-            margin-left:0px;
-            overflow: hidden;
-            text-align: left;
-            line-height: 200%;
-        }
     </style>
     <!--    表格参数文本-->
     <style  >
@@ -207,10 +195,12 @@
         /*第一格参数设置*/
     </style>
 </head>
+
 <body class="bg">
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">下单详情</li>
+    <li role="presentation" class="active">订单详情</li>
+    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
 </ul>
 
@@ -255,7 +245,7 @@
                         <table class="in-tbl" align="center">
                             <tr>
                                 <td>
-                                    <p class="mealwrite_2">数量 ：1</p>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
                                 </td>
                             </tr>
                         </table>
@@ -304,7 +294,7 @@
                         <table class="in-tbl" align="center">
                             <tr>
                                 <td>
-                                    <p class="mealwrite_2">数量 ：1</p>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
                                 </td>
                             </tr>
                         </table>
@@ -314,152 +304,152 @@
         </td>
     </tr>
     <tr >
-    <td>
-        <table class="tbl-in "align="center" >
-            <tr >
-                <!--                    第一格-->
-                <td >
-                    <table align="right">
-                        <tr class="tr">
-                            <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                            <td>
-                                <table class="tbl" align="center">
-                                    <tr>
-                                        <td  class="mealname">菜名</td>
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <div class="pingjia">
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite">菜品简介</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <!--                    第二格-->
-                <td>
-                    <table class="in-tbl" align="center">
-                        <tr>
-                            <td>
-                                <p class="mealwrite_2">数量 ：1</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
+        <td>
+            <table class="tbl-in "align="center" >
+                <tr >
+                    <!--                    第一格-->
+                    <td >
+                        <table align="right">
+                            <tr class="tr">
+                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                                <td>
+                                    <table class="tbl" align="center">
+                                        <tr>
+                                            <td  class="mealname">菜名</td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
+                                                <p class="mealwrite">菜品简介</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <!--                    第二格-->
+                    <td>
+                        <table class="in-tbl" align="center">
+                            <tr>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
     <tr >
-    <td>
-        <table class="tbl-in "align="center" >
-            <tr >
-                <!--                    第一格-->
-                <td >
-                    <table align="right">
-                        <tr class="tr">
-                            <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                            <td>
-                                <table class="tbl" align="center">
-                                    <tr>
-                                        <td  class="mealname">菜名</td>
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <div class="pingjia">
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite">菜品简介</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <!--                    第二格-->
-                <td>
-                    <table class="in-tbl" align="center">
-                        <tr>
-                            <td>
-                                <p class="mealwrite_2">数量 ：1</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
+        <td>
+            <table class="tbl-in "align="center" >
+                <tr >
+                    <!--                    第一格-->
+                    <td >
+                        <table align="right">
+                            <tr class="tr">
+                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                                <td>
+                                    <table class="tbl" align="center">
+                                        <tr>
+                                            <td  class="mealname">菜名</td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
+                                                <p class="mealwrite">菜品简介</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <!--                    第二格-->
+                    <td>
+                        <table class="in-tbl" align="center">
+                            <tr>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
     <tr >
-    <td>
-        <table class="tbl-in "align="center" >
-            <tr >
-                <!--                    第一格-->
-                <td >
-                    <table align="right">
-                        <tr class="tr">
-                            <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
-                            <td>
-                                <table class="tbl" align="center">
-                                    <tr>
-                                        <td  class="mealname">菜名</td>
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                            <div class="pingjia">
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite">菜品简介</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <!--                    第二格-->
-                <td>
-                    <table class="in-tbl" align="center">
-                        <tr>
-                            <td>
-                                <p class="mealwrite_2">数量 ：1</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
+        <td>
+            <table class="tbl-in "align="center" >
+                <tr >
+                    <!--                    第一格-->
+                    <td >
+                        <table align="right">
+                            <tr class="tr">
+                                <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                                <td>
+                                    <table class="tbl" align="center">
+                                        <tr>
+                                            <td  class="mealname">菜名</td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
+                                                <p class="mealwrite">菜品简介</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <!--                    第二格-->
+                    <td>
+                        <table class="in-tbl" align="center">
+                            <tr>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 </table>
 </body>
 </html>

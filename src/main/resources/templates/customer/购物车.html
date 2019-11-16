@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商家浏览的订单列表</title>
+    <title>购物车</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <script src="../static/jquery/jquery-3.0.0.js"></script>
     <script src="../static/twitter-bootstrap.js"></script>
@@ -48,8 +48,7 @@
             border-radius:20px
         }
         .pic{
-            width:100px;
-            float: left;
+            width:80%;
             border-radius: 10px;
             margin-top:10px;
             margin-bottom:10px;
@@ -74,10 +73,11 @@
             margin-left:5px;
         }
         .mealname{
-            font-size: 15px;
+            font-size: 150%;
             font-family: "Microsoft Tai Le";
             float: left;
             margin-top:10px;
+            margin-bottom:10px;
             margin-right:5px;
             margin-left:5px;
         }
@@ -183,12 +183,14 @@
         .bg{
             background-color:#f7f4f8;
         }
-        .bg-blue{
-            background-color: #2aabd2;
-            color: white;
-        }
         .btn-bg{
             background-color: #8ac007;
+            margin-right: 300px;
+            float: right;
+            color: white;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 90px;
         }
         /*第一格参数设置*/
     </style>
@@ -197,10 +199,9 @@
 <body class="bg">
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">订单列表</li>
+    <li role="presentation" class="active">购物车</li>
+    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
-    <li style="float: right" role="presentation"><a href="#">订单详情</a></li>
-    <li style="float: right" role="presentation"><a href="#">商家主页</a></li>
 </ul>
 
 <table class="tbl-two "align="center" >
@@ -215,17 +216,25 @@
                                 <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
                                 <td>
                                     <table class="tbl" align="center">
-                                        <td>
-                                            <tr>
-                                                <td  class="mealname">总价</td>
-                                            </tr>
-                                            <tr>
-                                                <td  class="mealname">菜品数目</td>
-                                            </tr>
-                                        </td>
-                                        <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite">菜品概览</p>
-                                        </td>
+                                        <tr>
+                                            <td  class="mealname">菜名</td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
+                                                <p class="mealwrite">菜品简介</p>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </td>
                             </tr>
@@ -235,8 +244,14 @@
                     <td>
                         <table class="in-tbl" align="center">
                             <tr>
-                                <td class="btn btn-block btn-bg">
-                                    未完成
+                                <td>
+                                    <input type="button" value="-" class="btn btn-default bg" onclick="sub(1)">
+                                </td>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                                <td >
+                                    <input type="button" value="+" class="btn btn-default bg" onclick="add(1)">
                                 </td>
                             </tr>
                         </table>
@@ -257,14 +272,22 @@
                                 <td>
                                     <table class="tbl" align="center">
                                         <tr>
-                                            <td  class="mealname">总价</td>
+                                            <td  class="mealname">菜名</td>
                                         </tr>
                                         <tr>
-                                            <td  class="mealname">菜品数目</td>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
+                                                <p class="mealwrite">菜品简介</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -276,8 +299,14 @@
                     <td>
                         <table class="in-tbl" align="center">
                             <tr>
-                                <td class="btn btn-block bg">
-                                    已完成
+                                <td>
+                                    <input type="button" value="-" class="btn btn-default bg" onclick="sub(1)">
+                                </td>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                                <td >
+                                    <input type="button" value="+" class="btn btn-default bg" onclick="add(1)">
                                 </td>
                             </tr>
                         </table>
@@ -298,14 +327,22 @@
                                 <td>
                                     <table class="tbl" align="center">
                                         <tr>
-                                            <td  class="mealname">总价</td>
+                                            <td  class="mealname">菜名</td>
                                         </tr>
                                         <tr>
-                                            <td  class="mealname">菜品数目</td>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
+                                                <p class="mealwrite">菜品简介</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -317,8 +354,14 @@
                     <td>
                         <table class="in-tbl" align="center">
                             <tr>
-                                <td class="btn btn-block bg">
-                                    已完成
+                                <td>
+                                    <input type="button" value="-" class="btn btn-default bg" onclick="sub(1)">
+                                </td>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                                <td >
+                                    <input type="button" value="+" class="btn btn-default bg" onclick="add(1)">
                                 </td>
                             </tr>
                         </table>
@@ -339,14 +382,22 @@
                                 <td>
                                     <table class="tbl" align="center">
                                         <tr>
-                                            <td  class="mealname">总价</td>
+                                            <td  class="mealname">菜名</td>
                                         </tr>
                                         <tr>
-                                            <td  class="mealname">菜品数目</td>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                    <img src="star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                                <p class="mealwrite">菜品概览</p>
+                                                <p class="mealwrite">菜品简介</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -358,8 +409,14 @@
                     <td>
                         <table class="in-tbl" align="center">
                             <tr>
-                                <td class="btn btn-block bg">
-                                    已完成
+                                <td>
+                                    <input type="button" value="-" class="btn btn-default bg" onclick="sub(1)">
+                                </td>
+                                <td>
+                                    <input type="text" value="0" id="tt1" class="text" align="center">
+                                </td>
+                                <td >
+                                    <input type="button" value="+" class="btn btn-default bg" onclick="add(1)">
                                 </td>
                             </tr>
                         </table>
@@ -368,6 +425,8 @@
             </table>
         </td>
     </tr>
+
 </table>
+<div class="btn btn-default btn-bg" id = "userselect" onclick="">结算</div>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <script src="../static/jquery/jquery-3.0.0.js"></script>
-    <script src="../static/twitter-bootstrap.js"></script>
-
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script !src="">
         function test() {
             console.log(666)
@@ -142,45 +141,52 @@
     <li style="float: right" role="presentation"><a href="#">个人主页</a></li>
 </ul>
 
-    <!--第三行-->
-    <!--滚动条-->
+<!--第三行-->
+<!--滚动条-->
 <div>
 
 </div>
-    <div style="overflow-y: scroll;height: 600px; " class="table">
-        <div >
-                <!--            商家信息-->
+<div style="overflow-y: scroll;height: 600px; " class="table">
+    <div >
+        <!--            商家信息-->
+        <tr class="tr" th:each=" shop : ${shops}">
             <div class="list">
                 <a href="#" target="_blank" onclick="test()" class="box btn btn-default">
                     <table class="tbl" align="center">
-                        <tr class="tr">
-                            <td width="25%" ><img src="../static/img/666.jpg" class="pic" alt="商家图标"></td>
+                            <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                             <td>
                                 <table class="tbl" align="center">
                                     <tr>
-                                        <td  class="shopname">店名</td>
+                                        <td  class="shopname" th:text="${shop.name}"></td>
                                     </tr>
                                     <tr>
                                         <td >
                                             <div class="pingjia">
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这">店铺简介</p></td>
+                                        <td th:each=" foodImg : ${shop.foodImgUrl}">
+                                            <div class="pingjia">
+                                                <img th:src="@{${foodImg}}" class="pic pic-size"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这" th:text="${shop.introduce}"></p></td>
                                     </tr>
                                 </table>
                             </td>
-                        </tr>
                     </table>
                 </a>
             </div>
-        </div>
+        </tr>
     </div>
+</div>
 </body>
 </html>

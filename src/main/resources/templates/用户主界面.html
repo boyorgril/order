@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
@@ -72,14 +72,14 @@
             margin-left:5px;
         }
         .pic-size{
-            width: 30%;
+            width: 20px;
             margin-top:0px;
             margin-bottom:0px;
             margin-right:0px;
             margin-left:0px;
         }
         .pingjia{
-            width: 80px;
+            width: 150px;
         }
         .brief{
             float: left;
@@ -151,34 +151,37 @@
         <div >
                 <!--            商家信息-->
             <div class="list">
-                <a href="#" target="_blank" onclick="test()" class="box btn btn-default">
+<!--                <a href="#" target="_blank" onclick="test()" class="box btn btn-default">-->
                     <table class="tbl" align="center">
-                        <tr class="tr">
-                            <td width="25%" ><img src="../static/img/666.jpg" class="pic" alt="商家图标"></td>
+                        <tr class="tr" th:each=" shop : ${shops}">
+                            <td width="25%" ><img th:src="@{${shop.imgUrl}}" class="pic" alt="商家图标"></td>
                             <td>
                                 <table class="tbl" align="center">
                                     <tr>
-                                        <td  class="shopname">店名</td>
+                                        <td  class="shopname" th:text="${shop.userName}">店名</td>
                                     </tr>
                                     <tr>
                                         <td >
                                             <div class="pingjia">
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
-                                                <img src="star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这">店铺简介</p></td>
+                                        <td width="100%" class="box brief" >
+                                            <p class="write" data-toggle="tooltip" title="鼠标移动到这" th:text="${shop.type}">
+                                                店铺简介</p>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                </a>
+<!--                </a>-->
             </div>
         </div>
     </div>

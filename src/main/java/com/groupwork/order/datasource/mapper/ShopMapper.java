@@ -3,10 +3,9 @@ package com.groupwork.order.datasource.mapper;
 import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.SelectProvider;
+
+import com.groupwork.order.datasource.dto.ShopFood;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 public interface ShopMapper {
@@ -39,4 +38,14 @@ public interface ShopMapper {
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);
+
+    @Select({
+            "select name,shop_Img_Url,introduce from shop where user_id = #{shopId,jdbcType=BIGINT} "
+    })
+    @Results({
+            @Result(column="shop_img_url", property="shopImgUrl", jdbcType= JdbcType.VARCHAR),
+            @Result(column="name", property="name", jdbcType= JdbcType.VARCHAR),
+            @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),
+    })
+    Shop getShopInfo(Long shopId);
 }

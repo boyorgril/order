@@ -1,11 +1,9 @@
 package com.groupwork.order.service;
 
-import com.groupwork.order.datasource.dto.Shop;
-import com.groupwork.order.datasource.dto.ShopExample;
-import com.groupwork.order.datasource.dto.ShopFood;
-import com.groupwork.order.datasource.dto.ShopFoodExample;
+import com.groupwork.order.datasource.dto.*;
 import com.groupwork.order.datasource.mapper.ShopFoodMapper;
 import com.groupwork.order.datasource.mapper.ShopMapper;
+import com.groupwork.order.model.OrderEntity;
 import com.groupwork.order.model.ShopEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,18 @@ public class ShopService {
     private ShopMapper shopMapper;
     @Autowired
     private ShopFoodMapper shopFoodMapper;
+
+    public List<ShopFood> getFoods(Long shopId){
+        return shopFoodMapper.getShopFoodAll(shopId);
+    }
+
+    public Shop getShopInfo(Long shopId){
+        return shopMapper.getShopInfo(shopId);
+    }
+
+    public String getFoodImgByFoodId(Long sfid){
+        return shopFoodMapper.getImgUrlByID(sfid);
+    }
 
     public List<ShopEntity> allShop(){
         List<Shop> allShop = shopMapper.selectByExample(new ShopExample());

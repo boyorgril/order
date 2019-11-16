@@ -2,9 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
-    <link th:href="@{/bootstrap/css/bootstrap-theme.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script !src="">
         function test() {
@@ -159,6 +158,17 @@
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td >
+                                            <div class="pingjia">
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img src="/img/star.png" class="pic pic-size"/>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td th:each=" foodImg : ${shop.foodImgUrl}">

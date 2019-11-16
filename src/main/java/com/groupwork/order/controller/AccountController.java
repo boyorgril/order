@@ -1,10 +1,9 @@
 package com.groupwork.order.controller;
 
-import com.groupwork.order.datasource.dto.LoginRecord;
+
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.service.AccountService;
 import com.groupwork.order.service.LoginRecordService;
-import com.groupwork.order.utils.FileUtilsDiy;
 import com.groupwork.order.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -40,14 +38,16 @@ public class AccountController {
         Long userId = accountService.findAccount(user);
         if(!"null".equals(String.valueOf(userId)) && userId > 0){
             //userId放到session缓存中，大多数数据根据userId都可以找到
+            log.info("{}登录成功", userId );
             httpServletRequest.getSession().setAttribute("userId",userId);
             String ipAddress = IpUtil.getIpAddr(httpServletRequest);
             loginRecordService.addRecord(ipAddress + IpUtil.getIpInfo(ipAddress), userId);
-            //直接返回到页面
-            //return "index";
-            //访问controller的index
-            //return "forward:index";
-            return "redirect:/index";
+            if("BUYER".equals(user.getType())){
+                return "redirect:/customer/index";
+            }else{
+                return "redirect:/merchant/index";
+            }
+
         }
         model.addAttribute("errormessage","notfound");
         return "login";

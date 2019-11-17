@@ -16,11 +16,11 @@ import org.springframework.stereotype.Repository;
 public interface OrderMapper {
 
     @Select({
-            "select id,status,buyId,addressId,totalMoney from order where sellId = #{userId,jdbcType=BIGINT}"
+            "select id,status,buyId,addressId,totalMoney from `order` where sellId = #{userId,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
-            @Result(column="status", property="status", jdbcType= JdbcType.BIGINT, id=true),
+            @Result(column="status", property="status", jdbcType= JdbcType.VARCHAR),
             @Result(column = "addressId", property = "addressId", jdbcType = JdbcType.VARCHAR),
             @Result(column = "totalMoney", property = "totalMoney", jdbcType = JdbcType.VARCHAR),
     })

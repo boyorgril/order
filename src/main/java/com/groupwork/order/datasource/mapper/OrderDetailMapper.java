@@ -51,12 +51,13 @@ public interface OrderDetailMapper {
     List<OrderDetail> getOrdersByOid(Long oid);
 
     @Select({
-            "select sfid from orderDetail where  oid = #{oid,jdbcType=BIGINT}"
+            "select sfid,number from orderDetail where  oid = #{oid,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column="sfid", property="sfid", jdbcType= JdbcType.BIGINT),
+            @Result(column="number", property="number", jdbcType= JdbcType.BIGINT),
     })
-    List<Long> getFoodsIdByOid(Long oid);
+    List<OrderDetail> getOrderDetailByOid(Long oid);
 
     @UpdateProvider(type = OrderDetailSqlProvider.class, method = "updateByExampleSelective")
     int updateByExampleSelective(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);

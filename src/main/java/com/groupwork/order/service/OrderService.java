@@ -35,10 +35,18 @@ public class OrderService {
     }
 
     public List<ShopFood> getOrderDetail(Long oid){
-        List<Long> sfids = orderDetailMapper.getFoodsIdByOid(oid);
+        List<OrderDetail> orders = orderDetailMapper.getOrderDetailByOid(oid);
+        List<Long> sfids = new ArrayList<>();
+        for (OrderDetail order : orders) {
+            sfids.add(order.getSfid());
+        }
         List<ShopFood> sfs = new ArrayList<>();
+        int i=0;
         for (Long sfid : sfids) {
-            sfs.add(shopFoodMapper.getFoodByID(sfid));
+            ShopFood sf = shopFoodMapper.getFoodByID(sfid);
+            sf.setSaleNum(orders.get(i).getNumber());
+            i++;
+            sfs.add(sf);
         }
         return sfs;
     }

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商家信息修改</title>
+    <title>修改菜品信息</title>
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script th:src="@{twitter-bootstrap.js}"></script>
@@ -66,7 +66,7 @@
     <!--菜品参数文本-->
     <style>
         .pic{
-            width:200px;
+            width:150px;
             border-radius: 10px;
             margin-top:10px;
             margin-bottom:10px;
@@ -93,13 +93,14 @@
             margin-top: 10px;
             /*background-color: white;*/
         }
+        /*菜品表格参数设置*/
         .addressbox{
             width: 600px;
             height: 300px;
             background-color: #e6e8ea;
             border-radius: 20px;
             margin-top: 10px;
-            margin-left: 230px;
+            margin-left: 300px;
         }
         .addresschild{
             width: 540px;
@@ -121,34 +122,43 @@
             color: #1b6d85;
             resize: none;
         }
+        /*表格区域参数设置*/
         /*商家行参数设置*/
         .fr-list{
-            margin-left: 100px;
-            margin-right: 100px;
-            height: 30%;
+            margin-left: 200px;
+            height: 150px;
             align-content: center;
         }
+        /*行参数设置*/
+        .tr{
+            width: 85%;
+        }
+        .greencheck{
+            background-color: #8ac007;
+            color: white;
+        }
+        /*文本参数设置*/
         /*第一格参数设置*/
     </style>
 </head>
 <body style="background-color:#f7f4f8 ">
 <!--导航-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">商家信息修改</li>
+    <li role="presentation" class="active">菜品信息修改</li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/shop/index'">返回主页</a></li>
+    <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/shop/index'">返回上级</a></li>
 </ul>
 <!--信息栏-->
 <div class="fr-list">
     <table class="tbl" align="center">
         <tr class="tr">
-            <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标" ></td>
+            <td width="25%" ><img th:src="@{${shopfood.imgUrl}}" class="pic" alt="商家图标" ></td>
             <td>
                 <table class="tbl" align="center">
                     <tr>
                         <td  class="shopname">店名</td>
                         <td>
-                            <input type="text" th:placeholder="${shop.name}" class="form-control" autocomplete="off">
+                            <input type="text" th:placeholder="${shopfood.name}" class="form-control" autocomplete="off">
                         </td>
                     </tr>
                     <tr>
@@ -170,7 +180,7 @@
                 <tr>
                     <td>
                         <div class = "addresschild" >
-                            <textarea name="简介" id="" cols="30" rows="10" th:placeholder="${shop.introduce}" class="address-txt"></textarea>
+                            <textarea name="简介" id="" cols="30" rows="10" th:placeholder="${shopfood.introduce}" class="address-txt"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -182,8 +192,11 @@
     </tr>
 </table>
 <!--            修改按钮-->
-<div class="form-group" style="margin-top:50px;background-color: #4CAF50;float: right; margin-right: 400px">
-    <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认修改</button>
+<div class="btn btn-block greencheck" style="color: white;width: 100px;height: 30px;margin-right: 300px;margin-top: 50px;float: right">
+    确认修改
+</div>
+<div class="btn btn-block" style=" background-color:#ce8483;color: white;width: 100px;height: 30px;margin-right: 30px;margin-top: 50px;float: right" >
+    删除菜品
 </div>
 
 </body>

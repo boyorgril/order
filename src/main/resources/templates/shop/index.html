@@ -8,6 +8,11 @@
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script th:src="@{twitter-bootstrap.js}"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script th:inline="javascript" type="text/javascript" charset="utf-8">
+        function functiontest(sfid) {
+            javascript:window.location.href= "/shop/modifyFood?sfId=" + sfid;
+        }
+    </script>
     <!--    导航栏设置文本-->
     <style>
         /*导航条*/
@@ -198,7 +203,7 @@
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">商家主界面</li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
+    <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/shop/addFood'">添加菜品</a></li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/shop/gotoOrderList'"><a href="#">订单列表</a></li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/gotoModify'"><a href="#">修改信息</a></li>
 </ul>
@@ -242,6 +247,10 @@
                                 </td>
                             </tr>
                         </table>
+                    </td>
+                    <!--    修改菜品按钮-->
+                    <td>
+                        <button type="button" class="btn btn-block " style="background-color: #4CAF50;color: white"  th:onclick="'javascript:functiontest('+${shopfood.id}+')'">修改信息</button>
                     </td>
                 </tr>
             </table>

@@ -147,15 +147,20 @@
         .in-tbl{
             margin-top: 20px;
         }
+
+        .greencheck{
+            background-color: #8ac007;
+            color: white;
+        }
         /*第一格参数设置*/
     </style>
 </head>
 <body  style="background-color:#f7f4f8">
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">下单详情</li>
+    <li role="presentation" class="active">订单详情</li>
     <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/logout'">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/shop/gotoOrderList'">返回上级</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/shop/gotoOrderList'"><a href="#">返回上级</a></li>
 </ul>
 
 <table class="tbl-two "align="center" >
@@ -209,5 +214,8 @@
         </td>
     </tr>
 </table>
+<div class="btn btn-block greencheck"  style="color: white;width: 100px;height: 30px;margin-right: 300px;margin-top: 50px;float: right" >
+    完成订单
+</div>
 </body>
 </html>

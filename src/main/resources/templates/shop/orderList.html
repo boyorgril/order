@@ -8,6 +8,11 @@
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script th:src="@{twitter-bootstrap.js}" src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script th:inline="javascript" type="text/javascript" charset="utf-8">
+        function functiontest(oid) {
+            javascript:window.location.href="/shop/gotoOrderDetail?orderId="+oid;
+        }
+    </script>
     <!--    导航栏设置文本-->
     <style>
         /*导航条*/
@@ -84,14 +89,12 @@
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">订单列表</li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
-    <li style="float: right" role="presentation"><a href="#">订单详情</a></li>
-    <li style="float: right" role="presentation"><a href="#">商家主页</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/shop/index'"><a href="#">返回主页</a></li>
 </ul>
 
 <div class="orderform">
     <table align="center">
-        <tr th:each = "order:${shoporders}" th:name="${order.oid}" th:onclick="'javascript:functiontest('+${order.oid}+')'">
+        <tr th:each = "order:${shoporders}"  th:onclick="'javascript:functiontest('+${order.oid}+')'">
             <td>
                 <img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标" style="margin-right: 50px">
             </td>
@@ -112,12 +115,4 @@
     </table>
 </div>
 </body>
-<script th:inline="javascript" type="text/javascript" charset="utf-8">
-
-    function functiontest(oid) {
-        javascript:window.location.href="/shop/gotoOrderDetail?orderId="+oid;
-    }
-
-
-</script>
 </html>

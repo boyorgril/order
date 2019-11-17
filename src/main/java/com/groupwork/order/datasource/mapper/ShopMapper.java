@@ -48,4 +48,5 @@ public interface ShopMapper {
             @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),
     })
     Shop getShopInfo(Long shopId);
+
 }

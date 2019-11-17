@@ -22,9 +22,10 @@ public interface ShopFoodMapper {
     List<String> shopFoodImg(Long shopId);
 
     @Select({
-            "select name,imgUrl,introduce from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
+            "select id,name,imgUrl,introduce from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
     })
     @Results({
+            @Result(column="id", property="id", jdbcType= JdbcType.BIGINT,id=true),
             @Result(column="imgUrl", property="imgUrl", jdbcType= JdbcType.VARCHAR),
             @Result(column="name", property="name", jdbcType= JdbcType.VARCHAR),
             @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),

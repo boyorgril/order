@@ -31,6 +31,10 @@ public class ShopService {
         return shopFoodMapper.getImgUrlByID(sfid);
     }
 
+    public ShopFood getFoodById(Long id){
+        return shopFoodMapper.getFoodByID(id);
+    }
+
     public List<ShopEntity> allShop(){
         List<Shop> allShop = shopMapper.selectByExample(new ShopExample());
         List<ShopEntity> shopEntitys = new ArrayList<>();

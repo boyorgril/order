@@ -1,5 +1,6 @@
 package com.groupwork.order.controller;
 
+import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.service.OrderService;
 import com.groupwork.order.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,24 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/gotoOrderDetail")
-    public String gotoOrderDetail(Model model, HttpServletRequest httpRequest,@RequestParam("orderId")Long oid){
+    public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
         return "shop/orderDetail";
+    }
+
+    @RequestMapping("/shop/modifyFood")
+    public String gotoModifyFood(Model model,@RequestParam("sfId")Long sfid){
+        model.addAttribute("shopfood",shopService.getFoodById(sfid));
+        return "/shop/modifyFood";
+    }
+
+    @RequestMapping("/shop/addFood")
+    public String gotoAddFood(Model model){
+        ShopFood shopFood = new ShopFood();
+        shopFood.setImgUrl("/img/666.jpg");
+        shopFood.setName("请在此输入菜品名");
+        shopFood.setIntroduce("请在此输入菜品简介");
+        model.addAttribute("shopfood",shopFood);
+        return "/shop/addFood";
     }
 }

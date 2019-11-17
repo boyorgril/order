@@ -1,6 +1,5 @@
 package com.groupwork.order.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.groupwork.order.datasource.dto.*;
@@ -10,26 +9,15 @@ import com.groupwork.order.datasource.mapper.OrderMapper;
 import com.groupwork.order.datasource.mapper.ShopFoodMapper;
 import com.groupwork.order.model.OrderCountEntity;
 import com.groupwork.order.model.OrderFood;
+import com.groupwork.order.datasource.dto.Order;
+import com.groupwork.order.datasource.dto.OrderDetail;
+import com.groupwork.order.datasource.dto.ShopFood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-@Service
-import com.groupwork.order.datasource.dto.Order;
-import com.groupwork.order.datasource.dto.OrderDetail;
-import com.groupwork.order.datasource.dto.ShopFood;
-import com.groupwork.order.datasource.mapper.OrderDetailMapper;
-import com.groupwork.order.datasource.mapper.OrderMapper;
-import com.groupwork.order.datasource.mapper.ShopFoodMapper;
-import com.groupwork.order.model.OrderEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

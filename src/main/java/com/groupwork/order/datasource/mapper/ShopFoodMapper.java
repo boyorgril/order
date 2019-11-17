@@ -2,11 +2,11 @@ package com.groupwork.order.datasource.mapper;
 
 import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.datasource.dto.ShopFoodExample;
+
+import java.math.BigDecimal;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
@@ -41,4 +41,10 @@ public interface ShopFoodMapper {
             "select id,shopId,name,imgUrl,price,saleNum,introduce from shopfood where id = #{id,jdbcType=BIGINT}"
     })
     ShopFood getFoodByID(Long id);
+
+    //没写完
+    @Update({
+            "update shopfood set name = #{name,jdbcType=VARCHAR},imgUrl = #{imgUrl,jdbcType=VARCHAR},price = #{price,jdbcType=BIGINT},introduce"
+    })
+    int updateShopFood(String name,String imgUrl,String intrduce,BigDecimal price ,Long sfid);
 }

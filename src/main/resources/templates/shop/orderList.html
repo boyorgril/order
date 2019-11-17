@@ -91,7 +91,7 @@
 
 <div class="orderform">
     <table align="center">
-        <tr th:each = "order:${shoporders}">
+        <tr th:each = "order:${shoporders}" onclick="javascript:window.location.href= '/shop/gotoOrderDetail'">
             <td>
                 <img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标" style="margin-right: 50px">
             </td>

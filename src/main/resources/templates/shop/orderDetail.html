@@ -9,6 +9,11 @@
     <script th:src="@{twitter-bootstrap.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script>
+        function checkOrder(orderId) {
+            javascript:window.location.href="/shop/checkOrder?orderId="+orderId;
+        }
+    </script>
     <!--    导航栏设置文本-->
     <style>
         /*导航条*/
@@ -152,6 +157,10 @@
             background-color: #8ac007;
             color: white;
         }
+
+        .checkcheck{
+            color: white;width: 100px;height: 30px;margin-right: 300px;margin-top: 50px;float: right
+        }
         /*第一格参数设置*/
     </style>
 </head>
@@ -204,7 +213,7 @@
                         <table class="in-tbl" align="center">
                             <tr>
                                 <td>
-                                    <p class="mealwrite_2" th:text="数量 +'：'+${orderDetail.saleNum}"></p>
+                                    <p class="mealwrite_2" th:text="数量 +'：'+${orderDetail.number}"></p>
                                 </td>
                             </tr>
                         </table>
@@ -214,8 +223,13 @@
         </td>
     </tr>
 </table>
-<div class="btn btn-block greencheck"  style="color: white;width: 100px;height: 30px;margin-right: 300px;margin-top: 50px;float: right" >
-    完成订单
+<div th:switch="${orderStatus}">
+    <div th:case="'COMPLETE'" class="btn btn-block checkcheck" style="background-color:darkgray" onclick="javascript:window.location.href= '/shop/gotoOrderList'">
+        已完成
+    </div>
+    <div th:case="'NOCOMPLETE'" class="btn btn-block greencheck checkcheck" th:onclick="'javascript:checkOrder('+${orderId}+')'">
+        完成订单
+    </div>
 </div>
 </body>
 </html>

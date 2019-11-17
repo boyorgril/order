@@ -5,15 +5,11 @@ import com.groupwork.order.datasource.dto.OrderExample;
 import java.util.List;
 
 import com.groupwork.order.datasource.dto.User;
-
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
 
@@ -36,12 +32,6 @@ public interface OrderMapper {
 
     int deleteByPrimaryKey(Long id);
 
-    @Insert({
-            "insert into `order` (buyId, sellId, createAt, updateWhen, status, totalMoney)",
-            "values (#{buyId,jdbcType=BIGINT}, #{sellId,jdbcType=BIGINT}, #{createAt,jdbcType=TIMESTAMP},",
-            "#{updateWhen,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DOUBLE})"
-    })
-    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     int insert(Order record);
 
     int insertSelective(Order record);

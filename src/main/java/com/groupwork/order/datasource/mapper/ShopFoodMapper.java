@@ -35,4 +35,9 @@ public interface ShopFoodMapper {
             "select imgUrl from shopfood where id = #{id,jdbcType=BIGINT}"
     })
     String getImgUrlByID(Long id);
+
+    @Select({
+            "select id,shopId,name,imgUrl,price,saleNum,introduce from shopfood where id = #{id,jdbcType=BIGINT}"
+    })
+    ShopFood getFoodByID(Long id);
 }

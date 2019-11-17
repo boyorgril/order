@@ -32,6 +32,7 @@ public class OrderController {
         for (Order order :orders) {
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setTotalMoney(order.getTotalMoney());
+            orderEntity.setOid(order.getId());
             orderEntity.setStatus(order.getStatus());
             Long foodId = orderService.getFoodId(order.getId());
             if(foodId == null)continue;

@@ -4,6 +4,7 @@ import com.groupwork.order.datasource.dto.OrderDetail;
 import com.groupwork.order.datasource.dto.OrderDetailExample;
 import java.util.List;
 
+import com.groupwork.order.datasource.dto.ShopFood;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,14 @@ public interface OrderDetailMapper {
             @Result(column="number", property="number", jdbcType= JdbcType.INTEGER),
     })
     List<OrderDetail> getOrdersByOid(Long oid);
+
+    @Select({
+            "select sfid from orderDetail where  oid = #{oid,jdbcType=BIGINT}"
+    })
+    @Results({
+            @Result(column="sfid", property="sfid", jdbcType= JdbcType.BIGINT),
+    })
+    List<Long> getFoodsIdByOid(Long oid);
 
     @UpdateProvider(type = OrderDetailSqlProvider.class, method = "updateByExampleSelective")
     int updateByExampleSelective(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);

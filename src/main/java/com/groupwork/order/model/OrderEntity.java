@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class OrderEntity {
+    private Long oid;
     private String imgUrl;
     private BigDecimal totalMoney;
     private String who;
@@ -16,7 +17,8 @@ public class OrderEntity {
     @Override
     public String toString() {
         return "OrderEntity{" +
-                "imgUrl='" + imgUrl + '\'' +
+                "oid=" + oid +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", totalMoney=" + totalMoney +
                 ", who='" + who + '\'' +
                 ", address='" + address + '\'' +

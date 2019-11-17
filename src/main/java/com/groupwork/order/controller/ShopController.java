@@ -7,6 +7,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,9 +33,8 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/gotoOrderDetail")
-    public String gotoOrderDetail(Model model, HttpServletRequest httpRequest){
-        Long oid = (Long) httpRequest.getSession().getAttribute("userId");
+    public String gotoOrderDetail(Model model, HttpServletRequest httpRequest,@RequestParam("orderId")Long oid){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
-        return "shop/shopOrderDetail";
+        return "shop/orderDetail";
     }
 }

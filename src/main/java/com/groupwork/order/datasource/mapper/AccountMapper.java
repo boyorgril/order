@@ -17,7 +17,7 @@ public interface AccountMapper {
     Long selectCount(User user);
 
     @Insert({
-            "insert into user(account, passWord) values (#{account,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR})"
+            "insert into user(account, passWord, type) values (#{account,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})"
     })
     int accountRegister(User user);
 

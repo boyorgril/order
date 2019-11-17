@@ -27,6 +27,7 @@ public class OrderService {
 
     public Long getFoodId(Long oid){
         List<OrderDetail> orderDetails =  orderDetailMapper.getOrdersByOid(oid);
+        if(orderDetails.size() ==0)return null;
         OrderDetail orderDetail =  orderDetails.get(0);
         return orderDetail.getSfid();
     }

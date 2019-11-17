@@ -24,7 +24,7 @@ public class OrderController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping("/shop/orderList")
+    @RequestMapping("/shop/gotoOrderList")
     public String enterOrderList(Model model, HttpServletRequest httpRequest){
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
         List<Order> orders =  orderService.getOrders(shopId);
@@ -34,13 +34,14 @@ public class OrderController {
             orderEntity.setTotalMoney(order.getTotalMoney());
             orderEntity.setStatus(order.getStatus());
             Long foodId = orderService.getFoodId(order.getId());
+            if(foodId == null)continue;
             orderEntity.setImgUrl(shopService.getFoodImgByFoodId(foodId));
             Address address = addressService.getAddress(order.getAddressId());
             orderEntity.setWho(address.getName() + "  "+address.getPhoneNumber());
-            orderEntity.setAddress(address.getLocation());
-            orderEntities.add(orderEntity);
+//            System.out.println(orderEntity);
+            if(orderEntity!=null) orderEntities.add(orderEntity);
         }
-        model.addAttribute("orders", orderEntities);
+        model.addAttribute("shoporders", orderEntities);
         return "shop/orderList";
     }
 }

@@ -6,8 +6,7 @@
     <title>商家浏览的订单列表</title>
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
-    <script th:src="@{twitter-bootstrap.js}"></script>
-    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <script th:src="@{twitter-bootstrap.js}" src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
     <!--    导航栏设置文本-->
     <style>
@@ -44,160 +43,44 @@
             background-color: #4CAF50;
         }
     </style>
-    <!--菜品参数文本-->
+    <!--other-->
     <style>
-        .box{
-            border-radius:20px
-        }
-        .pic{
-            width:100px;
-            float: left;
-            border-radius: 10px;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:15px;
-            margin-left:0px;
-        }
-        .pichead{
-            width:80px;
-            border-radius: 10px;
-            float: left;
-            margin-top:15px;
-            margin-right:15px;
-            margin-left:20px;
-        }
-        .shopname{
-            font-size: 150%;
-            font-family: "Microsoft Tai Le";
-            float: left;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:5px;
-            margin-left:5px;
-        }
-        .mealname{
-            font-size: 15px;
-            font-family: "Microsoft Tai Le";
-            float: left;
-            margin-top:10px;
-            margin-right:5px;
-            margin-left:5px;
-        }
-        .pic-size{
-            width: 15%;
-            margin-top:0px;
-            margin-bottom:0px;
-            margin-right:0px;
-            margin-left:0px;
-        }
-        .pingjia{
-            width: 80px;
-        }
-        .brief{
-            float: left;
-            width:80%;
-            background-color: #e6e8ea;
-            align-content: center;
-            font-size: 150%;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:5px;
-            margin-left:5px;
-        }
-        .write{
-            width: 400px;
-            height: 30px;
-            font-size: 80%;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:5px;
-            margin-left:10px;
-            overflow: hidden;
-            text-align: left;
-            line-height: 200%;
-        }
-        .mealwrite{
-            width: 300px;
-            height: 30px;
-            font-size: 75%;
-            margin-top:10px;
-            margin-bottom:10px;
-            margin-right:5px;
-            margin-left:10px;
-            overflow: hidden;
-            text-align: left;
-            line-height: 200%;
-        }
-    </style>
-    <!--    表格参数文本-->
-    <style  >
-        /*表格参数设置*/
-        .tbl{
-            width: 80%;
-            align-content: center;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            /*background-color: white;*/
-        }
-        /*菜品表格参数设置*/
-        .tbl-in{
-            width: 700px;
+        .orderform{
+            width:800px;
+            height: 550px;
             background-color: white;
-            border-radius: 20px;
-            margin-top: 10px;
-        }
-        .tbl-two{
-            width: 800px;
-            height:450px;
-            background-color: white;
-            border-radius: 20px;
-            margin-top: 10px;
-            overflow-y: scroll;
-        }
-        /*表格区域参数设置*/
-        .list{
-            margin-left: 250px;
-            margin-right: 250px;
-            height: 30%;
-            align-content: center;
-        }
-        /*商家行参数设置*/
-        .fr-list{
-            margin-left: 100px;
-            margin-right: 100px;
-            height: 30%;
-            align-content: center;
-        }
-        /*行参数设置*/
-        .tr{
-            width: 85%;
-        }
-        /*文本参数设置*/
-        .text{
-            width: 40px;
-            border: white;
-            text-align: center;
-        }
-        /*点击增加或删除*/
-        .in-tbl{
             margin-top: 20px;
+            margin-left: 290px;
+            border-radius: 10px;
         }
-        .bg{
-            background-color:#f7f4f8;
-        }
-        .bg-blue{
-            background-color: #2aabd2;
+        .greencheck{
+            background-color: #8ac007;
             color: white;
         }
-        .btn-bg{
-            background-color: #8ac007;
+        .pic{
+            width:120px;
+            margin-left: 10px;
+            border-radius: 10px;
+            float:left;
         }
-        /*第一格参数设置*/
+        .addressp{
+            width: 300px;
+            height: 30px;
+            margin-left: 10px;
+            margin-right: 50px;
+            overflow-y: hidden;
+            background-color: #f7f4f8;
+            border-radius: 10px;
+        }
+        table{
+            border-collapse:separate;
+            border-spacing: 0px 50px;
+        }
     </style>
-</head>
 
-<body class="bg">
-<!--第一行-->
+
+</head>
+<body bgcolor="#f7f4f8">
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">订单列表</li>
     <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
@@ -206,51 +89,27 @@
     <li style="float: right" role="presentation"><a href="#">商家主页</a></li>
 </ul>
 
-<table class="tbl-two "align="center" >
-    <tr th:each = "order:${orders}">
-        <td>
-            <table class="tbl-in "align="center" >
-                <tr >
-                    <!--                    第一格-->
-                    <td >
-                        <table align="right">
-                            <tr class="tr">
-                                <td width="35%" ><img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标"></td>
-                                <td>
-                                    <table class="tbl" align="center">
-                                        <td>
-                                            <tr>
-                                                <td th:text="${order.totalMoney}" class="mealname">总价</td>
-                                            </tr>
-                                            <tr>
-                                                <td  class="mealname" th:text="${order.who}">收件人  电话</td>
-                                            </tr>
-                                        </td>
-                                        <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                            <p class="mealwrite" th:text="${order.address}">地址</p>
-                                        </td>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <!--                    第二格-->
-                    <td>
-                        <table class="in-tbl" align="center">
-                            <tr th:switch="${order.status}">
-                                <td th:case="'NOCOMPLETE'" class="btn btn-block btn-bg">
-                                    未完成
-                                </td>
-                                <td th:case="'COMPLETE'" class="btn btn-block">
-                                    已完成
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+<div class="orderform">
+    <table align="center">
+        <tr th:each = "order:${shoporders}">
+            <td>
+                <img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标" style="margin-right: 50px">
+            </td>
+            <td >
+                <p th:text="总价 + '：' + ${order.totalMoney}" style="font-size: 20px">总价</p>
+                <p th:text="${order.who}" style="font-size: 20px">收件人 电话</p>
+                <p class="addressp" style="font-size: 15px ">收货地址</p>
+            </td>
+            <td th:switch="${order.status}">
+                <div class="btn btn-block" th:case="'COMPLETE'" style="background-color: #c9e2b3;color: white">
+                    已完成
+                </div>
+                <div class="btn btn-block greencheck" th:case="'NOCOMPLETE'">
+                    未完成
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

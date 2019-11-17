@@ -12,4 +12,15 @@ public class OrderEntity {
     private String who;
     private String address;
     private String status;
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "imgUrl='" + imgUrl + '\'' +
+                ", totalMoney=" + totalMoney +
+                ", who='" + who + '\'' +
+                ", address='" + address + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

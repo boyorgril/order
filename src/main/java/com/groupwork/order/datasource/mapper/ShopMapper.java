@@ -4,6 +4,8 @@ import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopExample;
 import java.util.List;
 
+import org.apache.ibatis.annotations.*;
+
 import com.groupwork.order.datasource.dto.ShopFood;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -29,6 +31,16 @@ public interface ShopMapper {
     })
     List<Shop> selectByExample(ShopExample example);
 
+    @Select({
+            "select id, user_id, shop_img_url, name, introduce from shop where id = #{id,jdbcType=BIGINT}"
+    })
+    @Results({
+            @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
+            @Result(column="user_id", property="userId", jdbcType= JdbcType.BIGINT),
+            @Result(column="shop_img_url", property="shopImgUrl", jdbcType= JdbcType.VARCHAR),
+            @Result(column="name", property="name", jdbcType= JdbcType.VARCHAR),
+            @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),
+    })
     Shop selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Shop record, @Param("example") ShopExample example);

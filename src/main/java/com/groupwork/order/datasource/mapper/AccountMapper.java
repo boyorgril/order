@@ -11,7 +11,8 @@ public interface AccountMapper {
 
     @Select({
             "select id from user",
-            "where account = #{account,jdbcType=VARCHAR} and passWord =  #{passWord,jdbcType=VARCHAR}"
+            "where account = #{account,jdbcType=VARCHAR} and passWord =  #{passWord,jdbcType=VARCHAR}",
+            " and type = #{type,jdbcType=VARCHAR}"
     })
     Long selectCount(User user);
 

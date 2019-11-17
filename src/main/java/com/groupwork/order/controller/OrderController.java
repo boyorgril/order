@@ -29,7 +29,7 @@ public class OrderController {
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
         List<Order> orders =  orderService.getOrders(shopId);
         List<OrderEntity> orderEntities = new ArrayList<OrderEntity>();
-        for (Order order :orders) {
+        for (Order order :orders)   {
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setTotalMoney(order.getTotalMoney());
             orderEntity.setOid(order.getId());

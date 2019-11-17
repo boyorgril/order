@@ -5,6 +5,7 @@ import com.groupwork.order.datasource.mapper.ShopFoodMapper;
 import com.groupwork.order.datasource.mapper.ShopMapper;
 import com.groupwork.order.model.OrderEntity;
 import com.groupwork.order.model.ShopEntity;
+import com.groupwork.order.model.ShopFoodEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class ShopService {
         List<ShopEntity> shopEntitys = new ArrayList<>();
         allShop.forEach(shop ->{
             ShopEntity shopEntity = new ShopEntity();
+            shopEntity.setShopId(shop.getId());
             shopEntity.setName(shop.getName());
             shopEntity.setShopImgUrl(shop.getShopImgUrl());
             shopEntity.setIntroduce(shop.getIntroduce());
@@ -52,5 +54,23 @@ public class ShopService {
             shopEntitys.add(shopEntity);
         });
         return shopEntitys;
+    }
+
+    public List<ShopFoodEntity> shopFoodByShopId(Long shopId){
+        ShopFoodExample example = new ShopFoodExample();
+        example.createCriteria().andShopIdEqualTo(shopId);
+        List<ShopFood> shopFoods = shopFoodMapper.selectByExample(example);
+        List<ShopFoodEntity> entities = new ArrayList<>();
+        shopFoods.forEach(food ->{
+            ShopFoodEntity entity = new ShopFoodEntity(food);
+            entities.add(entity);
+        });
+        return entities;
+    }
+
+    public ShopEntity findShopById(Long shopId) {
+        ShopEntity shopEntity = new ShopEntity();
+        shopEntity.convert(shopMapper.selectByPrimaryKey(shopId));
+        return shopEntity;
     }
 }

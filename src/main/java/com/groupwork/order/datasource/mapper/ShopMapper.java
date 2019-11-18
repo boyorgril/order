@@ -61,4 +61,13 @@ public interface ShopMapper {
     })
     Shop getShopInfo(Long shopId);
 
+    @Select({
+            "select name from shop where user_id = #{shopId,jdbcType=BIGINT}"
+    })
+    String getShopName(Long shopId);
+
+    @Update({
+            "update shop set name = #{name,jdbcType=VARCHAR},shop_Img_Url = #{shop_Img_Url,jdbcType=VARCHAR},introduce = #{introduce,jdbcType=VARCHAR} where user_id = #{shopId,jdbcType=BIGINT}"
+    })
+    int updateInfo(String name,String shop_Img_Url,String introduce,Long shopId);
 }

@@ -26,6 +26,34 @@
                 txt.value=0;
             }
         }
+
+        var imgUrl = "/img/666.jpg";
+        function addFood(){
+            var name = document.getElementById("foodname").value;
+            var price = document.getElementById("foodprice").value;
+            var introduce = document.getElementById("foodintroduce").value;
+            if(name ==""){
+                alert("名称不能为空");
+                return;
+            }
+            if(price==""){
+                alert("价格不能为空");
+                return;
+            }
+            if(introduce==""){
+                alert("介绍不能为空");
+                return;
+            }
+            var reg=/^[0-9]+.[0-9]+$/;
+            var reg2=/^[0-9]*$/;
+            if(reg.test(price) || reg2.test(price)){
+            }else{
+                alert("价格请输入数字");
+                return;
+            }
+            javascript:window.location.href= "/shop/addFoodDetail?name=" + name +"&imgUrl="+ imgUrl+"&price="+price+"&introduce="+introduce;
+        }
+
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
     <!--    导航栏设置文本-->
@@ -274,7 +302,7 @@
         /*第一格参数设置*/
     </style>
 </head>
-<body style="background-color:#f7f4f8 ">
+<body style="background-color:#f7f4f8 " >
 <!--导航-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">菜品信息添加</li>
@@ -289,9 +317,15 @@
             <td>
                 <table class="tbl" align="center">
                     <tr>
-                        <td  class="shopname">店名</td>
+                        <td class="shopname">菜名</td>
                         <td>
-                            <input type="text" th:placeholder="${shopfood.name}" class="form-control" autocomplete="off">
+                            <input id="foodname"  type="text" th:placeholder="${shopfood.name}" class="form-control" autocomplete="off">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="shopname">价格</td>
+                        <td>
+                            <input type="text" id="foodprice" th:placeholder="${shopfood.price}" class="form-control" autocomplete="off">
                         </td>
                     </tr>
                     <tr>
@@ -313,7 +347,7 @@
                 <tr>
                     <td>
                         <div class = "addresschild" >
-                            <textarea name="简介" id="" cols="30" rows="10" th:placeholder="${shopfood.introduce}" class="address-txt"></textarea>
+                            <textarea name="简介" id="foodintroduce" cols="30" rows="10" th:placeholder="${shopfood.introduce}" class="address-txt"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -326,7 +360,7 @@
 </table>
 <!--            修改按钮-->
 <div class="form-group" style="margin-top:50px;background-color: #4CAF50;float: right; margin-right: 400px">
-    <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认添加</button>
+    <button type="button" onclick="addFood()" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认添加</button>
 </div>
 
 </body>

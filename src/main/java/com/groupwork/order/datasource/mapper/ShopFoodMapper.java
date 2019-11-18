@@ -35,6 +35,8 @@ public interface ShopFoodMapper {
     })
     List<ShopFood> selectByExample(ShopFoodExample shopFoodExample);
 
+
+
     @Select({
             "select id, shopId, name, imgUrl, price, saleNum, introduce, createAt, updateWhen",
             "from shopfood where id = #{id,jdbcType=BIGINT}"
@@ -53,12 +55,13 @@ public interface ShopFoodMapper {
     ShopFood selectById(Long id);
 
     @Select({
-            "select id,name,imgUrl,introduce from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
+            "select id,name,imgUrl,introduce,price from shopfood where shopId = #{shopId,jdbcType=BIGINT} "
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT,id=true),
             @Result(column="imgUrl", property="imgUrl", jdbcType= JdbcType.VARCHAR),
             @Result(column="name", property="name", jdbcType= JdbcType.VARCHAR),
+            @Result(column="price", property="price", jdbcType= JdbcType.DECIMAL),
             @Result(column="introduce", property="introduce", jdbcType= JdbcType.VARCHAR),
     })
     List<ShopFood> getShopFoodAll(Long shopId);
@@ -73,9 +76,18 @@ public interface ShopFoodMapper {
     })
     ShopFood getFoodByID(Long id);
 
-    //没写完
     @Update({
-            "update shopfood set name = #{name,jdbcType=VARCHAR},imgUrl = #{imgUrl,jdbcType=VARCHAR},price = #{price,jdbcType=BIGINT},introduce"
+            "update shopfood set name = #{name,jdbcType=VARCHAR},imgUrl = #{imgUrl,jdbcType=VARCHAR},price = #{price,jdbcType=DECIMAL},introduce = #{introduce,jdbcType=VARCHAR} where id = #{sfid,jdbcType=BIGINT}"
     })
-    int updateShopFood(String name,String imgUrl,String intrduce,BigDecimal price ,Long sfid);
+    int updateShopFood(String name,String imgUrl,BigDecimal price,String introduce ,Long sfid);
+
+    @Delete({
+            "delete from shopfood where id = #{sfid,jdbcType=BIGINT}"
+    })
+    int dropFoodById(Long sfid);
+
+    @Insert({
+            "insert into shopfood(name,imgUrl,price,introduce,shopId) value(#{name,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{introduce,jdbcType=VARCHAR},#{shopId,jdbcType=BIGINT})"
+    })
+    int addShopFood(String name,String imgUrl,BigDecimal price,String introduce,Long shopId);
 }

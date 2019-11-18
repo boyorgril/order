@@ -54,6 +54,40 @@ public class OrderController {
         return "order/orderList";
     }
 
+    @RequestMapping("/shop/gotoOrderList")
+    public String enterShopOrderList(Model model, HttpServletRequest httpRequest){
+        Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+        String type = (String)httpRequest.getSession().getAttribute("userType");
+        List<Order> orders =  new ArrayList<>();
+
+        if("SELLER".equals(type)){
+            orders = orderService.getOrders(userId);
+        }else{
+            orders = orderService.getUserOrders(userId);
+        }
+        List<OrderEntity> orderEntities = new ArrayList<OrderEntity>();
+        for (Order order :orders)   {
+            OrderEntity orderEntity = new OrderEntity();
+            orderEntity.setTotalMoney(order.getTotalMoney());
+            orderEntity.setOid(order.getId());
+            orderEntity.setStatus(order.getStatus());
+            Long foodId = orderService.getFoodId(order.getId());
+            if(foodId == null)continue;
+            orderEntity.setImgUrl(shopService.getFoodImgByFoodId(foodId));
+            Address address = addressService.getAddress(order.getAddressId());
+            orderEntity.setWho(address.getName() + "  "+address.getPhoneNumber());
+            orderEntity.setAddress(address.getLocation());
+//            System.out.println(orderEntity);
+            if(orderEntity!=null) {
+                if(orderEntity.getStatus().equals("COMPLETE")||orderEntity.getStatus().equals("NOCOMPLETE")){
+                    orderEntities.add(orderEntity);
+                }
+            }
+        }
+        model.addAttribute("shoporders", orderEntities);
+        return "shop/orderList";
+    }
+
     @RequestMapping("/order/gotoOrderDetail")
     public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid, HttpServletRequest httpServletRequest){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));

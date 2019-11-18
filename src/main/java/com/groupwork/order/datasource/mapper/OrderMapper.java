@@ -25,6 +25,16 @@ public interface OrderMapper {
     })
     List<Order> getOrders(Long sellId);
 
+    @Select({
+            "Select status from `order` where id = #{oid,jdbcType=BIGINT}"
+    })
+    String getStatus(Long oid);
+
+    @Update({
+            "update `order` set status = 'COMPLETE' where id = #{oid,jdbcType=BIGINT}"
+    })
+    int updateStatus(Long oid);
+
     long countByExample(OrderExample example);
 
     int deleteByExample(OrderExample example);

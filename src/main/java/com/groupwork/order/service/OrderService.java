@@ -92,6 +92,11 @@ public class OrderService {
         return orderMapper.getOrders(shopID);
     }
 
+    public void updateStatus(Long oid){
+        orderMapper.updateStatus(oid);
+    }
+    public String getStatus(Long oid){return orderMapper.getStatus(oid);}
+
     public Long getFoodId(Long oid){
         List<OrderDetail> orderDetails =  orderDetailMapper.getOrdersByOid(oid);
         if(orderDetails.size() ==0)return null;

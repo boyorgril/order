@@ -11,6 +11,7 @@ import com.groupwork.order.model.ShopFoodEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,20 @@ public class ShopService {
         return shopFoodMapper.getShopFoodAll(shopId);
     }
 
+    public String getShopName(Long shopId){
+        return shopMapper.getShopName(shopId);
+    }
+
     public Shop getShopInfo(Long shopId){
         return shopMapper.getShopInfo(shopId);
+    }
+
+    public void updateShopFood(String name, String imgUrl, BigDecimal price, String introduce, Long sfid){
+        shopFoodMapper.updateShopFood(name,imgUrl,price,introduce,sfid);
+    }
+
+    public void addShopFood(String name,String imgUrl,BigDecimal price,String introduce,Long shopId){
+        shopFoodMapper.addShopFood(name,imgUrl,price,introduce,shopId);
     }
 
     public String getFoodImgByFoodId(Long sfid){
@@ -41,6 +54,15 @@ public class ShopService {
     public ShopFood getFoodById(Long id){
         return shopFoodMapper.getFoodByID(id);
     }
+
+    public void dropFood(Long sfId) {
+        shopFoodMapper.dropFoodById(sfId);
+    }
+
+    public void updateInfo(String name,String shop_Img_Url,String introduce,Long shopId){
+        shopMapper.updateInfo(name,shop_Img_Url,introduce,shopId);
+    }
+
 
     public List<ShopEntity> allShop(Long userId){
         List<Shop> allShop = shopMapper.selectByExample(new ShopExample());

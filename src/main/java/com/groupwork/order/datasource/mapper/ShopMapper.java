@@ -61,6 +61,11 @@ public interface ShopMapper {
     })
     Shop getShopInfo(Long shopId);
 
+    @Insert({
+            "insert into shop(user_id,name,shop_img_url,introduce) value(#{shopId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{introduce,jdbcType=VARCHAR})"
+    })
+    int createShop(Long shopId,String name,String imgUrl,String introduce);
+
     @Select({
             "select name from shop where user_id = #{shopId,jdbcType=BIGINT}"
     })

@@ -1,5 +1,6 @@
 package com.groupwork.order.controller;
 
+import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.service.OrderService;
 import com.groupwork.order.service.ShopService;
@@ -23,6 +24,9 @@ public class ShopController {
     public String enterIndex(Model model, HttpServletRequest httpRequest){
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
         String shopName = shopService.getShopName(shopId);
+        if(shopName == null){
+            return "redirect:/gotoAddShop";
+        }
         model.addAttribute("shopfoods", shopService.getFoods(shopId));
         model.addAttribute("shopname", shopName);
         return "shop/index";
@@ -33,6 +37,17 @@ public class ShopController {
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
         model.addAttribute("shop", shopService.getShopInfo(shopId));
         return "shop/shopInfoModify";
+    }
+
+    @RequestMapping("/gotoAddShop")
+    public String gotoAddShop(Model model, HttpServletRequest httpRequest){
+        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        Shop shop =new Shop();
+        shop.setName("请输入店名");
+        shop.setIntroduce("请输入店铺简介");
+        shop.setShopImgUrl("/img/666.jpg");
+        model.addAttribute("shop", shop);
+        return "shop/addShop";
     }
 
     @RequestMapping("/shop/gotoOrderDetail")
@@ -72,6 +87,13 @@ public class ShopController {
     public String modifyInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
         Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
         shopService.updateInfo(name,imgUrl,introduce,shopId);
+        return"redirect:/shop/index";
+    }
+
+    @RequestMapping("/shop/addShopInfo")
+    public String addInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        shopService.createShop(shopId,name,imgUrl,introduce);
         return"redirect:/shop/index";
     }
 

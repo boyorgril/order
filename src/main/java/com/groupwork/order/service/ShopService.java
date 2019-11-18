@@ -35,6 +35,10 @@ public class ShopService {
         return shopMapper.getShopName(shopId);
     }
 
+    public void createShop(Long shopId,String name,String imgUrl,String introduce){
+        shopMapper.createShop(shopId,name,imgUrl,introduce);
+    }
+
     public Shop getShopInfo(Long shopId){
         return shopMapper.getShopInfo(shopId);
     }

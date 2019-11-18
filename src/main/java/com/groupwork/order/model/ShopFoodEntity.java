@@ -14,9 +14,10 @@ public class ShopFoodEntity {
     private String introduce;
     private Double price;
     private Integer saleNum;
+    private String collected;
 
 
-    public ShopFoodEntity(ShopFood shopFood){
+    public void convert(ShopFood shopFood){
         this.foodId = shopFood.getId();
         this.name = shopFood.getName();
         this.foodUrl = shopFood.getImgUrl();

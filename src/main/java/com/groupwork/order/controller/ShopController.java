@@ -1,16 +1,17 @@
 package com.groupwork.order.controller;
 
+import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.service.OrderService;
 import com.groupwork.order.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 @Controller
 public class ShopController {
@@ -22,7 +23,12 @@ public class ShopController {
     @RequestMapping("shop/index")
     public String enterIndex(Model model, HttpServletRequest httpRequest){
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        String shopName = shopService.getShopName(shopId);
+        if(shopName == null){
+            return "redirect:/gotoAddShop";
+        }
         model.addAttribute("shopfoods", shopService.getFoods(shopId));
+        model.addAttribute("shopname", shopName);
         return "shop/index";
     }
 
@@ -31,6 +37,17 @@ public class ShopController {
         Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
         model.addAttribute("shop", shopService.getShopInfo(shopId));
         return "shop/shopInfoModify";
+    }
+
+    @RequestMapping("/gotoAddShop")
+    public String gotoAddShop(Model model, HttpServletRequest httpRequest){
+        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        Shop shop =new Shop();
+        shop.setName("请输入店名");
+        shop.setIntroduce("请输入店铺简介");
+        shop.setShopImgUrl("/img/666.jpg");
+        model.addAttribute("shop", shop);
+        return "shop/addShop";
     }
 
     @RequestMapping("/shop/gotoOrderDetail")
@@ -52,6 +69,7 @@ public class ShopController {
     @RequestMapping("/shop/modifyFood")
     public String gotoModifyFood(Model model,@RequestParam("sfId")Long sfid){
         model.addAttribute("shopfood",shopService.getFoodById(sfid));
+        model.addAttribute("sfid",sfid);
         return "/shop/modifyFood";
     }
 
@@ -63,5 +81,40 @@ public class ShopController {
         shopFood.setIntroduce("请在此输入菜品简介");
         model.addAttribute("shopfood",shopFood);
         return "/shop/addFood";
+    }
+
+    @RequestMapping("/shop/changeShopInfo")
+    public String modifyInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        shopService.updateInfo(name,imgUrl,introduce,shopId);
+        return"redirect:/shop/index";
+    }
+
+    @RequestMapping("/shop/addShopInfo")
+    public String addInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        shopService.createShop(shopId,name,imgUrl,introduce);
+        return"redirect:/shop/index";
+    }
+
+    @RequestMapping("/shop/addFoodDetail")
+    public String addFood(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,@RequestParam("introduce")String introduce){
+        BigDecimal price = BigDecimal.valueOf(Double.valueOf(pricestr));
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        shopService.addShopFood(name,imgUrl,price,introduce,shopId);
+        return "redirect:/shop/index";
+    }
+
+    @RequestMapping("/shop/modifyFoodDetail")
+    public String modifyFood(@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,@RequestParam("introduce")String introduce,@RequestParam("sfId")Long sfid){
+        BigDecimal price = BigDecimal.valueOf(Double.valueOf(pricestr));
+        shopService.updateShopFood(name,imgUrl,price,introduce,sfid);
+        return "redirect:/shop/index";
+    }
+
+    @RequestMapping("/shop/dropFood")
+    public String dropFood(@RequestParam("sfId")Long sfid){
+        shopService.dropFood(sfid);
+        return "redirect:/shop/index";
     }
 }

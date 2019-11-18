@@ -304,35 +304,50 @@
                 <p style="margin-top: 50px;margin-bottom: 50px" class="mealname" th:text="${countEntity.totalMoney}"></p>
             </div>
             <div class="form-group"style="margin-top: 50px">
-                <input type="text" class="form-control" autocomplete="off" >
+                <input type="text" class="form-control" id="userName" autocomplete="off" >
             </div>
             <div class="form-group"style="margin-top: 50px">
-                <input type="text" class="form-control" autocomplete="off">
+                <input type="text" class="form-control" id="phoneNumber" autocomplete="off">
             </div>
             <!--下拉列表-->
             <div class="dropdown">
-                <button class="dropbtn">请选择一个地址</button>
+                <button class="dropbtn" id="addressChoose" name="addressChoose" value="请选择一个地址"></button>
                 <div class="dropdown-content">
-                    <li text="fcmkdas"></li>
-                    <li text="fcmkdas"></li>
-                    <li text="fcmkdas"></li>
-                    <li text="fcmkdas"></li>
-                    <!--<tr th:each=" address : ${countEntity.userAdderss}">
-                        <li th:text="${address.location}"></li>
-                    </tr>-->
+                    <li th:each=" address ,addressStat:${countEntity.userAdderss}" th:id="${addressStat.index}" th:text="${address.location}" onclick="putAddressInfo(this)"></li>
                 </div>
             </div>
-            <div class="form-group" style="margin-top: 50px; background-color: #4CAF50">
-                <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">结账</button>
-            </div>
+            <form id="myForm" th:action="@{/customer/saveOrderAddress}" method="post">
+                <input id="orderNum" name="orderNum" th:value="${countEntity.orderId}" style="display: none">
+                <input id="addressId" name="addressId" value="" style="display: none">
+                <div class="form-group" style="margin-top: 50px; background-color: #4CAF50">
+                    <button type="button" class="btn btn-default form-control" onclick="submitInfo()" style="background-color: #4CAF50;color: white">结账</button>
+                </div>
+            </form>
         </div>
     </td>
 </table>
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
 
-    function putAddressInfo(addressInfo) {
-        console.log(addressInfo);
+    let addressInfos = [[${countEntity.userAdderss}]];
+
+    function putAddressInfo(count) {
+        let index = count.id;
+        let addressInfo = addressInfos[index]
+        document.getElementById("userName").value = addressInfo.name;
+        document.getElementById("phoneNumber").value = addressInfo.phoneNumber;
+        document.getElementById("addressChoose").value = addressInfo.location;
+        document.getElementById("addressId").value = addressInfo.id;
     }
+    function submitInfo(){
+        let addressId = document.getElementById("addressId").value;
+        if(addressId.length = 0){
+            alert("请完善地址信息");
+        }else{
+            document.getElementById("myForm").submit();
+        }
+
+    }
+
 
 </script>
 </body>

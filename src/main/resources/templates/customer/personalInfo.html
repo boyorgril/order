@@ -1,29 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>个人主页</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <script src="../static/jquery/jquery-3.0.0.js"></script>
-    <script src="../static/twitter-bootstrap.js"></script>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>
-        function add(i){
-
-            var txt=document.getElementById("tt"+i);
-            var a=txt.value;
-            a++;
-            txt.value=a;
-        }
-        function sub(i){
-            var txt=document.getElementById("tt"+i);
-            var a=txt.value;
-            if(a>0){
-                a--;
-                txt.value=a;
-            }else{
-                txt.value=0;
-            }
-        }
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
     <style>
@@ -290,11 +273,11 @@
 <div class="fr-list">
     <table class="tbl" align="center">
         <tr class="tr">
-            <td width="25%" ><img src="666.jpg" class="pic" alt="商家图标" ></td>
+            <td width="25%" ><img th:src="${userInfo.imgUrl}" class="pic" alt="商家图标" ></td>
             <td>
                 <table class="tbl" align="center">
                     <tr>
-                        <td  class="shopname">昵称</td>
+                        <td  class="shopname" th:text="${userInfo.name}"></td>
                     </tr>
                     <tr>
                         <td>
@@ -316,82 +299,28 @@
                 <table align="ceter">
                     <tr >
                         <td>
-<!--                            菜品收藏单位-->
-                            <table class="tbl-in ">
+                            <!--                            菜品收藏单位-->
+                            <table class="tbl-in " th:each=" food :${collectFoods}">
                                 <tr >
                                     <!--                    第一格-->
                                     <td >
                                         <table >
                                             <tr class="tr">
-                                                <td ><img src="../static/img/666.jpg" class="pic2" alt="菜品图标"></td>
+                                                <td ><img th:src="${food.imgUrl}" class="pic2" alt="菜品图标"></td>
                                                 <td>
                                                     <table class="tbl" align="center">
                                                         <tr>
-                                                            <td  class="mealname">菜名</td>
+                                                            <td  class="mealname" th:text="${food.name}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
+                                                                <p class="mealwrite-time" th:text="${food.collectDate}"></p>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </td>
                                                 <td class="box brief ">
-                                                    <p class="mealwrite-brf">菜品简介</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table class="tbl-in ">
-                                <tr >
-                                    <!--                    第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img src="666.jpg" class="pic2" alt="菜品图标"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname">菜名</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf">菜品简介</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table class="tbl-in ">
-                                <tr >
-                                    <!--第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img src="666.jpg" class="pic2" alt="菜品图标"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname">菜名</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf">菜品简介</p>
+                                                    <p class="mealwrite-brf" th:text="${food.introduce}"></p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -404,87 +333,33 @@
             </div>
         </td>
         <td>
-                <p class="mealname">店铺收藏</p>
-                <div class="info" style="overflow-y: scroll;overflow-x: hidden">
+            <p class="mealname">店铺收藏</p>
+            <div class="info" style="overflow-y: scroll;overflow-x: hidden">
                 <table align="ceter">
                     <tr >
                         <td>
                             <!--                            菜品收藏单位-->
-                            <table class="tbl-in ">
+                            <table class="tbl-in " th:each="shop : ${collectShops}">
                                 <tr >
                                     <!--                    第一格-->
                                     <td >
                                         <table >
                                             <tr class="tr">
-                                                <td ><img src="666.jpg" class="pic2" alt="菜品图标"></td>
+                                                <td ><img th:src="${shop.imgUrl}" class="pic2"></td>
                                                 <td>
                                                     <table class="tbl" align="center">
                                                         <tr>
-                                                            <td  class="mealname">店名</td>
+                                                            <td  class="mealname" th:text="${shop.name}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
+                                                                <p class="mealwrite-time" th:text="${shop.collectDate}"></p>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </td>
                                                 <td class="box brief ">
-                                                    <p class="mealwrite-brf">店铺简介</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table class="tbl-in ">
-                                <tr >
-                                    <!--                    第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img src="666.jpg" class="pic2" alt="菜品图标"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname">菜名</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf">菜品简介</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table class="tbl-in ">
-                                <tr >
-                                    <!--                    第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img src="666.jpg" class="pic2" alt="菜品图标"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname">菜名</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time">收藏时间</p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf">菜品简介</p>
+                                                    <p class="mealwrite-brf" th:text="介绍+${shop.introduce}"></p>
                                                 </td>
                                             </tr>
                                         </table>

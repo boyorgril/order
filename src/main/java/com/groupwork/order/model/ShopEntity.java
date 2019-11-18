@@ -13,6 +13,7 @@ public class ShopEntity {
     private String name;
     private String shopImgUrl;
     private String introduce;
+    private String collected;
     private List<String> foodImgUrl;
 
     public void convert(Shop shop){

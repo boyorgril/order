@@ -231,6 +231,7 @@
         <table class="tbl-in "align="center" >
             <tr th:each=" food : ${shopFood}">
                 <!--                    第一格-->
+                <a th:onclick="'javascript:foodComment('+${food.foodId}+')'" class="box btn btn-default"></a>
                 <td >
                     <table align="right">
                         <tr class="tr">
@@ -239,6 +240,7 @@
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="mealname" th:text="${food.name}"></td>
+                                        <input type="button" th:id="collectFood+${food.foodId}" th:value="${food.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectFood('+${food.foodId}+')'">
                                     </tr>
                                     <tr>
                                         <td >
@@ -310,5 +312,41 @@
         document.getElementById("orderNum").value = orderNum;
         document.getElementById("myForm").submit();
     }
+
+
+    function collectFood(foodId) {
+
+        let value = document.getElementById("collectFood"+foodId).value;
+        let url;
+        if(value != "取消收藏"){
+            url = "/customer/collectFood";
+        }else{
+            url = "/customer/cancelCollectFood";
+        }
+        let params = {
+            foodId : foodId
+        }
+        $.ajax({
+            type : "POST",
+            url : url,
+            async: false,
+            data : params,
+            success : function(result) {
+                if(result == "success"){
+                    if(value == "取消收藏"){
+                        document.getElementById("collectFood"+foodId).value = '收藏';
+                    }else{
+                        document.getElementById("collectFood"+foodId).value = '取消收藏';
+                    }
+
+                }
+            }
+        });
+    }
+
+    function foodComment(foodId) {
+        javascript:window.location.href= '/customer/seeFoodComment/'+foodId;
+    }
+
 </script>
 </html>

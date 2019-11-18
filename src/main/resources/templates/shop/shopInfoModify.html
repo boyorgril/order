@@ -9,22 +9,18 @@
     <script th:src="@{twitter-bootstrap.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>
-        function add(i){
-
-            var txt=document.getElementById("tt"+i);
-            var a=txt.value;
-            a++;
-            txt.value=a;
-        }
-        function sub(i){
-            var txt=document.getElementById("tt"+i);
-            var a=txt.value;
-            if(a>0){
-                a--;
-                txt.value=a;
-            }else{
-                txt.value=0;
+        let imgUrl = '/img/666.jpg';
+        function modify() {
+            var name = document.getElementById("shopname").value;
+            var introduce = document.getElementById("shopintroduce").value;
+            if(name==""){
+                name = document.getElementById("shopname").getAttribute("placeholder");
             }
+            if(introduce==""){
+                introduce = document.getElementById("shopintroduce").getAttribute("placeholder");
+            }
+            alert("修改成功");
+            javascript:window.location.href="/shop/changeShopInfo?name="+name+"&introduce="+introduce+"&imgUrl="+imgUrl;
         }
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
@@ -148,7 +144,7 @@
                     <tr>
                         <td  class="shopname">店名</td>
                         <td>
-                            <input type="text" th:placeholder="${shop.name}" class="form-control" autocomplete="off">
+                            <input id="shopname" type="text" th:placeholder="${shop.name}" class="form-control" autocomplete="off">
                         </td>
                     </tr>
                     <tr>
@@ -170,7 +166,7 @@
                 <tr>
                     <td>
                         <div class = "addresschild" >
-                            <textarea name="简介" id="" cols="30" rows="10" th:placeholder="${shop.introduce}" class="address-txt"></textarea>
+                            <textarea id="shopintroduce" name="简介" cols="30" rows="10" th:placeholder="${shop.introduce}" class="address-txt"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -183,7 +179,7 @@
 </table>
 <!--            修改按钮-->
 <div class="form-group" style="margin-top:50px;background-color: #4CAF50;float: right; margin-right: 400px">
-    <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认修改</button>
+    <button type="button" onclick="modify()" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">确认修改</button>
 </div>
 
 </body>

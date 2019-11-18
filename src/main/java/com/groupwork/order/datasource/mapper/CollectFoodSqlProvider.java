@@ -35,7 +35,7 @@ public class CollectFoodSqlProvider {
         }
 
         if(record.getCreateAt() != null){
-            sql.VALUES("createAt", "#{userId,jdbcType=TIMESTAMP}");
+            sql.VALUES("createAt", "#{createAt,jdbcType=TIMESTAMP}");
         }
 
         if(record.getStatus() != null){
@@ -89,23 +89,23 @@ public class CollectFoodSqlProvider {
         sql.UPDATE("collectFood");
 
         if(record.getId() != null){
-            sql.SET("id", "#{id,jdbcType=BIGINT}");
+            sql.SET("id = #{record.id,jdbcType=BIGINT}");
         }
 
         if(record.getSfid() != null){
-            sql.SET("sfid", "#{sfid,jdbcType=BIGINT}");
+            sql.SET("sfid = #{record.sfid,jdbcType=BIGINT}");
         }
 
         if(record.getUserId() != null){
-            sql.SET("userId", "#{userId,jdbcType=BIGINT}");
+            sql.SET("userId = #{record.userId,jdbcType=BIGINT}");
         }
 
         if(record.getCreateAt() != null){
-            sql.SET("createAt", "#{userId,jdbcType=TIMESTAMP}");
+            sql.SET("createAt = #{record.createAt,jdbcType=TIMESTAMP}");
         }
 
         if(record.getStatus() != null){
-            sql.SET("status", "#{status,jdbcType=VARCHAR}");
+            sql.SET("status = #{record.status,jdbcType=VARCHAR}");
         }
 
         applyWhere(sql, example, true);
@@ -134,22 +134,22 @@ public class CollectFoodSqlProvider {
         sql.UPDATE("collectFood");
 
         if(record.getSfid() != null){
-            sql.SET("sfid", "#{sfid,jdbcType=BIGINT}");
+            sql.SET("sfid = #{record.sfid,jdbcType=BIGINT}");
         }
 
         if(record.getUserId() != null){
-            sql.SET("userId", "#{userId,jdbcType=BIGINT}");
+            sql.SET("userId = #{record.userId,jdbcType=BIGINT}");
         }
 
         if(record.getCreateAt() != null){
-            sql.SET("createAt", "#{userId,jdbcType=TIMESTAMP}");
+            sql.SET("createAt = #{record.userId,jdbcType=TIMESTAMP}");
         }
 
         if(record.getStatus() != null){
-            sql.SET("status", "#{status,jdbcType=VARCHAR}");
+            sql.SET("status = #{record.status,jdbcType=VARCHAR}");
         }
 
-        sql.WHERE("id = #{id,jdbcType=BIGINT}");
+        sql.WHERE("id = #{record.id,jdbcType=BIGINT}");
         return sql.toString();
     }
 

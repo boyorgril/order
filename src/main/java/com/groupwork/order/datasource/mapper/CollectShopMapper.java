@@ -25,7 +25,7 @@ public interface CollectShopMapper {
     @Insert({
             "insert into collectShop (userId, shopId, createAt, status)",
             "values( #{userId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, ",
-                    "#{createdAt,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})"
+                    "#{createAt,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(CollectShop record);
@@ -63,4 +63,8 @@ public interface CollectShopMapper {
             "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(CollectShop record);
+
+    @UpdateProvider(type=CollectShopSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record")CollectShop record,  @Param("example") CollectShopExample example);
+
 }

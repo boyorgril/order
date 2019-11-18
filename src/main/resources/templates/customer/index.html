@@ -133,8 +133,8 @@
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">商家列表</li>
-    <li style="float: right" role="presentation"><a href="#">订单列表</a></li>
-    <li style="float: right" role="presentation"><a href="#">个人主页</a></li>
+    <li style="float: right" role="presentation"><a href="/order/gotoOrderList">订单列表</a></li>
+    <li style="float: right" role="presentation"><a href="/customer/personalInfo">个人主页</a></li>
 </ul>
 
 <!--第三行-->
@@ -154,6 +154,7 @@
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>
+                                        <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
                                     </tr>
                                     <tr>
                                         <td >
@@ -161,17 +162,13 @@
                                                 <img src="/img/star.png" class="pic pic-size"/>
                                                 <img src="/img/star.png" class="pic pic-size"/>
                                                 <img src="/img/star.png" class="pic pic-size"/>
-                                                <img src="/img/star.png" class="pic pic-size"/>
-                                                <img src="/img/star.png" class="pic pic-size"/>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td th:each=" foodImg : ${shop.foodImgUrl}">
-                                            <div class="pingjia">
+                                            <div class="pingjia" th:each=" foodImg : ${shop.foodImgUrl}">
                                                 <img th:src="@{${foodImg}}" class="pic pic-size"/>
                                             </div>
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这" th:text="${shop.introduce}"></p></td>
@@ -190,5 +187,37 @@
     function findShopInfo(shopId) {
         javascript:window.location.href= '/customer/visit/'+shopId;
     }
+
+    function collectShop(shopId) {
+
+        let value = document.getElementById("collectShop"+shopId).value;
+        let url;
+        if(value != "取消收藏"){
+            url = "/customer/collectShop";
+        }else{
+            url = "/customer/cancelCollectShop";
+        }
+        let params = {
+            shopId : shopId
+        }
+        $.ajax({
+            type : "POST",
+            url : url,
+            async: false,
+            data : params,
+            success : function(result) {
+                if(result == "success"){
+                    if(value == "取消收藏"){
+                        document.getElementById("collectShop"+shopId).value = '收藏';
+                    }else{
+                        document.getElementById("collectShop"+shopId).value = '取消收藏';
+                    }
+
+                }
+            }
+        });
+    }
+
+
 </script>
 </html>

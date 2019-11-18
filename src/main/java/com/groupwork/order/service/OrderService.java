@@ -1,17 +1,24 @@
 package com.groupwork.order.service;
 
-import com.groupwork.order.datasource.dto.Order;
-import com.groupwork.order.datasource.dto.OrderDetail;
-import com.groupwork.order.datasource.dto.ShopFood;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.groupwork.order.datasource.dto.*;
+import com.groupwork.order.datasource.mapper.AddressMapper;
 import com.groupwork.order.datasource.mapper.OrderDetailMapper;
 import com.groupwork.order.datasource.mapper.OrderMapper;
 import com.groupwork.order.datasource.mapper.ShopFoodMapper;
+import com.groupwork.order.model.OrderCountEntity;
 import com.groupwork.order.model.OrderDetailFoodEntity;
-import com.groupwork.order.model.OrderEntity;
+import com.groupwork.order.model.OrderFood;
+import com.groupwork.order.datasource.dto.Order;
+import com.groupwork.order.datasource.dto.OrderDetail;
+import com.groupwork.order.datasource.dto.ShopFood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +29,64 @@ public class OrderService {
     @Autowired
     private OrderDetailMapper orderDetailMapper;
     @Autowired
+    private AddressMapper addressMapper;
+    @Autowired
     private ShopFoodMapper shopFoodMapper;
+
+    public Order saveOrder(Long buyId, Long sellId, double totalMoney){
+        Order order = new Order();
+        order.setBuyId(buyId);
+        order.setSellId(sellId);
+        order.setTotalMoney(new BigDecimal(totalMoney));
+        order.setCreateAt(new Date());
+        order.setUpdateWhen(new Date());
+        orderMapper.insert(order);
+        return order;
+    }
+
+    public List<OrderDetail> saveOrderDetail(Long orderId, String orderDetail){
+        List<OrderDetail> detailList = new ArrayList<>();
+        JSONArray obj = JSONObject.parseArray(orderDetail);
+        for (int i = 0; i < obj.size(); i++) {
+            OrderDetail detail = new OrderDetail();
+            JSONObject job = obj.getJSONObject(i);
+            detail.setOid(orderId);
+            detail.setSfid(new BigDecimal(job.get("foodId").toString()).longValue());
+            detail.setNumber(new BigDecimal(job.get("number").toString()).intValue());
+            orderDetailMapper.insert(detail);
+            detailList.add(detail);
+        }
+        return detailList;
+    }
+
+
+    public OrderCountEntity buildModel(Order order, List<OrderDetail> detailList) {
+        OrderCountEntity orderCountEntity = new OrderCountEntity();
+        orderCountEntity.setOrderId(order.getId());
+        orderCountEntity.setTotalMoney(order.getTotalMoney().doubleValue());
+
+        AddressExample example = new AddressExample();
+        example.createCriteria().andUserIdEqualTo(order.getBuyId());
+        List<Address> addresses = addressMapper.selectByExample(example);
+        List<OrderFood> foods = buildFoods(detailList);
+
+        orderCountEntity.setOrderFoods(foods);
+        orderCountEntity.setUserAdderss(addresses);
+
+        return orderCountEntity;
+    }
+
+    public List<OrderFood> buildFoods(List<OrderDetail> detailList){
+        List<OrderFood> orderFoods = new ArrayList<>();
+        for (int i = 0; i < detailList.size() ; i++) {
+            OrderFood orderFood = new OrderFood();
+            ShopFood shopFood = shopFoodMapper.selectById(detailList.get(i).getSfid());
+            orderFood.convert(shopFood);
+            orderFood.setNumber(detailList.get(i).getNumber());
+            orderFoods.add(orderFood);
+        }
+        return orderFoods;
+    }
 
     public List<Order> getOrders(Long shopID){
         return orderMapper.getOrders(shopID);
@@ -34,11 +98,6 @@ public class OrderService {
         OrderDetail orderDetail =  orderDetails.get(0);
         return orderDetail.getSfid();
     }
-
-    public void updateStatus(Long oid){
-        orderMapper.updateStatus(oid);
-    }
-    public String getStatus(Long oid){return orderMapper.getStatus(oid);}
 
     public List<OrderDetailFoodEntity> getOrderDetail(Long oid){
         List<OrderDetail> orders = orderDetailMapper.getOrderDetailByOid(oid);
@@ -68,5 +127,13 @@ public class OrderService {
         odfe.setSaleNum(sf.getSaleNum());
         odfe.setShopId(sf.getShopId());
         return odfe;
+    }
+
+    public List<Order> getUserOrders(Long userId) {
+        return orderMapper.getUserOrders(userId);
+    }
+
+    public void saveOrderAddressInfo(String orderNum, String addressId) {
+        orderMapper.saveOrderAddress(new BigDecimal(orderNum).longValue(), new BigDecimal(addressId).longValue(), "NOCOMPLETE", new Date());
     }
 }

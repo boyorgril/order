@@ -1,6 +1,8 @@
 package com.groupwork.order.service;
 
 import com.groupwork.order.datasource.dto.*;
+import com.groupwork.order.datasource.mapper.CollectFoodMapper;
+import com.groupwork.order.datasource.mapper.CollectShopMapper;
 import com.groupwork.order.datasource.mapper.ShopFoodMapper;
 import com.groupwork.order.datasource.mapper.ShopMapper;
 import com.groupwork.order.model.OrderEntity;
@@ -19,6 +21,10 @@ public class ShopService {
     private ShopMapper shopMapper;
     @Autowired
     private ShopFoodMapper shopFoodMapper;
+    @Autowired
+    private CollectShopMapper collectShopMapper;
+    @Autowired
+    private CollectFoodMapper collectFoodMapper;
 
     public List<ShopFood> getFoods(Long shopId){
         return shopFoodMapper.getShopFoodAll(shopId);
@@ -36,7 +42,7 @@ public class ShopService {
         return shopFoodMapper.getFoodByID(id);
     }
 
-    public List<ShopEntity> allShop(){
+    public List<ShopEntity> allShop(Long userId){
         List<Shop> allShop = shopMapper.selectByExample(new ShopExample());
         List<ShopEntity> shopEntitys = new ArrayList<>();
         allShop.forEach(shop ->{
@@ -51,18 +57,41 @@ public class ShopService {
             }else {
                 shopEntity.setFoodImgUrl(foodUrl);
             }
+
+            CollectShopExample shopExample = new CollectShopExample();
+            shopExample.createCriteria().andUserIdEqualTo(userId).andShopIdEqualTo(shop.getId())
+                .andStatusEqualTo("COLLECT");
+            Long count = collectShopMapper.countByExample(shopExample);
+            if (count > 0){
+                shopEntity.setCollected("COLLECT");
+            }else{
+                shopEntity.setCollected("UNCOLLECT");
+            }
+
             shopEntitys.add(shopEntity);
         });
         return shopEntitys;
     }
 
-    public List<ShopFoodEntity> shopFoodByShopId(Long shopId){
+    public List<ShopFoodEntity> shopFoodByShopId(Long shopId, Long userId){
         ShopFoodExample example = new ShopFoodExample();
         example.createCriteria().andShopIdEqualTo(shopId);
         List<ShopFood> shopFoods = shopFoodMapper.selectByExample(example);
         List<ShopFoodEntity> entities = new ArrayList<>();
         shopFoods.forEach(food ->{
-            ShopFoodEntity entity = new ShopFoodEntity(food);
+            ShopFoodEntity entity = new ShopFoodEntity();
+            entity.convert(food);
+
+            CollectFoodExample foodExample = new CollectFoodExample();
+            foodExample.createCriteria().andUserIdEqualTo(userId).andSfidEqualTo(food.getId())
+                    .andStatusEqualTo("COLLECT");
+            Long count = collectFoodMapper.countByExample(foodExample);
+            if (count > 0){
+                entity.setCollected("COLLECT");
+            }else{
+                entity.setCollected("UNCOLLECT");
+            }
+
             entities.add(entity);
         });
         return entities;

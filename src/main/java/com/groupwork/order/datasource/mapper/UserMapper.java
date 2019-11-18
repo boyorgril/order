@@ -23,6 +23,13 @@ public interface UserMapper {
 
     List<User> selectByExample(UserExample example);
 
+    @Select({
+            "select userName, imgUrl from user where id = #{id,jdbcType=BIGINT}"
+    })
+    @Results({
+            @Result(column = "userName", property = "userName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "imgUrl", property = "imgUrl", jdbcType = JdbcType.VARCHAR)
+    })
     User selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);

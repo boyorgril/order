@@ -1,9 +1,11 @@
 package com.groupwork.order.datasource.mapper;
 
+import com.groupwork.order.datasource.dto.CollectShop;
 import com.groupwork.order.datasource.dto.CollectShopExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
+import java.util.Map;
 
 public class CollectShopSqlProvider {
 
@@ -55,6 +57,36 @@ public class CollectShopSqlProvider {
             sql.ORDER_BY(example.getOrderByClause());
         }
 
+        return sql.toString();
+    }
+
+    public String updateByExampleSelective(Map<String, Object> parameter){
+        SQL sql = new SQL();
+        CollectShop record = (CollectShop) parameter.get("record");
+        CollectShopExample example = (CollectShopExample) parameter.get("example");
+        sql.UPDATE("collectShop");
+
+        if(record.getId() != null){
+            sql.SET("id = {record.id,jdbcType=BIGINT}");
+        }
+
+        if(record.getShopId() != null){
+            sql.SET("shopId = #{record.shopId,jdbcType=BIGINT}");
+        }
+
+        if(record.getUserId() != null){
+            sql.SET("userId = #{record.userId,jdbcType=BIGINT}");
+        }
+
+        if(record.getCreateAt() != null){
+            sql.SET("createAt = #{record.userId,jdbcType=TIMESTAMP}");
+        }
+
+        if(record.getStatus() != null){
+            sql.SET("status = #{record.status,jdbcType=VARCHAR}");
+        }
+
+        applyWhere(sql, example, true);
         return sql.toString();
     }
 

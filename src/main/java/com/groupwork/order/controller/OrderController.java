@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -24,10 +25,17 @@ public class OrderController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping("/shop/gotoOrderList")
+    @RequestMapping("/order/gotoOrderList")
     public String enterOrderList(Model model, HttpServletRequest httpRequest){
-        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
-        List<Order> orders =  orderService.getOrders(shopId);
+        Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+        String type = (String)httpRequest.getSession().getAttribute("userType");
+        List<Order> orders =  new ArrayList<>();
+
+        if("SELLER".equals(type)){
+            orders = orderService.getOrders(userId);
+        }else{
+            orders = orderService.getUserOrders(userId);
+        }
         List<OrderEntity> orderEntities = new ArrayList<OrderEntity>();
         for (Order order :orders)   {
             OrderEntity orderEntity = new OrderEntity();
@@ -43,6 +51,24 @@ public class OrderController {
             if(orderEntity!=null) orderEntities.add(orderEntity);
         }
         model.addAttribute("shoporders", orderEntities);
-        return "shop/orderList";
+        return "order/orderList";
     }
+
+    @RequestMapping("/order/gotoOrderDetail")
+    public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid, HttpServletRequest httpServletRequest){
+        model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
+        model.addAttribute("userType", (String)httpServletRequest.getSession().getAttribute("userType"));
+        return "order/orderDetail";
+    }
+
+    @RequestMapping("/user/index")
+    public String userIndex(HttpServletRequest httpRequest){
+        String type = (String)httpRequest.getSession().getAttribute("userType");
+        if("SELLER".equals(type)){
+            return "redirect:/shop/index";
+        }else{
+            return "redirect:/customer/index";
+        }
+    }
+
 }

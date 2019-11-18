@@ -40,6 +40,7 @@ public class AccountController {
             //userId放到session缓存中，大多数数据根据userId都可以找到
             log.info("{}登录成功", userId );
             httpServletRequest.getSession().setAttribute("userId",userId);
+            httpServletRequest.getSession().setAttribute("userType",user.getType());
             String ipAddress = IpUtil.getIpAddr(httpServletRequest);
             loginRecordService.addRecord(ipAddress + IpUtil.getIpInfo(ipAddress), userId);
             if("BUYER".equals(user.getType())){

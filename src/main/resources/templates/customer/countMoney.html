@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>结算</title>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <style>
+        /*下拉列表*/
+        .dropbtn {
+            background-color: #4CAF50;
+            width: 400px;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 50px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 400px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-content li {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            min-width: 400px;
+        }
+
+        .dropdown-content li:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+    <!--    导航栏设置文本-->
+    <style>
+        /*导航条*/
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            background-color: #e6e8ea;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: #666;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        ul li:first-child{
+            display: block;
+            color: white;
+            padding: 14px 16px;
+            background-color: #4CAF50;
+        }
+    </style>
+    <!--菜品参数文本-->
+    <style>
+        .box{
+            border-radius:20px
+        }
+        .pic{
+            width:100px;
+            border-radius: 10px;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:15px;
+            margin-left:0px;
+        }
+        .shopname{
+            font-size: 150%;
+            font-family: "Microsoft Tai Le";
+            float: left;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .mealname{
+            font-size: 150%;
+            font-family: "Microsoft Tai Le";
+            float: left;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .pic-size{
+            width: 15%;
+            margin-top:0px;
+            margin-bottom:0px;
+            margin-right:0px;
+            margin-left:0px;
+        }
+        .pingjia{
+            width: 80px;
+        }
+        .brief{
+            float: left;
+            width:80%;
+            background-color: #e6e8ea;
+            align-content: center;
+            font-size: 150%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .write{
+            width: 400px;
+            height: 30px;
+            font-size: 80%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:10px;
+            overflow: hidden;
+            text-align: left;
+            line-height: 200%;
+        }
+        .mealwrite{
+            width: 300px;
+            height: 30px;
+            font-size: 75%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:10px;
+            overflow: hidden;
+            text-align: left;
+            line-height: 200%;
+        }
+    </style>
+    <!--    表格参数文本-->
+    <style  >
+        /*表格参数设置*/
+        .tbl{
+            width: 80%;
+            align-content: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            /*background-color: white;*/
+        }
+        /*菜品表格参数设置*/
+        .tbl-in{
+            width: 390px;
+            background-color: white;
+            border-radius: 20px;
+        }
+        .tbl-two{
+            width: 400px;
+            height:600px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+        .rightinfo{
+            width: 400px;
+            height:600px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+            margin-left: 50px;
+        }
+        /*表格区域参数设置*/
+        .list{
+            margin-left: 250px;
+            margin-right: 250px;
+            height: 30%;
+            align-content: center;
+        }
+        /*商家行参数设置*/
+        .fr-list{
+            margin-left: 100px;
+            margin-right: 100px;
+            height: 30%;
+            align-content: center;
+        }
+        /*行参数设置*/
+        .tr{
+            width: 85%;
+        }
+        /*文本参数设置*/
+        .text{
+            width: 40px;
+            border: white;
+            text-align: center;
+        }
+        /*点击增加或删除*/
+        .in-tbl{
+            margin-top: 20px;
+        }
+        .bg{
+            background-color:#f7f4f8;
+        }
+        /*第一格参数设置*/
+    </style>
+</head>
+<body bgcolor="#f7f4f8">
+<ul class="nav nav-pills .nav-justified ">
+    <li role="presentation" class="active">结算</li>
+    <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
+</ul>
+
+
+<table align="center">
+    <td>
+        <table class="tbl-two ">
+            <tr th:each=" food : ${countEntity.orderFoods}">
+                <td>
+                    <table class="tbl-in "align="center" >
+                        <tr >
+                            <!--                    第一格-->
+                            <td >
+                                <table align="right">
+                                    <tr class="tr">
+                                        <td width="35%" ><img th:src="${food.imgUrl}" class="pic"></td>
+                                        <td>
+                                            <table class="tbl" align="center">
+                                                <tr>
+                                                    <td  class="mealname" th:text="${food.name}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td >
+                                                        <div class="pingjia">
+                                                            <img th:src="@{/img/star.png}" class="pic pic-size"/>
+                                                            <img th:src="@{/img/star.png}" class="pic pic-size"/>
+                                                            <img th:src="@{/img/star.png}" class="pic pic-size"/>
+                                                        </div>
+                                                        <div class="biaoqian">
+                                                            <span style="position: relative;left: 100%;"th:text="价格"/>
+                                                            <span  style="display: inline-block;position: relative;left: 105%;" th:text="${food.price}"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="box brief tooltip-test" data-toggle="tooltip" title="菜品简介">
+                                                        <p class="mealwrite" th:text="${food.introduce}"></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <!--                    第二格-->
+                            <td style="padding-top: 70px">
+                                <table class="in-tbl" align="center">
+                                    <tr>
+                                        <td>
+                                            <input type="button" value="-" class="btn btn-default bg" onclick="sub(1)" disabled="disabled">
+                                        </td>
+                                        <td>
+                                            <input type="text" th:value="${food.number}" id="tt1" class="text" align="center">
+                                        </td>
+                                        <td >
+                                            <input type="button" value="+" class="btn btn-default bg" onclick="add(1)" disabled="disabled">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <div class="rightinfo">
+            <div>
+                <span style="position: relative;left: 68%;"th:text="总价"/>
+                <p style="margin-top: 50px;margin-bottom: 50px" class="mealname" th:text="${countEntity.totalMoney}"></p>
+            </div>
+            <div class="form-group"style="margin-top: 50px">
+                <input type="text" class="form-control" autocomplete="off" >
+            </div>
+            <div class="form-group"style="margin-top: 50px">
+                <input type="text" class="form-control" autocomplete="off">
+            </div>
+            <!--下拉列表-->
+            <div class="dropdown">
+                <button class="dropbtn">请选择一个地址</button>
+                <div class="dropdown-content">
+                    <li text="fcmkdas"></li>
+                    <li text="fcmkdas"></li>
+                    <li text="fcmkdas"></li>
+                    <li text="fcmkdas"></li>
+                    <!--<tr th:each=" address : ${countEntity.userAdderss}">
+                        <li th:text="${address.location}"></li>
+                    </tr>-->
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 50px; background-color: #4CAF50">
+                <button type="button" class="btn btn-default form-control" style="background-color: #4CAF50;color: white">结账</button>
+            </div>
+        </div>
+    </td>
+</table>
+<script th:inline="javascript" type="text/javascript" charset="utf-8">
+
+    function putAddressInfo(addressInfo) {
+        console.log(addressInfo);
+    }
+
+</script>
+</body>
+</html>

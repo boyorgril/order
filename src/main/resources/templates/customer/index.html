@@ -3,12 +3,8 @@
 <head>
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
-    <script th:src="@{twitter-bootstrap.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script !src="">
-        function test() {
-            console.log(666)
-        }
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
 
@@ -151,7 +147,7 @@
         <!--            商家信息-->
         <tr class="tr" th:each=" shop : ${shops}">
             <div class="list">
-                <a href="#" target="_blank" onclick="test()" class="box btn btn-default">
+                <a th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" class="box btn btn-default"></a>
                     <table class="tbl" align="center">
                             <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                             <td>
@@ -189,4 +185,10 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript" type="text/javascript" charset="utf-8">
+
+    function findShopInfo(shopId) {
+        javascript:window.location.href= '/customer/visit/'+shopId;
+    }
+</script>
 </html>

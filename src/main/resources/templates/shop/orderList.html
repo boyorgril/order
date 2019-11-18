@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商家浏览的订单列表</title>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}" src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script th:inline="javascript" type="text/javascript" charset="utf-8">
+        function functiontest(oid) {
+            javascript:window.location.href="/shop/gotoOrderDetail?orderId="+oid;
+        }
+    </script>
+    <!--    导航栏设置文本-->
+    <style>
+        /*导航条*/
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            background-color: #e6e8ea;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: #666;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        ul li:first-child{
+            display: block;
+            color: white;
+            padding: 14px 16px;
+            background-color: #4CAF50;
+        }
+    </style>
+    <!--other-->
+    <style>
+        .orderform{
+            width:800px;
+            height: 550px;
+            background-color: white;
+            margin-top: 20px;
+            margin-left: 290px;
+            border-radius: 10px;
+        }
+        .greencheck{
+            background-color: #8ac007;
+            color: white;
+        }
+        .pic{
+            width:120px;
+            margin-left: 10px;
+            border-radius: 10px;
+            float:left;
+        }
+        .addressp{
+            width: 300px;
+            height: 30px;
+            margin-left: 10px;
+            margin-right: 50px;
+            overflow-y: hidden;
+            background-color: #f7f4f8;
+            border-radius: 10px;
+        }
+        table{
+            border-collapse:separate;
+            border-spacing: 0px 50px;
+        }
+    </style>
+
+
+</head>
+<body bgcolor="#f7f4f8">
+<ul class="nav nav-pills .nav-justified ">
+    <li role="presentation" class="active">订单列表</li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/shop/index'"><a href="#">返回主页</a></li>
+</ul>
+
+<div class="orderform">
+    <table align="center">
+        <tr th:each = "order:${shoporders}"  th:onclick="'javascript:functiontest('+${order.oid}+')'">
+            <td>
+                <img th:src="@{${order.imgUrl}}" class="pic" alt="菜品图标" style="margin-right: 50px">
+            </td>
+            <td >
+                <p th:text="总价 + '：' + ${order.totalMoney}" style="font-size: 20px">总价</p>
+                <p th:text="${order.who}" style="font-size: 20px">收件人 电话</p>
+                <p class="addressp" style="font-size: 15px ">收货地址</p>
+            </td>
+            <td th:switch="${order.status}">
+                <div class="btn btn-block" th:case="'COMPLETE'" style="background-color: #c9e2b3;color: white">
+                    已完成
+                </div>
+                <div class="btn btn-block greencheck" th:case="'NOCOMPLETE'">
+                    未完成
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

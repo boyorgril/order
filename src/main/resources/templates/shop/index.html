@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="cn">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商家主页面</title>
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
+    <script th:src="@{twitter-bootstrap.js}"></script>
+    <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script th:inline="javascript" type="text/javascript" charset="utf-8">
+        function functiontest(sfid) {
+            javascript:window.location.href= "/shop/modifyFood?sfId=" + sfid;
+        }
+    </script>
+    <!--    导航栏设置文本-->
+    <style>
+        /*导航条*/
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            background-color: #e6e8ea;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: #666;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        ul li:first-child{
+            display: block;
+            color: white;
+            padding: 14px 16px;
+            background-color: #4CAF50;
+        }
+    </style>
+    <!--菜品参数文本-->
+    <style>
+        .box{
+            border-radius:20px
+        }
+        .pic{
+            width:80%;
+            border-radius: 10px;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:15px;
+            margin-left:0px;
+        }
+        .pichead{
+            width:80px;
+            border-radius: 10px;
+            float: left;
+            margin-top:15px;
+            margin-right:15px;
+            margin-left:20px;
+        }
+        .shopname{
+            font-size: 150%;
+            font-family: "Microsoft Tai Le";
+            float: left;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .mealname{
+            font-size: 150%;
+            font-family: "Microsoft Tai Le";
+            float: left;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .pic-size{
+            width: 20px;
+            margin-top:0px;
+            margin-bottom:0px;
+            margin-right:0px;
+            margin-left:0px;
+        }
+        .pingjia{
+            width: 150px;
+        }
+        .brief{
+            float: left;
+            width:80%;
+            background-color: #e6e8ea;
+            align-content: center;
+            font-size: 150%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:5px;
+        }
+        .write{
+            width: 400px;
+            height: 30px;
+            font-size: 80%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:10px;
+            overflow: hidden;
+            text-align: left;
+            line-height: 200%;
+        }
+        .mealwrite{
+            width: 300px;
+            height: 30px;
+            font-size: 75%;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:5px;
+            margin-left:10px;
+            overflow: hidden;
+            text-align: left;
+            line-height: 200%;
+        }
+    </style>
+    <!--    表格参数文本-->
+    <style  >
+        /*表格参数设置*/
+        .tbl{
+            width: 80%;
+            align-content: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            /*background-color: white;*/
+        }
+        /*菜品表格参数设置*/
+        .tbl-in{
+            width: 700px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+        .tbl-two{
+            width: 800px;
+            height:450px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+            overflow-y: scroll;
+            margin-left: 250px;
+        }
+        /*表格区域参数设置*/
+        .list{
+            margin-left: 250px;
+            margin-right: 250px;
+            height: 30%;
+            align-content: center;
+        }
+        /*商家行参数设置*/
+        .fr-list{
+            margin-left: 100px;
+            margin-right: 100px;
+            height: 30%;
+            align-content: center;
+        }
+        /*行参数设置*/
+        .tr{
+            width: 85%;
+        }
+        /*文本参数设置*/
+        .text{
+            width: 40px;
+            border:darkviolet 1px;
+            text-align: center;
+        }
+        /*点击增加或删除*/
+        .in-tbl{
+            margin-top: 20px;
+        }
+        .bg{
+            background-color:#f7f4f8;
+        }
+        .btn-caipin{
+            background-color: #8ac007;
+            color: white;
+            margin-top: 10px;
+        }
+        /*第一格参数设置*/
+    </style>
+</head>
+<body class="bg">
+<!--第一行-->
+<ul class="nav nav-pills .nav-justified ">
+    <li role="presentation" class="active">商家主界面</li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/logout'"><a href="#">注销登录</a></li>
+    <li style="float: right" role="presentation"><a href="#" onclick="javascript:window.location.href= '/shop/addFood'">添加菜品</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/shop/gotoOrderList'"><a href="#">订单列表</a></li>
+    <li style="float: right" role="presentation" onclick="javascript:window.location.href= '/gotoModify'"><a href="#">修改信息</a></li>
+</ul>
+
+<!--第二行-->
+
+
+<table class="tbl-two "align="center" >
+    <!--第三行-->
+    <tr  th:each="shopfood:${shopfoods}">
+        <td>
+            <table class="tbl-in "align="center" >
+                <tr >
+                    <!--                    第一格-->
+                    <td >
+                        <table align="center">
+                            <tr class="tr">
+                                <td width="35%" ><img th:src="@{${shopfood.imgUrl}}" class="pic" alt="菜品图标"></td>
+                                <td>
+                                    <table class="tbl" align="center">
+                                        <tr>
+                                            <td th:text="${shopfood.name}" class="mealname"></td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <div class="pingjia">
+                                                    <img src="/img/star.png" class="pic pic-size"/>
+                                                    <img src="/img/star.png" class="pic pic-size"/>
+                                                    <img src="/img/star.png" class="pic pic-size"/>
+                                                    <img src="/img/star.png" class="pic pic-size"/>
+                                                    <img src="/img/star.png" class="pic pic-size"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="box brief tooltip-test" data-toggle="tooltip" th:title="${shopfood.introduce}">
+                                                <p class="mealwrite" th:text="${shopfood.introduce}"></p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <!--    修改菜品按钮-->
+                    <td>
+                        <button type="button" class="btn btn-block " style="background-color: #4CAF50;color: white"  th:onclick="'javascript:functiontest('+${shopfood.id}+')'">修改信息</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

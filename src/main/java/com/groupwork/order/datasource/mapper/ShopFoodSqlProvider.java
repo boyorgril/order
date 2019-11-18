@@ -9,6 +9,34 @@ import java.util.List;
 public class ShopFoodSqlProvider {
 
 
+    public String selectByExample(ShopFoodExample example){
+        SQL sql = new SQL();
+
+        if (example != null && example.isDistinct()) {
+            sql.SELECT_DISTINCT("id");
+        } else {
+            sql.SELECT("id");
+        }
+        sql.SELECT("shopId");
+        sql.SELECT("name");
+        sql.SELECT("imgUrl");
+        sql.SELECT("price");
+        sql.SELECT("saleNum");
+        sql.SELECT("introduce");
+        sql.SELECT("createAt");
+        sql.SELECT("updateWhen");
+        sql.FROM("shopfood");
+        applyWhere(sql, example, false);
+
+        if (example != null && example.getOrderByClause() != null) {
+            sql.ORDER_BY(example.getOrderByClause());
+        }
+
+        return sql.toString();
+
+    }
+
+
     protected void applyWhere(SQL sql, ShopFoodExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;

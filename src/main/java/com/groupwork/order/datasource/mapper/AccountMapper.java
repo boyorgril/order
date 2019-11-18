@@ -11,12 +11,13 @@ public interface AccountMapper {
 
     @Select({
             "select id from user",
-            "where account = #{account,jdbcType=VARCHAR} and passWord =  #{passWord,jdbcType=VARCHAR}"
+            "where account = #{account,jdbcType=VARCHAR} and passWord =  #{passWord,jdbcType=VARCHAR}",
+            " and type = #{type,jdbcType=VARCHAR}"
     })
     Long selectCount(User user);
 
     @Insert({
-            "insert into user(account, passWord) values (#{account,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR})"
+            "insert into user(account, passWord, type) values (#{account,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})"
     })
     int accountRegister(User user);
 

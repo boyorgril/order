@@ -35,4 +35,8 @@ public class AccountService {
         return accountMapper.selectByExample(example);
     }
 
+    public void updateUserName(Long userId, String userName){
+        accountMapper.updateNameByKey(userId, userName);
+    }
+
 }

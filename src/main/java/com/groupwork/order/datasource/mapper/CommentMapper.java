@@ -17,9 +17,9 @@ public interface CommentMapper {
     int deleteByPrimaryKey(Long id);
 
     @Insert({
-            "insert into comment (orderId, content, createAt) values ",
-            "(#{orderId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, ",
-            " #{createdAt,jdbcType=TIMESTAMP}) "
+            "insert into comment (order_id, user_id, content, create_at) values ",
+            "(#{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, ",
+            " #{content,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}) "
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Long.class)
     int insert(Comment record);
@@ -27,21 +27,23 @@ public interface CommentMapper {
     @SelectProvider(type = CommentSqlProvider.class, method = "selectByExample")
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
-            @Result(column="orderId", property="orderId", jdbcType= JdbcType.BIGINT),
+            @Result(column="order_id", property="orderId", jdbcType= JdbcType.BIGINT),
+            @Result(column="user_id", property="userId", jdbcType= JdbcType.BIGINT),
             @Result(column="content", property="content", jdbcType= JdbcType.VARCHAR),
-            @Result(column="createAt", property="createAt", jdbcType= JdbcType.TIMESTAMP)
+            @Result(column="create_at", property="createAt", jdbcType= JdbcType.TIMESTAMP)
     })
     List<Comment> selectByExample(CommentExample example);
 
     @Select({
-            "select id, orderId, content, createAt from comment ",
+            "select id, user_id, order_id, content, create_at from comment ",
             "where id = #{id,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),
-            @Result(column="orderId", property="orderId", jdbcType= JdbcType.BIGINT),
+            @Result(column="user_id", property="userId", jdbcType= JdbcType.BIGINT),
+            @Result(column="order_id", property="orderId", jdbcType= JdbcType.BIGINT),
             @Result(column="content", property="content", jdbcType= JdbcType.VARCHAR),
-            @Result(column="createAt", property="createAt", jdbcType= JdbcType.TIMESTAMP)
+            @Result(column="create_at", property="createAt", jdbcType= JdbcType.TIMESTAMP)
     })
     Comment selectByPrimaryKey(Long id);
 

@@ -10,10 +10,24 @@ import java.util.Date;
 public class Comment implements Serializable {
     private Long id;
 
+    /**
+     * 用户id
+     */
+    private Long userId;
+
+    /**
+     * 订单id
+     */
     private Long orderId;
 
+    /**
+     * 评论
+     */
     private String content;
 
+    /**
+     * 创建时间
+     */
     private Date createAt;
 
     private static final long serialVersionUID = 1L;
@@ -24,6 +38,14 @@ public class Comment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getOrderId() {

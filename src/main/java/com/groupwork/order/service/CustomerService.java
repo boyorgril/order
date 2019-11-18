@@ -2,9 +2,7 @@ package com.groupwork.order.service;
 
 import com.groupwork.order.datasource.dto.*;
 import com.groupwork.order.datasource.mapper.*;
-import com.groupwork.order.model.CollectFoodEntity;
-import com.groupwork.order.model.CollectShopEntity;
-import com.groupwork.order.model.UserEntity;
+import com.groupwork.order.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +23,12 @@ public class CustomerService {
     private ShopMapper shopMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+    @Autowired
+    private CommentMapper commentMapper;
+    @Autowired
+    private AddressMapper addressMapper;
 
     public List<CollectFoodEntity> searchFood(Long userId){
         List<CollectFoodEntity> foodEntities = new ArrayList<>();
@@ -121,5 +125,60 @@ public class CustomerService {
         UserEntity entity = new UserEntity();
         entity.convert(userMapper.selectByPrimaryKey(userId));
         return entity;
+    }
+
+    public FoodCommentEntity foodComment(Long foodId){
+        FoodCommentEntity commentEntity = new FoodCommentEntity();
+        ShopFood shopFood = shopFoodMapper.selectById(foodId);
+        commentEntity.setFoodImgUrl(shopFood.getImgUrl());
+        commentEntity.setName(shopFood.getName());
+        commentEntity.setIntroduce(shopFood.getIntroduce());
+        OrderDetailExample example = new OrderDetailExample();
+        example.createCriteria().andSfidEqualTo(foodId);
+        List<OrderDetail> orderId = orderDetailMapper.selectByExample(example);
+        commentEntity.setUserComment(findFoodComment(orderId));
+
+        return commentEntity;
+    }
+
+    public List<CommentEntity> findFoodComment(List<OrderDetail> orderDetails){
+        List<CommentEntity> entityList = new ArrayList<>();
+
+        List<Long> orderIds = new ArrayList<>();
+        orderDetails.forEach(orderDetail -> {
+            orderIds.add(orderDetail.getOid().longValue());
+        });
+
+        CommentExample example = new CommentExample();
+        example.createCriteria().andOrderIdIn(orderIds);
+
+        List<Comment> comments = commentMapper.selectByExample(example);
+
+        comments.forEach(comment -> {
+            CommentEntity commentEntity = new CommentEntity();
+            commentEntity.setComment(comment.getContent());
+            commentEntity.setUsername(userMapper.selectByPrimaryKey(comment.getUserId()).getUserName());
+            entityList.add(commentEntity);
+        });
+
+        return entityList;
+    }
+
+
+    public UserEntity findDetailById(Long userId){
+        UserEntity userEntity = findUserInfo(userId);
+        AddressExample example = new AddressExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<Address> addresses = addressMapper.selectByExample(example);
+        userEntity.setUserAdderss(addresses);
+        return userEntity;
+    }
+
+    public void updateUserInfo(User user) {
+        UserExample example = new UserExample();
+        example.createCriteria().andIdEqualTo(user.getId());
+
+        user.setUpdateWhen(new Date());
+        userMapper.updateByExampleSelective(user, example);
     }
 }

@@ -54,14 +54,14 @@ public class ShopController {
     public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
         model.addAttribute("orderId",oid);
-        model.addAttribute("orderStatus",orderService.getStatus(oid));
+        //model.addAttribute("orderStatus",orderService.getStatus(oid));
         return "shop/orderDetail";
     }
 
     @RequestMapping("/shop/checkOrder")
     public String checkOrder(@RequestParam("orderId")Long oid){
         //数据库修改
-        orderService.updateStatus(oid);
+        //orderService.updateStatus(oid);
         //重定向
         return "redirect:/shop/gotoOrderList";
     }

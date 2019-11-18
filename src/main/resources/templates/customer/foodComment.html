@@ -223,23 +223,23 @@
             <td >
                 <table align="right">
                     <tr class="tr">
-                        <td width="35%" ><img src="666.jpg" class="pic" alt="菜品图标"></td>
+                        <td width="35%" ><img th:src="${comment.foodImgUrl}" class="pic" ></td>
                         <td>
                             <table class="tbl" align="center">
                                 <tr>
-                                    <td  class="mealname">菜名</td>
+                                    <td  class="mealname" th:text="${comment.name}"></td>
                                 </tr>
                                 <tr>
                                     <td >
                                         <div class="pingjia">
-                                            <img src="star.png" class="pic pic-size"/>
-                                            <img src="star.png" class="pic pic-size"/>
+                                            <img th:src="@{/img/star.png}" class="pic pic-size"/>
+                                            <img th:src="@{/img/star.png}" class="pic pic-size"/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="box brief tooltip-test" data-toggle="tooltip" title="鼠标移动到这">
-                                        <p class="mealwrite">菜品简介</p>
+                                        <p class="mealwrite" th:text="${comment.introduce}"></p>
                                     </td>
                                 </tr>
                             </table>
@@ -252,13 +252,13 @@
 </div>
 <div>
     <table class="tbl-two "align="center" >
-        <tr >
+        <tr th:each=" comm :${comment.userComment}">
             <td>
                 <div class = "comment">
                     <table >
                         <tr>
-                            <td><p>用户名</p></td>
-                            <td><div class = "commentdetail">pinglun</div></td>
+                            <td><p th:text="${comm.username}"></p></td>
+                            <td><div class = "commentdetail"><p th:text="${comm.comment}"></p></div></td>
                         </tr>
                     </table>
                 </div>

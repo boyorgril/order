@@ -45,4 +45,9 @@ public interface AccountMapper {
             @Result(column = "userName", property = "userName", jdbcType = JdbcType.VARCHAR),
     })
     List<User> selectByExample(UserExample userExample);
+
+    @Update({
+            "update user set userName = #{userName,jdbcType=VARCHAR} where id = #{userId,jdbcType=VARCHAR}"
+    })
+    void updateNameByKey(Long userId, String userName);
 }

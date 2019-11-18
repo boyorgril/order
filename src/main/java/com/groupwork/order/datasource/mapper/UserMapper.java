@@ -3,10 +3,8 @@ package com.groupwork.order.datasource.mapper;
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.datasource.dto.UserExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
@@ -24,14 +22,16 @@ public interface UserMapper {
     List<User> selectByExample(UserExample example);
 
     @Select({
-            "select userName, imgUrl from user where id = #{id,jdbcType=BIGINT}"
+            "select userName, imgUrl, money from user where id = #{id,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column = "userName", property = "userName", jdbcType = JdbcType.VARCHAR),
-            @Result(column = "imgUrl", property = "imgUrl", jdbcType = JdbcType.VARCHAR)
+            @Result(column = "imgUrl", property = "imgUrl", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "money", property = "money", jdbcType = JdbcType.DOUBLE)
     })
     User selectByPrimaryKey(Long id);
 
+    @UpdateProvider(type = UserSqlProvider.class, method = "updateByExampleSelective")
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);

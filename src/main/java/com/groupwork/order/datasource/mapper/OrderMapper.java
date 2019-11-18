@@ -74,7 +74,7 @@ public interface OrderMapper {
     List<Order> getUserOrders(Long userId);
 
     @Update({
-          "update `order` set addressId = #{addressId,jdbcType=INTEGER}, status = #{status,jdbcType=INTEGER}, payTime = #{status,jdbcType=TIMESTAMP} where id = #{orderId,jdbcType=BIGINT}"
+          "update `order` set addressId = #{addressId,jdbcType=INTEGER}, status = #{status,jdbcType=INTEGER}, payTime = #{payTime,jdbcType=TIMESTAMP} where id = #{orderId,jdbcType=BIGINT}"
     })
     int saveOrderAddress(long orderId, long addressId, String status, Date payTime);
 }

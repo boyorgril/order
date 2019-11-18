@@ -42,7 +42,7 @@ public class AccountController {
             httpServletRequest.getSession().setAttribute("userId",userId);
             httpServletRequest.getSession().setAttribute("userType",user.getType());
             String ipAddress = IpUtil.getIpAddr(httpServletRequest);
-            loginRecordService.addRecord(ipAddress + IpUtil.getIpInfo(ipAddress), userId);
+            loginRecordService.addRecord(ipAddress, userId);
             if("BUYER".equals(user.getType())){
                 return "redirect:/customer/index";
             }else{

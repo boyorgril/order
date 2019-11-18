@@ -1,12 +1,39 @@
 package com.groupwork.order.datasource.mapper;
 
+import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.datasource.dto.UserExample;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserSqlProvider {
 
+    public String updateByExampleSelective(Map<String, Object> parameter){
+        SQL sql = new SQL();
+        User record = (User) parameter.get("record");
+        UserExample example = (UserExample) parameter.get("example");
+        sql.UPDATE("user");
+
+        if(record.getId() != null){
+            sql.SET("id = #{record.id,jdbcType=BIGINT}");
+        }
+
+        if(record.getUserName() != null){
+            sql.SET("userName = #{record.userName,jdbcType=VARCHAR}");
+        }
+
+        if(record.getImgUrl() != null){
+            sql.SET("imgUrl = #{record.imgUrl,jdbcType=VARCHAR}");
+        }
+
+        if(record.getUpdateWhen() != null){
+            sql.SET("updateWhen = #{record.updateWhen,jdbcType=TIMESTAMP}");
+        }
+
+        applyWhere(sql, example, true);
+        return sql.toString();
+    }
 
     protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
         if (example == null) {

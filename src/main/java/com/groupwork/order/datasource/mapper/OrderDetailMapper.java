@@ -71,4 +71,5 @@ public interface OrderDetailMapper {
             "number = #{number,jdbcType=INTEGER} where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(OrderDetail record);
+
 }

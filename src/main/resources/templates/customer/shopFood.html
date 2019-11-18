@@ -14,6 +14,11 @@
             var a=txt.value;
             a++;
             txt.value=a;
+            if(a <= 0){
+                document.getElementById("submitMoney").disabled  = 'disable';
+            }else{
+                document.getElementById("submitMoney").removeAttribute("disabled");;
+            }
         }
         function sub(i){
             var txt=document.getElementById(i);
@@ -24,6 +29,13 @@
             }else{
                 txt.value=0;
             }
+
+            if(a <= 0){
+                document.getElementById("submitMoney").disabled  = 'disable';
+            }else{
+                document.getElementById("submitMoney").removeAttribute("disabled");;
+            }
+
         }
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
@@ -231,12 +243,12 @@
         <table class="tbl-in "align="center" >
             <tr th:each=" food : ${shopFood}">
                 <!--                    第一格-->
-                <a th:onclick="'javascript:foodComment('+${food.foodId}+')'" class="box btn btn-default"></a>
+
                 <td >
                     <table align="right">
                         <tr class="tr">
                             <td width="20%" ><img th:src="${food.foodUrl}" class="pic"></td>
-                            <td>
+                            <td th:onclick="'javascript:foodComment('+${food.foodId}+')'">
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="mealname" th:text="${food.name}"></td>
@@ -288,7 +300,7 @@
                 <input id="shopId" name="shopId" th:value="${shopInfo.shopId}" style="display: none"/>
                 <input id="totalMoney" name="totalMoney" value="" style="display: none">
                 <input id="orderNum" name="orderNum" value="" style="display: none">
-                <button type="button" th:text="结算菜单" onclick="computeMoney();"></button>
+                <button type="button" id="submitMoney" th:text="结算菜单" onclick="computeMoney();" disabled="disabled"></button>
             </form>
         </div>
     </div>
@@ -310,6 +322,7 @@
 
         document.getElementById("totalMoney").value = totalMoney;
         document.getElementById("orderNum").value = orderNum;
+
         document.getElementById("myForm").submit();
     }
 

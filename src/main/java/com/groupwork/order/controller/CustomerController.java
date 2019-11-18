@@ -1,23 +1,31 @@
 package com.groupwork.order.controller;
 
+import com.alibaba.druid.util.StringUtils;
+import com.groupwork.order.datasource.dto.Address;
 import com.groupwork.order.datasource.dto.Order;
 import com.groupwork.order.datasource.dto.OrderDetail;
+import com.groupwork.order.datasource.dto.User;
+import com.groupwork.order.datasource.mapper.UserMapper;
 import com.groupwork.order.model.CollectFoodEntity;
 import com.groupwork.order.model.CollectShopEntity;
 import com.groupwork.order.model.OrderCountEntity;
-import com.groupwork.order.service.CustomerService;
-import com.groupwork.order.service.OrderService;
-import com.groupwork.order.service.ShopService;
+import com.groupwork.order.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,6 +37,13 @@ public class CustomerController {
     private OrderService orderService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private AccountService accountService;
+
+    @Value(value = "${resources_path}")
+    String resources_path;//资源文件绝对地址目录
 
     @RequestMapping("customer/index")
     public String enterIndex(Model model, HttpServletRequest httpServletRequest){
@@ -110,9 +125,55 @@ public class CustomerController {
     }
 
     @RequestMapping("/customer/seeFoodComment/{foodId}")
-    public String showFoodComment(@PathVariable Long shopId, Model model){
-
+    public String showFoodComment(Model model, @PathVariable Long foodId){
+        model.addAttribute("comment",customerService.foodComment(foodId));
         return "customer/foodComment";
     }
+
+    @RequestMapping("/customer/infoDetail")
+    public String infoDeatil(Model model, HttpServletRequest servletRequest){
+        Long userId = (Long) servletRequest.getSession().getAttribute("userId");
+        model.addAttribute("userInfo", customerService.findDetailById(userId));
+        return "customer/updateInfo";
+    }
+
+    @RequestMapping("/customer/changeImg")
+    public String saveImgUrl(@RequestParam("upFile") MultipartFile file, HttpServletRequest servletRequest){
+        Long userId = (Long) servletRequest.getSession().getAttribute("userId");
+        String fileName = userId + new Date().getTime() + ".jpg";
+        try{
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(resources_path + fileName);
+            Files.write(path, bytes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        User user = new User();
+        user.setImgUrl("/" + fileName);
+        user.setId(userId);
+
+        customerService.updateUserInfo(user);
+
+        return "redirect:/customer/infoDetail";
+    }
+
+    @RequestMapping("/customer/updateAddress")
+    public String updateAddressInfo(Address address, HttpServletRequest servletRequest){
+        Long userId = (Long) servletRequest.getSession().getAttribute("userId");
+        address.setUserId(userId);
+        addressService.insertOrUpdateAddr(address);
+        return "redirect:/customer/infoDetail";
+    }
+
+    @RequestMapping("/customer/updateUserName")
+    @ResponseBody
+    public String updateName(@RequestParam(value = "name", required = false) String name, HttpServletRequest httpServletRequest){
+        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        accountService.updateUserName(userId, name);
+        return "success";
+    }
+
+
 
 }

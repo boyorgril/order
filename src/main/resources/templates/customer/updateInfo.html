@@ -1,58 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>个人主页</title>
+    <title>个人信息修改</title>
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
     <script>
+
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
-    <style>
-        /*下拉列表*/
-        .dropbtn {
-            background-color: #4CAF50;
-            width: 400px;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            margin-top: 50px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 400px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        }
-
-        .dropdown-content li {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            min-width: 400px;
-        }
-
-        .dropdown-content li:hover {background-color: #f1f1f1}
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
-        }
-    </style>
     <!--    导航栏设置文本-->
     <style>
         /*导航条*/
@@ -229,6 +187,38 @@
             margin-top: 10px;
             margin-left: 10px;
         }
+        .addressbox{
+            width: 600px;
+            height: 300px;
+            background-color: #e6e8ea;
+            border-radius: 20px;
+            margin-top: 10px;
+            margin-left: 230px;
+        }
+        .addresschild{
+            width: 540px;
+            height: 50px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .address-txt{
+            text-align: center;
+            margin-left: 15px;
+            margin-top: 13px;
+            font-size: 15px;
+            color: #1b6d85;
+            position: absolute;
+        }
+        .address-btn{
+            text-align: center;
+            margin-left: 260px;
+            margin-top: 10px;
+            font-size: 20px;
+            color: #1b6d85;
+            position: absolute;
+        }
         /*表格区域参数设置*/
         .list{
             margin-left: 250px;
@@ -260,28 +250,70 @@
         .bg{
             background-color:#f7f4f8;
         }
-        /*第一格参数设置*/
+
+        #fade{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=88);
+        }
+        #light {
+            display: none;
+            position: absolute;
+            top:35%;
+            left: 35%;
+            width: 30%;
+            height: 30%;
+            padding: 10px;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body style="background-color:#f7f4f8 ">
-<!--第一行-->
+<div id="fade" class="black_overlay"></div>
+<!--导航-->
 <ul class="nav nav-pills .nav-justified ">
-    <li role="presentation" class="active">个人主页</li>
+    <li role="presentation" class="active">个人信息修改</li>
     <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
 </ul>
+<!--信息栏-->
 <div class="fr-list">
     <table class="tbl" align="center">
         <tr class="tr">
-            <td width="25%" ><img th:src="${userInfo.imgUrl}" class="pic" alt="商家图标" ></td>
+            <td width="25%" ><img th:src="${userInfo.imgUrl}" class="pic"  ></td>
             <td>
                 <table class="tbl" align="center">
                     <tr>
-                        <td  class="shopname" th:text="${userInfo.name}"></td>
+                        <td  class="shopname">昵称:</td>
+                        <td>
+                            <input type="text" id="username" class="form-control" autocomplete="off" th:value="${userInfo.name}" onblur="updateUserName()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="shopname">余额:</td>
+                        <td>
+                            <p type="text" class="form-control" autocomplete="off" th:text="${userInfo.money}">
+                        </td>
                     </tr>
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-default " onclick="updateDetailInfo()" style="background-color: #4CAF50;color: white;margin-top: 30px">修改资料</button>
+                            <div>
+                                <form id="myForm" th:action="@{/customer/changeImg}" method="post" enctype="multipart/form-data">
+                                    <input type="file" id="upFile" name="upFile" accept="image/gif,image/jpeg,image/jpg,image/png" class="btn btn-default " style="background-color: #4CAF50;color: white;margin-top: 30px" onchange="uploadImgFile()"></input>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -290,82 +322,24 @@
     </table>
 </div>
 
-<table align="center">
+<!--地址-->
+<table>
     <tr>
         <td>
-            <p class="mealname">菜品收藏</p>
-            <div class="info" style="overflow-y: scroll;overflow-x: hidden">
-
-                <table align="ceter">
-                    <tr >
-                        <td>
-                            <!--                            菜品收藏单位-->
-                            <table class="tbl-in " th:each=" food :${collectFoods}">
-                                <tr >
-                                    <!--                    第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img th:src="${food.imgUrl}" class="pic2" alt="菜品图标"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname" th:text="${food.name}"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time" th:text="${food.collectDate}"></p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf" th:text="${food.introduce}"></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+            <div class="addressbox" style="overflow-y: scroll;overflow-x: hidden">
+                <table>
+                    <tr th:each="addr ,addressStat: ${userInfo.userAdderss}" >
+                        <td th:id="${addressStat.index}" onclick="putAddressInfo(this)">
+                            <div class = "addresschild" >
+                                <p class="address-txt" th:text=" '姓名: ' + ${addr.name} + ' 电话: '+ ${addr.phoneNumber} + ' 地址: ' + ${addr.location}"></p>
+                            </div>
                         </td>
                     </tr>
-                </table>
-            </div>
-        </td>
-        <td>
-            <p class="mealname">店铺收藏</p>
-            <div class="info" style="overflow-y: scroll;overflow-x: hidden">
-                <table align="ceter">
-                    <tr >
-                        <td>
-                            <!--                            菜品收藏单位-->
-                            <table class="tbl-in " th:each="shop : ${collectShops}">
-                                <tr >
-                                    <!--                    第一格-->
-                                    <td >
-                                        <table >
-                                            <tr class="tr">
-                                                <td ><img th:src="${shop.imgUrl}" class="pic2"></td>
-                                                <td>
-                                                    <table class="tbl" align="center">
-                                                        <tr>
-                                                            <td  class="mealname" th:text="${shop.name}"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td >
-                                                                <p class="mealwrite-time" th:text="${shop.collectDate}"></p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="box brief ">
-                                                    <p class="mealwrite-brf" th:text="介绍+${shop.introduce}"></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+                    <tr>
+                        <td onclick="showBlackAddressDetailInfo()">
+                            <div class = "addresschild" >
+                                <p class="address-btn">+</p>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -373,12 +347,83 @@
         </td>
     </tr>
 </table>
+<form id="addressForm" th:action="@{/customer/updateAddress}" method="post">
+    <div id="light" class="white_content">
+        <input style="display: none" id="id" name="id">
+        姓名:<input id="name" name="name" type="text"><br>
+        电话:<input id="phoneNumber" name="phoneNumber" type="text"><br>
+        地址:<input id="location" name="location" type="text"><br>
+        <input type="button" value="提交" onclick="addressFormSubmit()"></a>
+        <input type="button" value="取消" onclick="hideAddressDetailInfo()"></a>
+    </div>
+</form>
+
 </body>
 <script th:inline="javascript" type="text/javascript" charset="utf-8">
-
-    function updateDetailInfo() {
-        javascript:window.location.href= '/customer/infoDetail';
+    function uploadImgFile() {
+        document.getElementById("myForm").submit();
     }
 
+    let addressInfos = [[${userInfo.userAdderss}]];
+
+    function putAddressInfo(count){
+        let index = count.id;
+        let addressInfo = addressInfos[index]
+
+        document.getElementById('id').value = addressInfo.id;
+        document.getElementById('name').value = addressInfo.name;
+        document.getElementById('phoneNumber').value = addressInfo.phoneNumber;
+        document.getElementById('location').value = addressInfo.location;
+        showAddressDetailInfo();
+    }
+
+    function showBlackAddressDetailInfo() {
+        document.getElementById('name').value = '';
+        document.getElementById('phoneNumber').value = '';
+        document.getElementById('location').value = '';
+        showAddressDetailInfo();
+    }
+
+    function showAddressDetailInfo() {
+        document.getElementById('light').style.display='block';
+        document.getElementById('fade').style.display='block';
+    }
+
+    function hideAddressDetailInfo() {
+        document.getElementById('light').style.display='none';
+        document.getElementById('fade').style.display='none';
+    }
+    
+    function addressFormSubmit() {
+        let name = document.getElementById('name').value;
+        let phoneNumber = document.getElementById('phoneNumber').value;
+        let location = document.getElementById('location').value;
+        if(name.length > 0 && phoneNumber.length > 0 && location.length > 0){
+            document.getElementById("addressForm").submit();
+        }else{
+            alert("请完善信息");
+        }
+    }
+    function updateUserName() {
+
+        let name = document.getElementById("username").value
+
+        let params = {
+            name : name
+        }
+
+        $.ajax({
+            type : "POST",
+            url : "/customer/updateUserName",
+            async: false,
+            data : params,
+            success : function(result) {
+                if(result == "success"){
+                    document.getElementById("username").value = name;
+                }
+            }
+        });
+    }
+    
 </script>
 </html>

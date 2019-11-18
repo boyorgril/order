@@ -16,9 +16,10 @@ public class CommentSqlProvider {
         } else {
             sql.SELECT("id");
         }
-        sql.SELECT("orderId");
+        sql.SELECT("user_id");
+        sql.SELECT("order_id");
         sql.SELECT("content");
-        sql.SELECT("createAt");
+        sql.SELECT("create_at");
         sql.FROM("comment");
         applyWhere(sql, example, false);
 

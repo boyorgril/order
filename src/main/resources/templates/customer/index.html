@@ -147,14 +147,13 @@
         <!--            商家信息-->
         <tr class="tr" th:each=" shop : ${shops}">
             <div class="list">
-                <a th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" class="box btn btn-default"></a>
                     <table class="tbl" align="center">
-                            <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
-                            <td>
+                        <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
+                        <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
+                        <td th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" >
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>
-                                        <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
                                     </tr>
                                     <tr>
                                         <td >
@@ -217,7 +216,5 @@
             }
         });
     }
-
-
 </script>
 </html>

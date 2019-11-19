@@ -86,6 +86,11 @@ public interface ShopFoodMapper {
     })
     int dropFoodById(Long sfid);
 
+    @Update({
+            "update shopfood set imgUrl = #{imgUrl,jdbcType=VARCHAR} where id = #{shopId,jdbcType=BIGINT}"
+    })
+    int updatePic(String imgUrl,Long shopId);
+
     @Insert({
             "insert into shopfood(name,imgUrl,price,introduce,shopId) value(#{name,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{introduce,jdbcType=VARCHAR},#{shopId,jdbcType=BIGINT})"
     })

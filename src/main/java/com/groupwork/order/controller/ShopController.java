@@ -2,16 +2,24 @@ package com.groupwork.order.controller;
 
 import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopFood;
+import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.service.OrderService;
 import com.groupwork.order.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 
 @Controller
 public class ShopController {
@@ -19,6 +27,8 @@ public class ShopController {
     private ShopService shopService;
     @Autowired
     private OrderService orderService;
+    @Value(value = "${resources_path}")
+    String resources_path;//资源文件绝对地址目录
 
     @RequestMapping("shop/index")
     public String enterIndex(Model model, HttpServletRequest httpRequest){
@@ -50,26 +60,62 @@ public class ShopController {
         return "shop/addShop";
     }
 
+    @RequestMapping("/shop/changeImg")
+    public String saveImgUrl(@RequestParam("upFile") MultipartFile file, HttpServletRequest servletRequest){
+        Long userId = (Long) servletRequest.getSession().getAttribute("userId");
+        String fileName = userId + new Date().getTime() + ".jpg";
+        try{
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(resources_path + fileName);
+            Files.write(path, bytes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        shopService.updatePic("/" + fileName,userId);
+
+        return "redirect:/gotoModify";
+    }
+
+    @RequestMapping("/shopfoodModify/changeImg")
+    public String saveFoodImgUrl(@RequestParam("upFile") MultipartFile file, HttpServletRequest servletRequest,Model model){
+        Long userId = (Long) servletRequest.getSession().getAttribute("shopModifyFoodId");
+        System.out.println(userId);
+        String fileName = userId + new Date().getTime() + ".jpg";
+        try{
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(resources_path + fileName);
+            Files.write(path, bytes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        shopService.updateFoodPic("/" + fileName,userId);
+
+        return "redirect:/shop/modifyFood?sfId="+userId;
+    }
+
     @RequestMapping("/shop/gotoOrderDetail")
     public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
         model.addAttribute("orderId",oid);
-        //model.addAttribute("orderStatus",orderService.getStatus(oid));
+        model.addAttribute("orderStatus",orderService.getStatus(oid));
         return "shop/orderDetail";
     }
 
     @RequestMapping("/shop/checkOrder")
     public String checkOrder(@RequestParam("orderId")Long oid){
         //数据库修改
-        //orderService.updateStatus(oid);
+        orderService.updateStatus(oid);
         //重定向
         return "redirect:/shop/gotoOrderList";
     }
 
     @RequestMapping("/shop/modifyFood")
-    public String gotoModifyFood(Model model,@RequestParam("sfId")Long sfid){
+    public String gotoModifyFood(Model model,@RequestParam("sfId")Long sfid,HttpServletRequest httpServletRequest){
         model.addAttribute("shopfood",shopService.getFoodById(sfid));
         model.addAttribute("sfid",sfid);
+        httpServletRequest.getSession().setAttribute("shopModifyFoodId",sfid);
         return "/shop/modifyFood";
     }
 
@@ -86,7 +132,7 @@ public class ShopController {
     @RequestMapping("/shop/changeShopInfo")
     public String modifyInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
         Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
-        shopService.updateInfo(name,imgUrl,introduce,shopId);
+        shopService.updateInfo(name,shopService.getShopImgByid(shopId),introduce,shopId);
         return"redirect:/shop/index";
     }
 
@@ -108,7 +154,7 @@ public class ShopController {
     @RequestMapping("/shop/modifyFoodDetail")
     public String modifyFood(@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,@RequestParam("introduce")String introduce,@RequestParam("sfId")Long sfid){
         BigDecimal price = BigDecimal.valueOf(Double.valueOf(pricestr));
-        shopService.updateShopFood(name,imgUrl,price,introduce,sfid);
+        shopService.updateShopFood(name,shopService.getFoodImgByFoodId(sfid),price,introduce,sfid);
         return "redirect:/shop/index";
     }
 

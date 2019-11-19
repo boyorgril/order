@@ -75,4 +75,14 @@ public interface ShopMapper {
             "update shop set name = #{name,jdbcType=VARCHAR},shop_Img_Url = #{shop_Img_Url,jdbcType=VARCHAR},introduce = #{introduce,jdbcType=VARCHAR} where user_id = #{shopId,jdbcType=BIGINT}"
     })
     int updateInfo(String name,String shop_Img_Url,String introduce,Long shopId);
+
+    @Update({
+            "update shop set shop_Img_Url = #{shop_Img_Url,jdbcType=VARCHAR} where user_id = #{shopId,jdbcType=BIGINT}"
+    })
+    int updatePic(String shop_Img_Url,Long shopId);
+
+    @Select({
+        "select shop_Img_Url from shop where user_id = #{shopId,jdbcType=BIGINT}"
+    })
+    String getImg(Long shopId);
 }

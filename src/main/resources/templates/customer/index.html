@@ -150,7 +150,7 @@
                     <table class="tbl" align="center">
                         <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                         <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
-                        <td th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" >
+                        <td th:onclick="'javascript:findShopInfo('+${shop.shopOwnerId}+')'" >
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>
@@ -158,7 +158,7 @@
                                     <tr>
                                         <td >
                                             <div class="pingjia">
-                                                <img src="/img/star.png" class="pic pic-size"/>
+                                                <img th:src="@{/img/star.png}" class="pic pic-size"/>
                                                 <img src="/img/star.png" class="pic pic-size"/>
                                                 <img src="/img/star.png" class="pic pic-size"/>
                                             </div>

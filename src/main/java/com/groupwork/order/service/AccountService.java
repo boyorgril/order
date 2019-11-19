@@ -6,6 +6,7 @@ import com.groupwork.order.datasource.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +19,12 @@ public class AccountService {
     }
 
     public int accountRegister(User user){
+        user.setCreateAt(new Date());
+        user.setUserName(user.getAccount());
+        if("BUYER".equals(user.getType())){
+            user.setMoney(500.00);
+        }
+        user.setImgUrl("/img/initial.png");
        return accountMapper.accountRegister(user);
     }
 

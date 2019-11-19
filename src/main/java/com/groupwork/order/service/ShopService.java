@@ -104,6 +104,9 @@ public class ShopService {
         ShopFoodExample example = new ShopFoodExample();
         example.createCriteria().andShopIdEqualTo(shopId);
         List<ShopFood> shopFoods = shopFoodMapper.selectByExample(example);
+        if(shopFoods.size() == 0){
+            return null;
+        }
         List<ShopFoodEntity> entities = new ArrayList<>();
         shopFoods.forEach(food ->{
             ShopFoodEntity entity = new ShopFoodEntity();

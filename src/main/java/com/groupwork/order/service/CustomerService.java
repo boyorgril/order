@@ -136,6 +136,9 @@ public class CustomerService {
         OrderDetailExample example = new OrderDetailExample();
         example.createCriteria().andSfidEqualTo(foodId);
         List<OrderDetail> orderId = orderDetailMapper.selectByExample(example);
+        if(orderId.size() == 0){
+            return commentEntity;
+        }
         commentEntity.setUserComment(findFoodComment(orderId));
 
         return commentEntity;
@@ -153,6 +156,10 @@ public class CustomerService {
         example.createCriteria().andOrderIdIn(orderIds);
 
         List<Comment> comments = commentMapper.selectByExample(example);
+
+        if(comments.size() == 0){
+            return null;
+        }
 
         comments.forEach(comment -> {
             CommentEntity commentEntity = new CommentEntity();

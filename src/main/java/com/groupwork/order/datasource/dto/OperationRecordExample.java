@@ -2,7 +2,6 @@ package com.groupwork.order.datasource.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class OperationRecordExample {
@@ -106,32 +105,6 @@ public class OperationRecordExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
-        }
-
         public Criteria andIdIsNull() {
             addCriterion("id is null");
             return (Criteria) this;
@@ -192,63 +165,63 @@ public class OperationRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNull() {
-            addCriterion("userId is null");
+        public Criteria andIpAddressIsNull() {
+            addCriterion("ip_address is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNotNull() {
-            addCriterion("userId is not null");
+        public Criteria andIpAddressIsNotNull() {
+            addCriterion("ip_address is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(Long value) {
-            addCriterion("userId =", value, "userId");
+        public Criteria andIpAddressEqualTo(String value) {
+            addCriterion("ip_address =", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(Long value) {
-            addCriterion("userId <>", value, "userId");
+        public Criteria andIpAddressNotEqualTo(String value) {
+            addCriterion("ip_address <>", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(Long value) {
-            addCriterion("userId >", value, "userId");
+        public Criteria andIpAddressGreaterThan(String value) {
+            addCriterion("ip_address >", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("userId >=", value, "userId");
+        public Criteria andIpAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("ip_address >=", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(Long value) {
-            addCriterion("userId <", value, "userId");
+        public Criteria andIpAddressLessThan(String value) {
+            addCriterion("ip_address <", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(Long value) {
-            addCriterion("userId <=", value, "userId");
+        public Criteria andIpAddressLessThanOrEqualTo(String value) {
+            addCriterion("ip_address <=", value, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<Long> values) {
-            addCriterion("userId in", values, "userId");
+        public Criteria andIpAddressIn(List<String> values) {
+            addCriterion("ip_address in", values, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<Long> values) {
-            addCriterion("userId not in", values, "userId");
+        public Criteria andIpAddressNotIn(List<String> values) {
+            addCriterion("ip_address not in", values, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(Long value1, Long value2) {
-            addCriterion("userId between", value1, value2, "userId");
+        public Criteria andIpAddressBetween(String value1, String value2) {
+            addCriterion("ip_address between", value1, value2, "ipAddress");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(Long value1, Long value2) {
-            addCriterion("userId not between", value1, value2, "userId");
+        public Criteria andIpAddressNotBetween(String value1, String value2) {
+            addCriterion("ip_address not between", value1, value2, "ipAddress");
             return (Criteria) this;
         }
 
@@ -323,62 +296,62 @@ public class OperationRecordExample {
         }
 
         public Criteria andCreateAtIsNull() {
-            addCriterion("createAt is null");
+            addCriterion("create_at is null");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtIsNotNull() {
-            addCriterion("createAt is not null");
+            addCriterion("create_at is not null");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtEqualTo(Date value) {
-            addCriterionForJDBCDate("createAt =", value, "createAt");
+            addCriterion("create_at =", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtNotEqualTo(Date value) {
-            addCriterionForJDBCDate("createAt <>", value, "createAt");
+            addCriterion("create_at <>", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtGreaterThan(Date value) {
-            addCriterionForJDBCDate("createAt >", value, "createAt");
+            addCriterion("create_at >", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createAt >=", value, "createAt");
+            addCriterion("create_at >=", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtLessThan(Date value) {
-            addCriterionForJDBCDate("createAt <", value, "createAt");
+            addCriterion("create_at <", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createAt <=", value, "createAt");
+            addCriterion("create_at <=", value, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtIn(List<Date> values) {
-            addCriterionForJDBCDate("createAt in", values, "createAt");
+            addCriterion("create_at in", values, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtNotIn(List<Date> values) {
-            addCriterionForJDBCDate("createAt not in", values, "createAt");
+            addCriterion("create_at not in", values, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createAt between", value1, value2, "createAt");
+            addCriterion("create_at between", value1, value2, "createAt");
             return (Criteria) this;
         }
 
         public Criteria andCreateAtNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createAt not between", value1, value2, "createAt");
+            addCriterion("create_at not between", value1, value2, "createAt");
             return (Criteria) this;
         }
     }

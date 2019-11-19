@@ -149,7 +149,7 @@
             <div class="list">
                     <table class="tbl" align="center">
                         <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
-                        <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
+                        <input type="button" th:id="collectShop+${shop.shopOwnerId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopOwnerId}+')'">
                         <td th:onclick="'javascript:findShopInfo('+${shop.shopOwnerId}+')'" >
                                 <table class="tbl" align="center">
                                     <tr>

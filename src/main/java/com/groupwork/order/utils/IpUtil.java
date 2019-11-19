@@ -20,6 +20,8 @@ public class IpUtil {
      * @param request
      * @return
      */
+    public static String ipAddress;
+
     public static String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -37,6 +39,7 @@ public class IpUtil {
         if (ip.split(",").length > 1) {
             ip = ip.split(",")[0];
         }
+        ipAddress = ip;
         return ip;
     }
 

@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * operationrecord
+ * operation_record
  * @author 
  */
 public class OperationRecord implements Serializable {
     private Long id;
 
-    private Long userId;
+    private String ipAddress;
 
     private String describe;
 
@@ -26,12 +26,12 @@ public class OperationRecord implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getIpAddress() {
+        return ipAddress;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public String getDescribe() {

@@ -9,6 +9,7 @@ import java.util.List;
 public class ShopEntity {
 
 
+    private Long shopOwnerId;
     private Long shopId;
     private String name;
     private String shopImgUrl;

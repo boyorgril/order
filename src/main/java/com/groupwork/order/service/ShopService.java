@@ -74,6 +74,7 @@ public class ShopService {
         allShop.forEach(shop ->{
             ShopEntity shopEntity = new ShopEntity();
             shopEntity.setShopId(shop.getId());
+            shopEntity.setShopOwnerId(shop.getUserId());
             shopEntity.setName(shop.getName());
             shopEntity.setShopImgUrl(shop.getShopImgUrl());
             shopEntity.setIntroduce(shop.getIntroduce());

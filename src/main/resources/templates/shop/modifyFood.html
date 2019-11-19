@@ -59,6 +59,9 @@
             //console.log(name,"+",price,"+",introduce,"+",sfid);
             javascript:window.location.href= "/shop/modifyFoodDetail?name=" + name +"&imgUrl="+ imgUrl+"&price="+price+"&introduce="+introduce+"&sfId="+sfid;
         }
+        function uploadImgFile() {
+            document.getElementById("myForm").submit();
+        }
     </script>
     <!--    导航栏设置文本-->
     <style>
@@ -205,6 +208,17 @@
                         </td>
                     </tr>
 <!--                    上传按钮-->
+                    <tr>
+                        <td>
+                            <form id="myForm" th:action="@{/shopfoodModify/changeImg}" method="post" enctype="multipart/form-data">
+                                <div>
+                                    <button style="position:relative; background-color: #5cb85c;width: 120px;height: 30px;margin-top: 30px" class="btn btn-info btn-fill btn-wd" id="btn" name="btn">
+                                        上传图片<input type="file" id="upFile" name="upFile" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0" accept="image/gif,image/jpeg,image/jpg,image/png"  class="form-control" aria-describedby="basic-addon2" onchange="uploadImgFile()">
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

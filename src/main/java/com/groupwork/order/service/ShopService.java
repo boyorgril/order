@@ -55,6 +55,10 @@ public class ShopService {
         return shopFoodMapper.getImgUrlByID(sfid);
     }
 
+    public String getShopImgByid(Long shopId){
+        return shopMapper.getImg(shopId);
+    }
+
     public ShopFood getFoodById(Long id){
         return shopFoodMapper.getFoodByID(id);
     }
@@ -67,6 +71,13 @@ public class ShopService {
         shopMapper.updateInfo(name,shop_Img_Url,introduce,shopId);
     }
 
+    public void updatePic(String shop_Img_Url,Long shopId){
+        shopMapper.updatePic(shop_Img_Url,shopId);
+    }
+
+    public void updateFoodPic(String shop_Img_Url,Long shopId){
+        shopFoodMapper.updatePic(shop_Img_Url,shopId);
+    }
 
     public List<ShopEntity> allShop(Long userId){
         List<Shop> allShop = shopMapper.selectByExample(new ShopExample());

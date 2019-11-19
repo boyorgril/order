@@ -350,13 +350,13 @@
     </tr>
 </table>
 <form id="addressForm" th:action="@{/customer/updateAddress}" method="post">
-    <div id="light" class="white_content">
+    <div id="light" class="white_content" style="border-radius: 10px">
         <input style="display: none" id="id" name="id">
-        姓名:<input id="name" name="name" type="text"><br>
-        电话:<input id="phoneNumber" name="phoneNumber" type="text"><br>
-        地址:<input id="location" name="location" type="text"><br>
-        <input type="button" value="提交" onclick="addressFormSubmit()"></a>
-        <input type="button" value="取消" onclick="hideAddressDetailInfo()"></a>
+        姓名:<input id="name" name="name" type="text" style="margin-top: 10px;"><br>
+        电话:<input id="phoneNumber" name="phoneNumber" type="text" style="margin-top: 10px"><br>
+        地址:<input id="location" name="location" type="text" style="margin-top: 10px"><br>
+        <input type="button"class="btn btn-default" style="background-color: #5cb85c;color: white;margin-top: 10px" value="提交" onclick="addressFormSubmit()"></a>
+        <input type="button"class="btn btn-default" style="margin-top: 10px" value="取消" onclick="hideAddressDetailInfo()"></a>
     </div>
 </form>
 

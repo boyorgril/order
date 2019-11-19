@@ -56,7 +56,7 @@ public class OrderController {
 
     @RequestMapping("/shop/gotoOrderList")
     public String enterShopOrderList(Model model, HttpServletRequest httpRequest){
-        Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long userId = (Long) httpRequest.getSession().getAttribute("shopId");
         String type = (String)httpRequest.getSession().getAttribute("userType");
         List<Order> orders =  new ArrayList<>();
 
@@ -64,6 +64,10 @@ public class OrderController {
             orders = orderService.getOrders(userId);
         }else{
             orders = orderService.getUserOrders(userId);
+        }
+        for (Order o:orders
+             ) {
+            System.out.println(o);
         }
         List<OrderEntity> orderEntities = new ArrayList<OrderEntity>();
         for (Order order :orders)   {

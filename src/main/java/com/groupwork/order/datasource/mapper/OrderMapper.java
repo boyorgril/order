@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface OrderMapper {
 
     @Select({
-            "select id,status,buyId,addressId,totalMoney from `order` where sellId = #{userId,jdbcType=BIGINT}"
+            "select id,status,buyId,addressId,totalMoney from `order` where sellId = #{sellId,jdbcType=BIGINT}"
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),

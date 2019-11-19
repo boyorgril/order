@@ -143,4 +143,8 @@ public class ShopService {
         shopEntity.convert(shopMapper.selectByPrimaryKey(shopId));
         return shopEntity;
     }
+
+    public Long getId(Long shopId){
+        return shopMapper.getIdByUserId(shopId);
+    }
 }

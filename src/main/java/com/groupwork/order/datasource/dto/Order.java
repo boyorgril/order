@@ -115,4 +115,12 @@ public class Order implements Serializable {
     public void setPayTime(Date payTime) {
         this.payTime = payTime;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "addressId=" + addressId +
+                ", totalMoney=" + totalMoney +
+                '}';
+    }
 }

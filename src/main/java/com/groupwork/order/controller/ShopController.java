@@ -32,7 +32,9 @@ public class ShopController {
 
     @RequestMapping("shop/index")
     public String enterIndex(Model model, HttpServletRequest httpRequest){
-        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long shopId = shopService.getId(userId);
+        httpRequest.getSession().setAttribute("shopId",shopId);
         String shopName = shopService.getShopName(shopId);
         if(shopName == null){
             return "redirect:/gotoAddShop";
@@ -44,14 +46,14 @@ public class ShopController {
 
     @RequestMapping("/gotoModify")
     public String gotoModify(Model model, HttpServletRequest httpRequest){
-        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long shopId = (Long) httpRequest.getSession().getAttribute("shopId");
         model.addAttribute("shop", shopService.getShopInfo(shopId));
         return "shop/shopInfoModify";
     }
 
     @RequestMapping("/gotoAddShop")
     public String gotoAddShop(Model model, HttpServletRequest httpRequest){
-        Long shopId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long shopId = (Long) httpRequest.getSession().getAttribute("shopId");
         Shop shop =new Shop();
         shop.setName("请输入店名");
         shop.setIntroduce("请输入店铺简介");
@@ -62,7 +64,7 @@ public class ShopController {
 
     @RequestMapping("/shop/changeImg")
     public String saveImgUrl(@RequestParam("upFile") MultipartFile file, HttpServletRequest servletRequest){
-        Long userId = (Long) servletRequest.getSession().getAttribute("userId");
+        Long userId = (Long) servletRequest.getSession().getAttribute("shopId");
         String fileName = userId + new Date().getTime() + ".jpg";
         try{
             byte[] bytes = file.getBytes();
@@ -131,7 +133,7 @@ public class ShopController {
 
     @RequestMapping("/shop/changeShopInfo")
     public String modifyInfo(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("introduce")String introduce){
-        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("shopId");
         shopService.updateInfo(name,shopService.getShopImgByid(shopId),introduce,shopId);
         return"redirect:/shop/index";
     }
@@ -146,7 +148,7 @@ public class ShopController {
     @RequestMapping("/shop/addFoodDetail")
     public String addFood(HttpServletRequest httpServletRequest,@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,@RequestParam("introduce")String introduce){
         BigDecimal price = BigDecimal.valueOf(Double.valueOf(pricestr));
-        Long shopId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        Long shopId = (Long) httpServletRequest.getSession().getAttribute("shopId");
         shopService.addShopFood(name,imgUrl,price,introduce,shopId);
         return "redirect:/shop/index";
     }

@@ -147,7 +147,7 @@
                         <td> <input type="button" th:id="collectShop+${shop.shopOwnerId}" class="btn btn-block"
                                   style="width: 80px;height: 30px;margin-right: 20px;border-radius: 10px;outline: none;background-color: #5cb85c;color: white;text-align: center"  th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopOwnerId}+')'"></td>
                         <td ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
-                        <td th:onclick="'javascript:findShopInfo('+${shop.shopOwnerId}+')'" >
+                        <td th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" >
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>

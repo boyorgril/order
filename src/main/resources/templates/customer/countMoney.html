@@ -311,7 +311,7 @@
             </div>
             <!--下拉列表-->
             <div class="dropdown">
-                <button class="dropbtn" id="addressChoose" name="addressChoose" value="请选择一个地址"></button>
+                <button class="dropbtn" id="addressChoose" name="addressChoose" >请选择地址</button>
                 <div class="dropdown-content">
                     <li th:each=" address ,addressStat:${countEntity.userAdderss}" th:id="${addressStat.index}" th:text="${address.location}" onclick="putAddressInfo(this)"></li>
                 </div>

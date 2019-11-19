@@ -50,7 +50,7 @@
             border-radius:20px
         }
         .pic{
-            width:100%;
+            width:220px;
             border-radius: 10px;
             margin-top:10px;
             margin-bottom:10px;
@@ -104,7 +104,7 @@
     <style>
         /*表格区域参数设置*/
         .list{
-            margin-left: 250px;
+            margin-left: 150px;
             margin-right: auto;
             margin-bottom: 10px;
             margin-top: 10px;
@@ -119,10 +119,6 @@
             align-content: center;
         }
         /*行参数设置*/
-        .tr{
-            height: 20px;
-            width: 60%;
-        }
         .bg{
             background-color:#f7f4f8;
         }
@@ -145,11 +141,12 @@
 <div style="overflow-y: scroll;height: 600px; " class="table">
     <div >
         <!--            商家信息-->
-        <tr class="tr" th:each=" shop : ${shops}">
+        <tr  th:each=" shop : ${shops}">
             <div class="list">
                     <table class="tbl" align="center">
-                        <td width="25%" ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
-                        <input type="button" th:id="collectShop+${shop.shopId}" th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'">
+                        <td> <input type="button" th:id="collectShop+${shop.shopId}" class="btn btn-block"
+                                  style="width: 80px;height: 30px;margin-right: 20px;border-radius: 10px;outline: none;background-color: #5cb85c;color: white;text-align: center"  th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'"></td>
+                        <td ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                         <td th:onclick="'javascript:findShopInfo('+${shop.shopOwnerId}+')'" >
                                 <table class="tbl" align="center">
                                     <tr>

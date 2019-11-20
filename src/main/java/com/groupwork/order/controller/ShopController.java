@@ -154,7 +154,8 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/modifyFoodDetail")
-    public String modifyFood(@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,@RequestParam("introduce")String introduce,@RequestParam("sfId")Long sfid){
+    public String modifyFood(@RequestParam("name")String name,@RequestParam("imgUrl")String imgUrl,@RequestParam("price")String pricestr,
+                             @RequestParam("introduce")String introduce,@RequestParam("sfId")Long sfid){
         BigDecimal price = BigDecimal.valueOf(Double.valueOf(pricestr));
         shopService.updateShopFood(name,shopService.getFoodImgByFoodId(sfid),price,introduce,sfid);
         return "redirect:/shop/index";

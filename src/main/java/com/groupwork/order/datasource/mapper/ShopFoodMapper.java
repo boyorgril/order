@@ -4,6 +4,7 @@ import com.groupwork.order.datasource.dto.ShopFood;
 import com.groupwork.order.datasource.dto.ShopFoodExample;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.*;
@@ -77,9 +78,10 @@ public interface ShopFoodMapper {
     ShopFood getFoodByID(Long id);
 
     @Update({
-            "update shopfood set name = #{name,jdbcType=VARCHAR},imgUrl = #{imgUrl,jdbcType=VARCHAR},price = #{price,jdbcType=DECIMAL},introduce = #{introduce,jdbcType=VARCHAR} where id = #{sfid,jdbcType=BIGINT}"
+            "update shopfood set name = #{name,jdbcType=VARCHAR},imgUrl = #{imgUrl,jdbcType=VARCHAR},price = #{price,jdbcType=DECIMAL}," +
+                    "introduce = #{introduce,jdbcType=VARCHAR},updateWhen = #{updateWhen,jdbcType=TIMESTAMP} where id = #{sfid,jdbcType=BIGINT}"
     })
-    int updateShopFood(String name,String imgUrl,BigDecimal price,String introduce ,Long sfid);
+    int updateShopFood(String name, String imgUrl, BigDecimal price, String introduce , Long sfid, Date updateWhen);
 
     @Delete({
             "delete from shopfood where id = #{sfid,jdbcType=BIGINT}"
@@ -87,12 +89,13 @@ public interface ShopFoodMapper {
     int dropFoodById(Long sfid);
 
     @Update({
-            "update shopfood set imgUrl = #{imgUrl,jdbcType=VARCHAR} where id = #{shopId,jdbcType=BIGINT}"
+            "update shopfood set imgUrl = #{imgUrl,jdbcType=VARCHAR},updateWhen = #{updateWhen,jdbcType=TIMESTAMP} where id = #{shopId,jdbcType=BIGINT}"
     })
-    int updatePic(String imgUrl,Long shopId);
+    int updatePic(String imgUrl,Long shopId,Date updateWhen);
 
     @Insert({
-            "insert into shopfood(name,imgUrl,price,introduce,shopId) value(#{name,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{introduce,jdbcType=VARCHAR},#{shopId,jdbcType=BIGINT})"
+            "insert into shopfood(name,imgUrl,price,introduce,shopId,createAt) value(#{name,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL}," +
+                    "#{introduce,jdbcType=VARCHAR},#{shopId,jdbcType=BIGINT},#{createAt,jdbcType=TIMESTAMP})"
     })
-    int addShopFood(String name,String imgUrl,BigDecimal price,String introduce,Long shopId);
+    int addShopFood(String name,String imgUrl,BigDecimal price,String introduce,Long shopId,Date createAt);
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,11 +45,11 @@ public class ShopService {
     }
 
     public void updateShopFood(String name, String imgUrl, BigDecimal price, String introduce, Long sfid){
-        shopFoodMapper.updateShopFood(name,imgUrl,price,introduce,sfid);
+        shopFoodMapper.updateShopFood(name,imgUrl,price,introduce,sfid,new Date());
     }
 
     public void addShopFood(String name,String imgUrl,BigDecimal price,String introduce,Long shopId){
-        shopFoodMapper.addShopFood(name,imgUrl,price,introduce,shopId);
+        shopFoodMapper.addShopFood(name,imgUrl,price,introduce,shopId,new Date());
     }
 
     public String getFoodImgByFoodId(Long sfid){
@@ -76,7 +77,7 @@ public class ShopService {
     }
 
     public void updateFoodPic(String shop_Img_Url,Long shopId){
-        shopFoodMapper.updatePic(shop_Img_Url,shopId);
+        shopFoodMapper.updatePic(shop_Img_Url,shopId,new Date());
     }
 
     public List<ShopEntity> allShop(Long userId){

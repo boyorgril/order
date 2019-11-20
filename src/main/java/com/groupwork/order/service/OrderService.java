@@ -3,10 +3,8 @@ package com.groupwork.order.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.groupwork.order.datasource.dto.*;
-import com.groupwork.order.datasource.mapper.AddressMapper;
-import com.groupwork.order.datasource.mapper.OrderDetailMapper;
-import com.groupwork.order.datasource.mapper.OrderMapper;
-import com.groupwork.order.datasource.mapper.ShopFoodMapper;
+import com.groupwork.order.datasource.mapper.*;
+import com.groupwork.order.model.CommentEntity;
 import com.groupwork.order.model.OrderCountEntity;
 import com.groupwork.order.model.OrderDetailFoodEntity;
 import com.groupwork.order.model.OrderFood;
@@ -32,6 +30,8 @@ public class OrderService {
     private AddressMapper addressMapper;
     @Autowired
     private ShopFoodMapper shopFoodMapper;
+    @Autowired
+    private CommentMapper commentMapper;
 
     public Order saveOrder(Long buyId, Long sellId, double totalMoney){
         Order order = new Order();
@@ -141,4 +141,25 @@ public class OrderService {
     public void saveOrderAddressInfo(String orderNum, String addressId) {
         orderMapper.saveOrderAddress(new BigDecimal(orderNum).longValue(), new BigDecimal(addressId).longValue(), "NOCOMPLETE", new Date());
     }
+
+    public CommentEntity findOrderComment(Long orderId){
+        CommentEntity entity = new CommentEntity();
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria().andOrderIdEqualTo(orderId);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        if(comments.size() > 0){
+            entity.setComment(comments.get(0).getContent());
+        }
+        return entity;
+    }
+
+    public void insertComment(Long userId, Long orderId, String content){
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setOrderId(orderId);
+        comment.setUserId(userId);
+        comment.setCreateAt(new Date());
+        commentMapper.insert(comment);
+    }
+
 }

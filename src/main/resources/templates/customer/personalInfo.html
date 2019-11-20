@@ -247,7 +247,7 @@
                     <tr >
                         <td>
                             <!--                            菜品收藏单位-->
-                            <table class="tbl-in " th:each=" food :${collectFoods}">
+                            <table class="tbl-in " th:each=" food :${collectFoods}" th:onclick="'javascript:viewFood('+${food.foodId}+')'">
                                 <tr >
                                     <!--                    第一格-->
                                     <td >
@@ -261,7 +261,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td >
-                                                                <p class="mealwrite-time" th:text="${food.collectDate}"></p>
+                                                                <p class="mealwrite-time" th:text="${#dates.format(food.collectDate, 'yyyy-MM-dd HH:mm')}"></p>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -288,7 +288,7 @@
                     <tr >
                         <td>
                             <!--                            菜品收藏单位-->
-                            <table class="tbl-in " th:each="shop : ${collectShops}">
+                            <table class="tbl-in " th:each="shop : ${collectShops}" th:onclick="'javascript:viewShop('+${shop.shopId}+')'">
                                 <tr >
                                     <!--                    第一格-->
                                     <td >
@@ -302,7 +302,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td >
-                                                                <p class="mealwrite-time" th:text="${shop.collectDate}"></p>
+                                                                <p class="mealwrite-time" th:text="${#dates.format(shop.collectDate, 'yyyy-MM-dd HH:mm')}"></p>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -327,6 +327,14 @@
 
     function updateDetailInfo() {
         javascript:window.location.href= '/customer/infoDetail';
+    }
+
+    function viewFood(foodId){
+        javascript:window.location.href= '/customer/seeFoodComment/'+foodId;
+    }
+
+    function viewShop(shopId){
+        javascript:window.location.href= '/customer/visit/'+shopId;
     }
 
 </script>

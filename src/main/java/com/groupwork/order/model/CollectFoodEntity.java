@@ -8,12 +8,14 @@ import java.util.Date;
 @Data
 public class CollectFoodEntity {
 
+    private Long foodId;
     private String name;
     private String imgUrl;
     private String introduce;
     private Date collectDate;
 
     public void convert(ShopFood food){
+        this.foodId = food.getId();
         this.name = food.getName();
         this.imgUrl = food.getImgUrl();
         this.introduce = food.getIntroduce();

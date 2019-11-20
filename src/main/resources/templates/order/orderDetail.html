@@ -222,13 +222,58 @@
         </td>
     </tr>
 </table>
-<div th:switch="${orderStatus}">
-    <div th:case="'COMPLETE'" class="btn btn-block checkcheck" style="background-color:darkgray" onclick="javascript:window.location.href= '/shop/gotoOrderList'">
-        已完成
+
+<div>
+    <input id="orderComment" th:style="${comment.comment} ? '':'display:none'" th:value="${comment.comment}">
+    <button id="commentButton" style="display: none" onclick="submitComment()">提交评价</button>
+</div>
+
+<div th:switch="${userType}">
+    <div th:case="'SELLER'">
+        <div th:switch="${orderStatus}">
+            <div th:case="'COMPLETE'" class="btn btn-block checkcheck" style="background-color:darkgray" onclick="javascript:window.location.href= '/shop/gotoOrderList'">
+                已完成
+            </div>
+            <div th:case="'NOCOMPLETE'" class="btn btn-block greencheck checkcheck" th:onclick="'javascript:checkOrder('+${orderId}+')'">
+                完成订单
+            </div>
+        </div>
     </div>
-    <div th:case="'NOCOMPLETE'" class="btn btn-block greencheck checkcheck" th:onclick="'javascript:checkOrder('+${orderId}+')'">
-        完成订单
+    <div th:case="'BUYER'">
+        <div th:switch="${orderStatus}">
+            <div th:case="'COMPLETE'" id="content" th:disabled="${comment.comment} ? true:false" class="btn btn-block greencheck checkcheck" onclick="javascript:commentOrder()">
+                评价
+            </div>
+        </div>
     </div>
+
 </div>
 </body>
+<script th:inline="javascript" type="text/javascript" charset="utf-8">
+    function commentOrder() {
+        document.getElementById("orderComment").style.display='block';
+        document.getElementById("commentButton").style.display='block';
+    }
+    function submitComment() {
+        let comment = document.getElementById("orderComment").value
+        let orderID = [[${orderId}]];
+        let params = {
+            comment : comment,
+            orderId : orderID
+        }
+
+        $.ajax({
+            type : "POST",
+            url : "/order/commentSubmit",
+            async: false,
+            data : params,
+            success : function(result) {
+                if(result == "success"){
+                    document.getElementById("commentButton").style.display='none';
+                    document.getElementById("content").attr("disabled","true");
+                }
+            }
+        });
+    }
+</script>
 </html>

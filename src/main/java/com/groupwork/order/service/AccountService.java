@@ -1,10 +1,8 @@
 package com.groupwork.order.service;
 
-import com.groupwork.order.annotation.OperationLog;
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.datasource.dto.UserExample;
 import com.groupwork.order.datasource.mapper.AccountMapper;
-import com.groupwork.order.model.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,9 +98,21 @@ public class OrderController {
     @RequestMapping("/order/gotoOrderDetail")
     public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid, HttpServletRequest httpServletRequest){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
+        model.addAttribute("orderStatus",orderService.getStatus(oid));
         model.addAttribute("userType", (String)httpServletRequest.getSession().getAttribute("userType"));
+        model.addAttribute("orderId", oid);
+        model.addAttribute("comment", orderService.findOrderComment(oid));
         return "order/orderDetail";
     }
+
+    @RequestMapping("/order/commentSubmit")
+    @ResponseBody
+    public String saveComment( @RequestParam("comment")String comment, @RequestParam("orderId")String oid, HttpServletRequest httpServletRequest){
+        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        orderService.insertComment(userId, new BigDecimal(oid).longValue(), comment);
+        return "success";
+    }
+
 
     @RequestMapping("/user/index")
     public String userIndex(HttpServletRequest httpRequest){

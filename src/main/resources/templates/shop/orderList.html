@@ -100,7 +100,7 @@
             </td>
             <td >
                 <p th:text="总价 + '：' + ${order.totalMoney}" style="font-size: 20px">总价</p>
-                <p th:text="${order.who}" style="font-size: 20px">收件人 电话</p>
+                <p th:text="${order.who}" style="font-size: 15px">收件人 电话</p>
                 <p th:text="${order.address}" class="addressp" style="font-size: 15px ">收货地址</p>
             </td>
             <td th:switch="${order.status}">

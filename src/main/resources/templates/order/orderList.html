@@ -71,11 +71,13 @@
         .addressp{
             width: 300px;
             height: 30px;
-            margin-left: 10px;
+            font-family: "Tw Cen MT Condensed Extra Bold";
+            margin-left: 0px;
             margin-right: 50px;
             overflow-y: hidden;
             background-color: #f7f4f8;
             border-radius: 10px;
+            font-size: 15px;padding-left: 5px;padding-top: 3px
         }
         table{
             border-collapse:separate;
@@ -100,8 +102,8 @@
             </td>
             <td >
                 <p th:text="总价 + '：' + ${order.totalMoney}" style="font-size: 20px">总价</p>
-                <p th:text="${order.who}" style="font-size: 20px">收件人 电话</p>
-                <p class="addressp" style="font-size: 15px ">收货地址</p>
+                <p th:text="${order.who}" style="font-size: 15px">收件人 电话</p>
+                <p th:text="${order.address}" class="addressp" >收货地址</p>
             </td>
             <td th:switch="${order.status}">
                 <div class="btn btn-block" th:case="'COMPLETE'" style="background-color: #c9e2b3;color: white">

@@ -67,14 +67,20 @@
             margin-left:5px;
         }
         .pic-size{
-            width: 30%;
+            width: 20px;
             margin-top:0px;
             margin-bottom:0px;
             margin-right:0px;
             margin-left:0px;
         }
         .pingjia{
-            width: 80px;
+            width: 400px;
+        }
+        .foodBrief{
+            float: left;
+            width: 40px;
+            height: 35px;
+            padding-left: 5px;
         }
         .brief{
             float: left;
@@ -129,6 +135,7 @@
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">商家列表</li>
+    <li style="float: right" role="presentation"><a href="/logout">注销登录</a></li>
     <li style="float: right" role="presentation"><a href="/order/gotoOrderList">订单列表</a></li>
     <li style="float: right" role="presentation"><a href="/customer/personalInfo">个人主页</a></li>
 </ul>
@@ -144,11 +151,19 @@
         <tr  th:each=" shop : ${shops}">
             <div class="list">
                     <table class="tbl" align="center">
-                        <td> <input type="button" th:id="collectShop+${shop.shopOwnerId}" class="btn btn-block"
-                                  style="width: 80px;height: 30px;margin-right: 20px;border-radius: 10px;outline: none;background-color: #5cb85c;color: white;text-align: center"  th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopOwnerId}+')'"></td>
+                        <td> <input type="button" th:id="collectShop+${shop.shopId}" class="btn btn-block"
+                                  style="width: 80px;height: 30px;margin-right: 20px;border-radius: 10px;outline: none;background-color: #5cb85c;color: white;text-align: center"
+                                    th:value="${shop.collected} == 'COLLECT' ? '取消收藏':'收藏'" th:onclick="'javascript:collectShop('+${shop.shopId}+')'"></td>
                         <td ><img th:src="@{${shop.shopImgUrl}}" class="pic" alt="商家图标"></td>
                         <td th:onclick="'javascript:findShopInfo('+${shop.shopId}+')'" >
                                 <table class="tbl" align="center">
+                                    <tr>
+                                        <td>
+                                            <div class="pingjia" th:each=" foodImg : ${shop.foodImgUrl}">
+                                                <img th:src="@{${foodImg}}" class="pic  foodBrief"/>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td  class="shopname" th:text="${shop.name}"></td>
                                     </tr>
@@ -160,11 +175,6 @@
                                                 <img src="/img/star.png" class="pic pic-size"/>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                            <div class="pingjia" th:each=" foodImg : ${shop.foodImgUrl}">
-                                                <img th:src="@{${foodImg}}" class="pic pic-size"/>
-                                            </div>
                                     </tr>
                                     <tr>
                                         <td width="100%" class="box brief" ><p class="write" data-toggle="tooltip" title="鼠标移动到这" th:text="${shop.introduce}"></p></td>

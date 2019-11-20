@@ -299,15 +299,20 @@
     </td>
     <td>
         <div class="rightinfo">
-            <div>
-                <span style="position: relative;left: 68%;"th:text="总价"/>
-                <p style="margin-top: 50px;margin-bottom: 50px" class="mealname" th:text="${countEntity.totalMoney}"></p>
+            <div >
+                <div style="float: left;margin-bottom: 20px" class="mealname">总价：</div>
+                <div style="float: left;margin-bottom: 20px ">
+                    <p class="mealname" th:text="${countEntity.totalMoney}"></p>
+                </div>
             </div>
-            <div class="form-group"style="margin-top: 50px">
-                <input type="text" class="form-control" id="userName" autocomplete="off" >
+            <div class="form-group"style="margin-top: 30px">
+                <input type="text" class="form-control" id="userName" autocomplete="off" placeholder="请输入联系人" >
             </div>
-            <div class="form-group"style="margin-top: 50px">
-                <input type="text" class="form-control" id="phoneNumber" autocomplete="off">
+            <div class="form-group"style="margin-top: 30px">
+                <input type="text" class="form-control" id="phoneNumber" autocomplete="off" placeholder="请输入联系电话">
+            </div>
+            <div class="form-group"style="margin-top: 30px">
+                <input type="text" class="form-control" id="adrssDetail" autocomplete="off" placeholder="请输入联系地址">
             </div>
             <!--下拉列表-->
             <div class="dropdown">
@@ -335,7 +340,7 @@
         let addressInfo = addressInfos[index]
         document.getElementById("userName").value = addressInfo.name;
         document.getElementById("phoneNumber").value = addressInfo.phoneNumber;
-        document.getElementById("addressChoose").value = addressInfo.location;
+        document.getElementById("adrssDetail").value = addressInfo.location;
         document.getElementById("addressId").value = addressInfo.id;
     }
     function submitInfo(){

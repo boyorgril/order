@@ -206,9 +206,9 @@
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">菜品列表</li>
-    <li style="float: right" role="presentation"><a href="#">注销登录</a></li>
-    <li style="float: right" role="presentation"><a href="#">个人主页</a></li>
-    <li style="float: right" role="presentation"><a href="#">返回上级</a></li>
+    <li style="float: right" role="presentation"><a href="/logout">注销登录</a></li>
+    <li style="float: right" role="presentation"><a href="/customer/personalInfo">个人主页</a></li>
+    <li style="float: right" role="presentation"><a href="/customer/index">返回上级</a></li>
 </ul>
 <!--第三行-->
 <div class="fr-list">
@@ -248,16 +248,16 @@
                     <table align="right">
                         <tr>
                             <td width="20%" ><img th:src="${food.foodUrl}" class="pic-meal"></td>
+                            <div >
+                                <input class="btn btn-block" type="button" th:id="collectFood+${food.foodId}"
+                                       style="width: 80px;height: 30px;border-radius: 10px;margin-top: 20px;margin-left:300px;outline: none"
+                                       th:value="${food.collected} == 'COLLECT' ? '取消收藏':'收藏'"
+                                       th:onclick="'javascript:collectFood('+${food.foodId}+')'">
+                            </div>
                             <td th:onclick="'javascript:foodComment('+${food.foodId}+')'">
                                 <table class="tbl" align="center">
                                     <tr>
                                         <td  class="mealname" th:text="${food.name}"></td>
-                                        <div >
-                                             <input class="btn btn-block" type="button" th:id="collectFood+${food.foodId}"
-                                                    style="width: 80px;height: 30px;border-radius: 10px;margin-top: 20px;margin-left:300px;outline: none"
-                                                    th:value="${food.collected} == 'COLLECT' ? '取消收藏':'收藏'"
-                                                    th:onclick="'javascript:collectFood('+${food.foodId}+')'">
-                                        </div>
                                     </tr>
                                     <tr>
                                         <td >

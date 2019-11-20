@@ -46,7 +46,8 @@ public class OrderController {
             if(foodId == null)continue;
             orderEntity.setImgUrl(shopService.getFoodImgByFoodId(foodId));
             Address address = addressService.getAddress(order.getAddressId());
-            orderEntity.setWho(address.getName() + "  "+address.getPhoneNumber());
+            orderEntity.setWho("姓名： "+ address.getName() + "     电话："+address.getPhoneNumber());
+            orderEntity.setAddress(address.getLocation());
 //            System.out.println(orderEntity);
             if(orderEntity!=null) orderEntities.add(orderEntity);
         }

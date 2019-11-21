@@ -52,9 +52,11 @@ public class OrderService {
             JSONObject job = obj.getJSONObject(i);
             detail.setOid(orderId);
             detail.setSfid(new BigDecimal(job.get("foodId").toString()).longValue());
-            detail.setNumber(new BigDecimal(job.get("number").toString()).intValue());
-            orderDetailMapper.insert(detail);
-            detailList.add(detail);
+            if(new BigDecimal(job.get("number").toString()).intValue() != 0){
+                detail.setNumber(new BigDecimal(job.get("number").toString()).intValue());
+                orderDetailMapper.insert(detail);
+                detailList.add(detail);
+            }
         }
         return detailList;
     }

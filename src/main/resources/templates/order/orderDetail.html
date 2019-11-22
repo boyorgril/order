@@ -7,7 +7,11 @@
     <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
     <script th:src="@{/jquery/jquery-3.0.0.min.js}"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
-    <script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+    <script>$(function () { $("[data-toggle='tooltip']").tooltip();});
+            $(function () {
+                hideAddressDetailInfo();
+            })
+    </script>
     <script>
         function checkOrder(orderId) {
             javascript:window.location.href="/shop/checkOrder?orderId="+orderId;
@@ -46,6 +50,32 @@
             color: white;
             padding: 14px 16px;
             background-color: #4CAF50;
+        }
+        #fade{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=88);
+        }
+        #light {
+            display: none;
+            position: absolute;
+            top:35%;
+            left: 35%;
+            width: 30%;
+            height: 30%;
+            padding: 10px;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+            text-align: center;
         }
     </style>
     <!--菜品参数文本-->
@@ -150,29 +180,18 @@
         }
 
         .checkcheck{
-            color: white;width: 100px;height: 30px;margin-right: 300px;margin-top: 50px;float: right
-        }
-        .comment-text{
-            resize: none;
-            width: 250px;
-            height: 350px;
-            outline: none;
-            border: none;
-            background-color: #e6e8ea;
-            border-radius: 10px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-family: "Microsoft Tai Le";
-            padding-left: 5px;
-            padding-right: 5px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            font-size: 140%;
+            color: white;
+            width: 100px;
+            height: 30px;
+            margin-right: 300px;
+            margin-top: 50px;
+            float: right
         }
         /*第一格参数设置*/
     </style>
 </head>
 <body  style="background-color:#f7f4f8">
+<div id="fade" class="black_overlay"></div>
 <!--第一行-->
 <ul class="nav nav-pills .nav-justified ">
     <li role="presentation" class="active">订单详情</li>
@@ -182,7 +201,7 @@
 
 <div>
     <div style="float: left;margin-left: 300px">
-<table class="tbl-two "align="center" >
+        <table class="tbl-two "align="center" >
     <tr th:each = "orderDetail:${ShopFoods}" >
         <td>
             <table class="tbl-in "align="center" >
@@ -234,31 +253,22 @@
     </tr>
 </table>
     </div>
-    <div style=" float: right;margin-right: 20px;margin-top: 50px">
-        <textarea id="orderComment" th:style="${comment.comment} ? '':'display:none'" th:text="${comment.comment}" cols="30" rows="10" class="comment-text" readonly="readonly"></textarea>
-        <button id="commentButton" style="display: none;background-color: #c9e2b3;width: 100px;height: 30px;border-radius: 10px;color: white;text-align: center;float: right" class="btn btn-block" onclick="submitComment()">提交评价</button>
-    </div>
+    <form id="addressForm"  method="post">
+        <div id="light" class="white_content" style="border-radius: 10px">
+            <input style="display: none" id="id" name="id">
+            <textarea name="" id="orderComment" cols="30" rows="10" th:placeholder="评论" th:text="${comment.comment}"
+                style="width: 90%;height: 100px;resize: none;outline: none;margin-top: 20px"></textarea>
+            <input id="checkcomment" th:disabled="${comment.comment} ? true:false" type="button"class="btn btn-default" style="background-color: #5cb85c;color: white;margin-top: 10px" value="提交" onclick="submitComment()"></a>
+            <input type="button"class="btn btn-default" style="margin-top: 10px" value="取消" onclick="hideAddressDetailInfo()"></a>
+        </div>
+    </form>
 </div>
 
-
-<div th:switch="${userType}">
-    <div th:case="'SELLER'">
-        <div th:switch="${orderStatus}">
-            <div th:case="'COMPLETE'" class="btn btn-block checkcheck" style="background-color:darkgray" onclick="javascript:window.location.href= '/shop/gotoOrderList'">
-                已完成
-            </div>
-            <div th:case="'NOCOMPLETE'" class="btn btn-block greencheck checkcheck" th:onclick="'javascript:checkOrder('+${orderId}+')'">
-                完成订单
-            </div>
-        </div>
-    </div>
-    <div th:case="'BUYER'">
-        <div th:switch="${orderStatus}">
-            <button th:case="'COMPLETE'" id="content" th:disabled="${comment.comment} ? true:false" class="btn btn-block greencheck checkcheck" onclick="javascript:commentOrder()">
-                评价
-            </button>
-        </div>
-    </div>
+ <div >
+     <button id="content" class="btn btn-block greencheck checkcheck" onclick="showBlackAddressDetailInfo()">
+         评价
+     </button>
+ </div>
 
 </div>
 </body>
@@ -268,6 +278,21 @@
         document.getElementById("orderComment").removeAttribute("readonly");
         document.getElementById("commentButton").style.display='block';
     }
+
+    function hideAddressDetailInfo() {
+        document.getElementById('light').style.display='none';
+        document.getElementById('fade').style.display='none';
+    }
+
+    function showBlackAddressDetailInfo() {
+        showAddressDetailInfo();
+    }
+
+    function showAddressDetailInfo() {
+        document.getElementById('light').style.display='block';
+        document.getElementById('fade').style.display='block';
+    }
+
     function submitComment() {
         let comment = document.getElementById("orderComment").value
         let orderID = [[${orderId}]];
@@ -283,9 +308,8 @@
             data : params,
             success : function(result) {
                 if(result == "success"){
-                    document.getElementById("commentButton").style.display='none';
-                    document.getElementById("content").disabled = "disabled";
-                    document.getElementById("orderComment").disabled = "disabled";
+                    hideAddressDetailInfo()
+                    document.getElementById("checkcomment").disabled = "disabled";
                 }
             }
         });

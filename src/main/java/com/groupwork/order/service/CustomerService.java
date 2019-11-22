@@ -188,4 +188,14 @@ public class CustomerService {
         user.setUpdateWhen(new Date());
         userMapper.updateByExampleSelective(user, example);
     }
+
+    public double userMoney(Long userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        return user.getMoney();
+    }
+
+    public void updateUserMoney(double orderMoney, Long userId){
+        userMapper.updateUserMoney(orderMoney, userId);
+    }
+
 }

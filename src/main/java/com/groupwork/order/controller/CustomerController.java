@@ -96,12 +96,19 @@ public class CustomerController {
     public String saveOrder(@RequestParam("totalMoney") String totalMoney, @RequestParam("shopId") String shopId,
                             @RequestParam("orderNum") String orderNum, HttpServletRequest httpServletRequest, Model model){
         Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        double userMoney = customerService.userMoney(userId);
+        if (new BigDecimal(totalMoney).doubleValue()> userMoney){
+            model.addAttribute("reason","账户余额不足");
+            return "404";
+        }
+
         Order order = orderService.saveOrder(userId, new BigDecimal(shopId).longValue(),
                 new BigDecimal(totalMoney).doubleValue());
         List<OrderDetail> detailList = orderService.saveOrderDetail(order.getId(), orderNum);
 
         OrderCountEntity countEntity = orderService.buildModel(order,detailList);
 
+        customerService.updateUserMoney(new BigDecimal(totalMoney).doubleValue(), userId);
         model.addAttribute("countEntity", countEntity);
 
         return "customer/countMoney";

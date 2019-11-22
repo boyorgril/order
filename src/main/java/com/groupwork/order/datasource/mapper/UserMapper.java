@@ -11,17 +11,11 @@ import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
 public interface UserMapper {
-    long countByExample(UserExample example);
 
-    int deleteByExample(UserExample example);
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    List<User> selectByExample(UserExample example);
+    @Update({
+         "update user set money = money - #{orderMoney,jdbcType=DOUBLE} where id = #{userId,jdbcType=BIGINT}"
+    })
+    int updateUserMoney(double orderMoney, Long userId);
 
     @Select({
             "select userName, imgUrl, money from user where id = #{id,jdbcType=BIGINT}"

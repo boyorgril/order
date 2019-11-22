@@ -64,7 +64,7 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order record);
     @Select({
-            "select id,status,buyId,addressId,totalMoney from `order` where buyId = #{userId,jdbcType=BIGINT}"
+            "select id,status,buyId,addressId,totalMoney from `order` where buyId = #{userId,jdbcType=BIGINT} order by createAt DESC"
     })
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.BIGINT, id=true),

@@ -2,6 +2,8 @@ package com.groupwork.order.datasource.mapper;
 
 import com.groupwork.order.datasource.dto.User;
 import com.groupwork.order.datasource.dto.UserExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.*;
@@ -49,4 +51,14 @@ public interface UserMapper {
             @Result(column = "introduce", property = "type", jdbcType = JdbcType.VARCHAR),
     })
     List<User> selectAllShop();
+
+    @Select({
+            "select money from user where id = #{id,jdbcType=BIGINT}"
+    })
+    BigDecimal getMoneyById(Long id);
+
+    @Update({
+            "update user set money = #{money,jdbcType=DECIMAL} where id = #{userId,jdbcType=BIGINT}"
+    })
+    int updateMoney(BigDecimal money,Long userId);
 }

@@ -3,6 +3,7 @@ package com.groupwork.order.datasource.mapper;
 import com.groupwork.order.datasource.dto.Order;
 import com.groupwork.order.datasource.dto.OrderExample;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +73,11 @@ public interface OrderMapper {
             @Result(column = "totalMoney", property = "totalMoney", jdbcType = JdbcType.VARCHAR),
     })
     List<Order> getUserOrders(Long userId);
+
+    @Select({
+            "select totalMoney from `order` where id = #{oid,jdbcType=BIGINT}"
+    })
+    BigDecimal getOrderMoney(Long oid);
 
     @Update({
           "update `order` set addressId = #{addressId,jdbcType=INTEGER}, status = #{status,jdbcType=INTEGER}, payTime = #{payTime,jdbcType=TIMESTAMP} where id = #{orderId,jdbcType=BIGINT}"

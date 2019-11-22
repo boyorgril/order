@@ -2,6 +2,8 @@ package com.groupwork.order.datasource.mapper;
 
 import com.groupwork.order.datasource.dto.Shop;
 import com.groupwork.order.datasource.dto.ShopExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.*;

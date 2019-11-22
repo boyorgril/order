@@ -34,6 +34,8 @@ public class ShopController {
     public String enterIndex(Model model, HttpServletRequest httpRequest){
         Long userId = (Long) httpRequest.getSession().getAttribute("userId");
         Long shopId = shopService.getId(userId);
+        BigDecimal money = shopService.getMoney(userId);
+        if(money==null)money =new BigDecimal(0);
         httpRequest.getSession().setAttribute("shopId",shopId);
         String shopName = shopService.getShopName(shopId);
         if(shopName == null){
@@ -41,6 +43,7 @@ public class ShopController {
         }
         model.addAttribute("shopfoods", shopService.getFoods(shopId));
         model.addAttribute("shopname", shopName);
+        model.addAttribute("money",money);
         return "shop/index";
     }
 
@@ -106,9 +109,17 @@ public class ShopController {
     }
 
     @RequestMapping("/shop/checkOrder")
-    public String checkOrder(@RequestParam("orderId")Long oid){
+    public String checkOrder(@RequestParam("orderId")Long oid,HttpServletRequest httpRequest){
         //数据库修改
         orderService.updateStatus(oid);
+        Long userId = (Long) httpRequest.getSession().getAttribute("userId");
+        Long shopId = shopService.getId(userId);
+        BigDecimal money = shopService.getMoney(userId);
+        if(money==null)money =new BigDecimal(0);
+        BigDecimal orderMoney = orderService.getOrderMoney(oid);
+        if(orderMoney==null)orderMoney =new BigDecimal(0);
+        money = money.add(orderMoney);
+        shopService.updateMoney(money,userId);
         //重定向
         return "redirect:/shop/gotoOrderList";
     }

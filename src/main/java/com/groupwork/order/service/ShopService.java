@@ -1,10 +1,7 @@
 package com.groupwork.order.service;
 
 import com.groupwork.order.datasource.dto.*;
-import com.groupwork.order.datasource.mapper.CollectFoodMapper;
-import com.groupwork.order.datasource.mapper.CollectShopMapper;
-import com.groupwork.order.datasource.mapper.ShopFoodMapper;
-import com.groupwork.order.datasource.mapper.ShopMapper;
+import com.groupwork.order.datasource.mapper.*;
 import com.groupwork.order.model.OrderEntity;
 import com.groupwork.order.model.ShopEntity;
 import com.groupwork.order.model.ShopFoodEntity;
@@ -27,6 +24,8 @@ public class ShopService {
     private CollectShopMapper collectShopMapper;
     @Autowired
     private CollectFoodMapper collectFoodMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     public List<ShopFood> getFoods(Long shopId){
         return shopFoodMapper.getShopFoodAll(shopId);
@@ -38,6 +37,14 @@ public class ShopService {
 
     public void createShop(Long shopId,String name,String imgUrl,String introduce){
         shopMapper.createShop(shopId,name,imgUrl,introduce);
+    }
+
+    public BigDecimal getMoney(Long id){
+        return userMapper.getMoneyById(id);
+    }
+
+    public void updateMoney(BigDecimal money,Long userId){
+        userMapper.updateMoney(money,userId);
     }
 
     public Shop getShopInfo(Long shopId){

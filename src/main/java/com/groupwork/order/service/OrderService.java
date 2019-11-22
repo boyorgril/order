@@ -138,6 +138,11 @@ public class OrderService {
         return orderMapper.getUserOrders(userId);
     }
 
+
+    public BigDecimal getOrderMoney(Long oid){
+        return orderMapper.getOrderMoney(oid);
+    }
+
     public void saveOrderAddressInfo(String orderNum, String addressId) {
         orderMapper.saveOrderAddress(new BigDecimal(orderNum).longValue(), new BigDecimal(addressId).longValue(), "NOCOMPLETE", new Date());
     }

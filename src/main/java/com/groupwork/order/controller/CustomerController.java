@@ -102,6 +102,11 @@ public class CustomerController {
             return "404";
         }
 
+        if(orderService.findUserAddress(userId).size() <= 0){
+            model.addAttribute("reason","请维护个人地址信息");
+            return "404";
+        }
+
         Order order = orderService.saveOrder(userId, new BigDecimal(shopId).longValue(),
                 new BigDecimal(totalMoney).doubleValue());
         List<OrderDetail> detailList = orderService.saveOrderDetail(order.getId(), orderNum);

@@ -164,7 +164,9 @@ public class CustomerService {
         comments.forEach(comment -> {
             CommentEntity commentEntity = new CommentEntity();
             commentEntity.setComment(comment.getContent());
-            commentEntity.setUsername(userMapper.selectByPrimaryKey(comment.getUserId()).getUserName());
+            User user = userMapper.selectByPrimaryKey(comment.getUserId());
+            commentEntity.setUsername(user.getUserName());
+            commentEntity.setImgUrl(user.getImgUrl());
             entityList.add(commentEntity);
         });
 

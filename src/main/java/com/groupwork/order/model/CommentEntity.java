@@ -7,5 +7,6 @@ public class CommentEntity {
 
     private String username;
     private String comment;
+    private String imgUrl;
 
 }

@@ -67,9 +67,7 @@ public class OrderService {
         orderCountEntity.setOrderId(order.getId());
         orderCountEntity.setTotalMoney(order.getTotalMoney().doubleValue());
 
-        AddressExample example = new AddressExample();
-        example.createCriteria().andUserIdEqualTo(order.getBuyId());
-        List<Address> addresses = addressMapper.selectByExample(example);
+        List<Address> addresses = findUserAddress(order.getBuyId());
         List<OrderFood> foods = buildFoods(detailList);
 
         orderCountEntity.setOrderFoods(foods);
@@ -77,6 +75,14 @@ public class OrderService {
 
         return orderCountEntity;
     }
+
+    public List<Address> findUserAddress(Long userId){
+        AddressExample example = new AddressExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<Address> addresses = addressMapper.selectByExample(example);
+        return addresses;
+    }
+
 
     public List<OrderFood> buildFoods(List<OrderDetail> detailList){
         List<OrderFood> orderFoods = new ArrayList<>();

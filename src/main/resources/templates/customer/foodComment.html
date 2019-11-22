@@ -204,6 +204,14 @@
         .bg{
             background-color:#f7f4f8;
         }
+        .pic2{
+            width:100px;
+            border-radius: 10px;
+            margin-top:10px;
+            margin-bottom:10px;
+            margin-right:15px;
+            margin-left:5px;
+        }
         /*第一格参数设置*/
     </style>
 </head>
@@ -258,6 +266,7 @@
                     <table >
                         <tr>
                             <td><p th:text="${comm.username}"></p></td>
+                            <td ><img th:src="${comm.imgUrl}" class="pic2"></td>
                             <td><div class = "commentdetail"><p th:text="${comm.comment}"></p></div></td>
                         </tr>
                     </table>

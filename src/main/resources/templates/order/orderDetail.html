@@ -254,9 +254,9 @@
     </div>
     <div th:case="'BUYER'">
         <div th:switch="${orderStatus}">
-            <div th:case="'COMPLETE'" id="content" th:disabled="${comment.comment} ? true:false" class="btn btn-block greencheck checkcheck" onclick="javascript:commentOrder()">
+            <button th:case="'COMPLETE'" id="content" th:disabled="${comment.comment} ? true:false" class="btn btn-block greencheck checkcheck" onclick="javascript:commentOrder()">
                 评价
-            </div>
+            </button>
         </div>
     </div>
 

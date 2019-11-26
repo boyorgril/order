@@ -27,6 +27,12 @@ public class OrderController {
     @Autowired
     private AddressService addressService;
 
+    /**
+     * 判断用户类型，并将该顾客的订单列表显示其 orderList.html
+     * @param model
+     * @param httpRequest
+     * @return
+     */
     @RequestMapping("/order/gotoOrderList")
     public String enterOrderList(Model model, HttpServletRequest httpRequest){
         Long userId = (Long) httpRequest.getSession().getAttribute("userId");
@@ -57,6 +63,12 @@ public class OrderController {
         return "order/orderList";
     }
 
+    /**
+     * 判断用户类型，并将其显示到商家的 orderList.html
+     * @param model
+     * @param httpRequest
+     * @return
+     */
     @RequestMapping("/shop/gotoOrderList")
     public String enterShopOrderList(Model model, HttpServletRequest httpRequest){
         Long userId = (Long) httpRequest.getSession().getAttribute("shopId");
@@ -95,6 +107,13 @@ public class OrderController {
         return "shop/orderList";
     }
 
+    /**
+     * 显示用户订单详情 orderDetail.html
+     * @param model
+     * @param oid
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("/order/gotoOrderDetail")
     public String gotoOrderDetail(Model model,@RequestParam("orderId")Long oid, HttpServletRequest httpServletRequest){
         model.addAttribute("ShopFoods", orderService.getOrderDetail(oid));
@@ -105,6 +124,13 @@ public class OrderController {
         return "order/orderDetail";
     }
 
+    /**
+     * 顾客提交对订单的评价
+     * @param comment
+     * @param oid
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("/order/commentSubmit")
     @ResponseBody
     public String saveComment( @RequestParam("comment")String comment, @RequestParam("orderId")String oid, HttpServletRequest httpServletRequest){
@@ -113,7 +139,11 @@ public class OrderController {
         return "success";
     }
 
-
+    /**
+     * 根据用户类型，判断进入顾客 index.html 或商家 index.html
+     * @param httpRequest
+     * @return
+     */
     @RequestMapping("/user/index")
     public String userIndex(HttpServletRequest httpRequest){
         String type = (String)httpRequest.getSession().getAttribute("userType");

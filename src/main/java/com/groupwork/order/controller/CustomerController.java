@@ -45,6 +45,12 @@ public class CustomerController {
     @Value(value = "${resources_path}")
     String resources_path;//资源文件绝对地址目录
 
+    /**
+     * 取得店铺信息，并展示在顾客的主页 index.html
+     * @param model
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/index")
     public String enterIndex(Model model, HttpServletRequest httpServletRequest){
         Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
@@ -52,6 +58,13 @@ public class CustomerController {
         return "customer/index";
     }
 
+    /**
+     * 通过商家shopId，来跳转到访问的商家页面
+     * @param shopId
+     * @param model
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/visit/{shopId}")
     public String shopFood(@PathVariable Long shopId, Model model, HttpServletRequest httpServletRequest){
         Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
@@ -60,6 +73,12 @@ public class CustomerController {
         return "customer/shopFood";
     }
 
+    /**
+     * 顾客收藏商家
+     * @param shopId
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/collectShop")
     @ResponseBody
     public String collectShop(@RequestParam(value = "shopId", required = false) String shopId, HttpServletRequest httpServletRequest){
@@ -68,6 +87,12 @@ public class CustomerController {
         return "success";
     }
 
+    /**
+     * 顾客取消收藏商家
+     * @param shopId
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/cancelCollectShop")
     @ResponseBody
     public String cancelCollectShop(@RequestParam(value = "shopId", required = false) String shopId, HttpServletRequest httpServletRequest){
@@ -76,6 +101,12 @@ public class CustomerController {
         return "success";
     }
 
+    /**
+     * 顾客收藏菜品
+     * @param foodId
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/collectFood")
     @ResponseBody
     public String collectFood(@RequestParam(value = "foodId", required = false) String foodId, HttpServletRequest httpServletRequest){
@@ -84,6 +115,12 @@ public class CustomerController {
         return "success";
     }
 
+    /**
+     * 顾客取消收藏菜品
+     * @param shopId
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("customer/cancelCollectFood")
     @ResponseBody
     public String cancelCollectFood(@RequestParam(value = "foodId", required = false) String shopId, HttpServletRequest httpServletRequest){
@@ -92,6 +129,16 @@ public class CustomerController {
         return "success";
     }
 
+    /**
+     * 顾客确认订单，如果此时账户余额不足或地址不全，则点击提交时会返回404页面；
+     *                 如果账户余额充足，会计算此次订单的总费用
+     * @param totalMoney
+     * @param shopId
+     * @param orderNum
+     * @param httpServletRequest
+     * @param model
+     * @return
+     */
     @RequestMapping("customer/saveOrder")
     public String saveOrder(@RequestParam("totalMoney") String totalMoney, @RequestParam("shopId") String shopId,
                             @RequestParam("orderNum") String orderNum, HttpServletRequest httpServletRequest, Model model){
@@ -119,12 +166,24 @@ public class CustomerController {
         return "customer/countMoney";
     }
 
+    /**
+     * 顾客保存订单的地址和联系人及联系方式
+     * @param orderNum
+     * @param addressId
+     * @return
+     */
     @RequestMapping("customer/saveOrderAddress")
     public String saveOrderAddressInfo(String orderNum, String addressId){
         orderService.saveOrderAddressInfo(orderNum, addressId);
         return "redirect:/order/gotoOrderList";
     }
 
+    /**
+     * 显示顾客的个人用户信息
+     * @param httpServletRequest
+     * @param model
+     * @return
+     */
     @RequestMapping("customer/personalInfo")
     public String showPesonalInfo(HttpServletRequest httpServletRequest, Model model){
         Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
@@ -136,12 +195,24 @@ public class CustomerController {
         return "customer/personalInfo";
     }
 
+    /**
+     * 显示顾客对菜品的评论信息
+     * @param model
+     * @param foodId
+     * @return
+     */
     @RequestMapping("/customer/seeFoodComment/{foodId}")
     public String showFoodComment(Model model, @PathVariable Long foodId){
         model.addAttribute("comment",customerService.foodComment(foodId));
         return "customer/foodComment";
     }
 
+    /**
+     * 修改顾客个人信息详情，并且刷新 updateInfo.html
+     * @param model
+     * @param servletRequest
+     * @return
+     */
     @RequestMapping("/customer/infoDetail")
     public String infoDeatil(Model model, HttpServletRequest servletRequest){
         Long userId = (Long) servletRequest.getSession().getAttribute("userId");
@@ -149,6 +220,12 @@ public class CustomerController {
         return "customer/updateInfo";
     }
 
+    /**
+     * 顾客上传头像，并将其保存到服务器端，同时刷新 updateInfo.html
+     * @param file
+     * @param servletRequest
+     * @return
+     */
     @RequestMapping("/customer/changeImg")
     public String saveImgUrl(@RequestParam("upFile") MultipartFile file, HttpServletRequest servletRequest){
         Long userId = (Long) servletRequest.getSession().getAttribute("userId");
@@ -170,6 +247,12 @@ public class CustomerController {
         return "redirect:/customer/infoDetail";
     }
 
+    /**
+     * 顾客变更地址详情
+     * @param address
+     * @param servletRequest
+     * @return
+     */
     @RequestMapping("/customer/updateAddress")
     public String updateAddressInfo(Address address, HttpServletRequest servletRequest){
         Long userId = (Long) servletRequest.getSession().getAttribute("userId");
@@ -178,6 +261,12 @@ public class CustomerController {
         return "redirect:/customer/infoDetail";
     }
 
+    /**
+     * 修改顾客的昵称
+     * @param name
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("/customer/updateUserName")
     @ResponseBody
     public String updateName(@RequestParam(value = "name", required = false) String name, HttpServletRequest httpServletRequest){

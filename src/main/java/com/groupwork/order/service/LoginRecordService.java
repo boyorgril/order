@@ -13,6 +13,11 @@ public class LoginRecordService {
     @Autowired
     private LoginRecordMapper loginRecordMapper;
 
+    /**
+     * 添加登录记录
+     * @param ipAddress
+     * @param userId
+     */
     public void addRecord(String ipAddress, Long userId){
 
         LoginRecord record = new LoginRecord();

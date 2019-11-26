@@ -11,6 +11,10 @@ public class OperationRecordService {
     @Autowired
     private OperationRecordMapper operationRecordMapper;
 
+    /**
+     * 添加操作记录
+     * @param record
+     */
     public void saveRecord(OperationRecord record){
         operationRecordMapper.insert(record);
     }

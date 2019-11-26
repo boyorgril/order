@@ -33,6 +33,13 @@ public class OrderService {
     @Autowired
     private CommentMapper commentMapper;
 
+    /**
+     * 保存订单
+     * @param buyId
+     * @param sellId
+     * @param totalMoney
+     * @return
+     */
     public Order saveOrder(Long buyId, Long sellId, double totalMoney){
         Order order = new Order();
         order.setBuyId(buyId);
@@ -44,6 +51,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * 保存订单详情
+     * @param orderId
+     * @param orderDetail
+     * @return
+     */
     public List<OrderDetail> saveOrderDetail(Long orderId, String orderDetail){
         List<OrderDetail> detailList = new ArrayList<>();
         JSONArray obj = JSONObject.parseArray(orderDetail);
@@ -62,6 +75,12 @@ public class OrderService {
     }
 
 
+    /**
+     * 创建OrderCountEntity实例
+     * @param order
+     * @param detailList
+     * @return
+     */
     public OrderCountEntity buildModel(Order order, List<OrderDetail> detailList) {
         OrderCountEntity orderCountEntity = new OrderCountEntity();
         orderCountEntity.setOrderId(order.getId());
@@ -76,6 +95,11 @@ public class OrderService {
         return orderCountEntity;
     }
 
+    /**
+     * 取得用户的所有地址
+     * @param userId
+     * @return
+     */
     public List<Address> findUserAddress(Long userId){
         AddressExample example = new AddressExample();
         example.createCriteria().andUserIdEqualTo(userId);
@@ -84,6 +108,11 @@ public class OrderService {
     }
 
 
+    /**
+     * 取得订单列表中所有的订单的菜品信息
+     * @param detailList
+     * @return
+     */
     public List<OrderFood> buildFoods(List<OrderDetail> detailList){
         List<OrderFood> orderFoods = new ArrayList<>();
         for (int i = 0; i < detailList.size() ; i++) {
@@ -96,15 +125,35 @@ public class OrderService {
         return orderFoods;
     }
 
+    /**
+     * 取得店铺收到的所有订单信息
+     * @param shopID
+     * @return
+     */
     public List<Order> getOrders(Long shopID){
         return orderMapper.getOrders(shopID);
     }
 
+    /**
+     * 更新订单状态
+     * @param oid
+     */
     public void updateStatus(Long oid){
         orderMapper.updateStatus(oid);
     }
+
+    /**
+     * 取得订单状态
+     * @param oid
+     * @return
+     */
     public String getStatus(Long oid){return orderMapper.getStatus(oid);}
 
+    /**
+     * 取得订单中第一个菜品的id
+     * @param oid
+     * @return
+     */
     public Long getFoodId(Long oid){
         List<OrderDetail> orderDetails =  orderDetailMapper.getOrdersByOid(oid);
         if(orderDetails.size() ==0)return null;
@@ -112,6 +161,11 @@ public class OrderService {
         return orderDetail.getSfid();
     }
 
+    /**
+     * 取得订单中所有菜品的信息
+     * @param oid
+     * @return
+     */
     public List<OrderDetailFoodEntity> getOrderDetail(Long oid){
         List<OrderDetail> orders = orderDetailMapper.getOrderDetailByOid(oid);
         List<Long> sfids = new ArrayList<>();
@@ -130,6 +184,11 @@ public class OrderService {
         return sfs;
     }
 
+    /**
+     * 用shopFood实例化OrderDetailFoodEntity
+     * @param sf
+     * @return
+     */
     public OrderDetailFoodEntity getProperty(ShopFood sf){
         OrderDetailFoodEntity odfe = new OrderDetailFoodEntity();
         odfe.setId(sf.getId());
@@ -142,19 +201,39 @@ public class OrderService {
         return odfe;
     }
 
+    /**
+     * 取得用户所有订单
+     * @param userId
+     * @return
+     */
     public List<Order> getUserOrders(Long userId) {
         return orderMapper.getUserOrders(userId);
     }
 
 
+    /**
+     * 取得订单总价
+     * @param oid
+     * @return
+     */
     public BigDecimal getOrderMoney(Long oid){
         return orderMapper.getOrderMoney(oid);
     }
 
+    /**
+     * 保存订单地址信息
+     * @param orderNum
+     * @param addressId
+     */
     public void saveOrderAddressInfo(String orderNum, String addressId) {
         orderMapper.saveOrderAddress(new BigDecimal(orderNum).longValue(), new BigDecimal(addressId).longValue(), "NOCOMPLETE", new Date());
     }
 
+    /**
+     * 通过订单Id寻找所有相关评论
+     * @param orderId
+     * @return
+     */
     public CommentEntity findOrderComment(Long orderId){
         CommentEntity entity = new CommentEntity();
         CommentExample commentExample = new CommentExample();
@@ -166,6 +245,12 @@ public class OrderService {
         return entity;
     }
 
+    /**
+     * 添加评论
+     * @param userId
+     * @param orderId
+     * @param content
+     */
     public void insertComment(Long userId, Long orderId, String content){
         Comment comment = new Comment();
         comment.setContent(content);

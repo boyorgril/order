@@ -30,6 +30,12 @@ public class CustomerService {
     @Autowired
     private AddressMapper addressMapper;
 
+
+    /**
+     * 寻找店铺所有的菜品信息
+     * @param userId
+     * @return
+     */
     public List<CollectFoodEntity> searchFood(Long userId){
         List<CollectFoodEntity> foodEntities = new ArrayList<>();
 
@@ -49,6 +55,11 @@ public class CustomerService {
         return foodEntities;
     }
 
+    /**
+     * 搜寻所有店铺
+     * @param userId
+     * @return
+     */
     public List<CollectShopEntity> searchShop(Long userId){
         List<CollectShopEntity> shopEntities = new ArrayList<>();
 
@@ -68,6 +79,11 @@ public class CustomerService {
         return shopEntities;
     }
 
+    /**
+     * 收藏店铺
+     * @param userId
+     * @param shopId
+     */
     public void collectShop(Long userId, Long shopId){
         CollectShopExample example = new CollectShopExample();
         example.createCriteria().andUserIdEqualTo(userId).andShopIdEqualTo(shopId);
@@ -85,6 +101,11 @@ public class CustomerService {
         }
     }
 
+    /**
+     * 收藏菜品
+     * @param userId
+     * @param foodId
+     */
     public void collectFood(Long userId, Long foodId) {
 
         CollectFoodExample example = new CollectFoodExample();
@@ -105,6 +126,12 @@ public class CustomerService {
 
     }
 
+    /**
+     * 更新店铺收藏状态
+     * @param userId
+     * @param shopId
+     * @param status
+     */
     public void updateCollectShopStatus(Long userId, long shopId, String status) {
         CollectShopExample example = new CollectShopExample();
         example.createCriteria().andUserIdEqualTo(userId).andShopIdEqualTo(shopId);
@@ -113,6 +140,12 @@ public class CustomerService {
         collectShopMapper.updateByExampleSelective(collectShop,example);
     }
 
+    /**
+     * 更新菜品收藏状态
+     * @param userId
+     * @param foodId
+     * @param status
+     */
     public void updateCollectFoodStatus(Long userId, long foodId, String status) {
         CollectFoodExample example = new CollectFoodExample();
         example.createCriteria().andUserIdEqualTo(userId).andSfidEqualTo(foodId);
@@ -121,12 +154,22 @@ public class CustomerService {
         collectFoodMapper.updateByExampleSelective(collectFood,example);
     }
 
+    /**
+     * 取得用户信息
+     * @param userId
+     * @return
+     */
     public UserEntity findUserInfo(Long userId) {
         UserEntity entity = new UserEntity();
         entity.convert(userMapper.selectByPrimaryKey(userId));
         return entity;
     }
 
+    /**
+     * 取得对应菜品的所有评论
+     * @param foodId
+     * @return
+     */
     public FoodCommentEntity foodComment(Long foodId){
         FoodCommentEntity commentEntity = new FoodCommentEntity();
         ShopFood shopFood = shopFoodMapper.selectById(foodId);
@@ -144,6 +187,11 @@ public class CustomerService {
         return commentEntity;
     }
 
+    /**
+     * 取得对应订单的所有评价
+     * @param orderDetails
+     * @return
+     */
     public List<CommentEntity> findFoodComment(List<OrderDetail> orderDetails){
         List<CommentEntity> entityList = new ArrayList<>();
 
@@ -173,7 +221,11 @@ public class CustomerService {
         return entityList;
     }
 
-
+    /**
+     * 取得用户所有信息，包括用户所有收货地址
+     * @param userId
+     * @return
+     */
     public UserEntity findDetailById(Long userId){
         UserEntity userEntity = findUserInfo(userId);
         AddressExample example = new AddressExample();
@@ -183,6 +235,10 @@ public class CustomerService {
         return userEntity;
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     */
     public void updateUserInfo(User user) {
         UserExample example = new UserExample();
         example.createCriteria().andIdEqualTo(user.getId());
@@ -191,11 +247,21 @@ public class CustomerService {
         userMapper.updateByExampleSelective(user, example);
     }
 
+    /**
+     * 查询用户余额
+     * @param userId
+     * @return
+     */
     public double userMoney(Long userId){
         User user = userMapper.selectByPrimaryKey(userId);
         return user.getMoney();
     }
 
+    /**
+     * 更新用户的余额
+     * @param orderMoney
+     * @param userId
+     */
     public void updateUserMoney(double orderMoney, Long userId){
         userMapper.updateUserMoney(orderMoney, userId);
     }

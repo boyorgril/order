@@ -20,18 +20,35 @@ public class AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
+    /**
+     * 通过地址id获取地址信息
+     * @param addressId
+     * @return
+     */
     public Address getAddress(Long addressId){
         return addressMapper.getAddressById(addressId);
     }
 
+    /**
+     * 更新地址信息
+     * @param address
+     */
     public void updateAddress(Address address){
         addressMapper.updateByPrimaryKey(address);
     }
 
+    /**
+     * 插入地址信息
+     * @param address
+     */
     public void insertAddress(Address address){
         addressMapper.insert(address);
     }
 
+    /**
+     * 插入或更新地址信息
+     * @param address
+     */
     public void insertOrUpdateAddr(Address address) {
 
         if (StringUtils.isEmpty(address.getId())){

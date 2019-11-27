@@ -190,7 +190,7 @@ public class ShopController {
     @RequestMapping("/shop/addFood")
     public String gotoAddFood(Model model){
         ShopFood shopFood = new ShopFood();
-        shopFood.setImgUrl("/img/666.jpg");
+        shopFood.setImgUrl("/img/initial.png");
         shopFood.setName("请在此输入菜品名");
         shopFood.setIntroduce("请在此输入菜品简介");
         model.addAttribute("shopfood",shopFood);

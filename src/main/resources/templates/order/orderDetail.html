@@ -264,8 +264,8 @@
     </form>
 </div>
 
- <div >
-     <button id="content" class="btn btn-block greencheck checkcheck" onclick="showBlackAddressDetailInfo()">
+ <div>
+     <button th:disabled="${orderStatus}=='NOCOMPLETE' ? true:false" id="content" class="btn btn-block greencheck checkcheck" onclick="showBlackAddressDetailInfo()">
          评价
      </button>
  </div>

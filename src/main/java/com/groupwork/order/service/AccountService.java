@@ -34,7 +34,7 @@ public class AccountService {
         if("BUYER".equals(user.getType())){
             user.setMoney(500.00);
         }
-        user.setImgUrl("/img/initial.png");
+        user.setImgUrl("/img/user.jpg");
        return accountMapper.accountRegister(user);
     }
 
